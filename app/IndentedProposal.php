@@ -70,6 +70,11 @@ class IndentedProposal extends Model
             })
             ->where('indented_proposal_item.indented_proposal_id', '=', $indentedProposal->id)->get();
 
-        return view('proposal.admin.indented.create', compact('selectedItems', 'ctr'));
+        return view('proposal.admin.indented.create', compact('selectedItems', 'ctr', 'indentedProposal'));
+    }
+
+    public static function saveIndentedProposal($request)
+    {
+
     }
 }

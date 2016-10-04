@@ -48,7 +48,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
             Route::post('/aftermarket/create', 'ItemController@postAfterMarket')->name('post_after_market');
             Route::get('/aftermarket/{afterMarket}/information', 'ItemController@adminAfterMarketInformation')->name('admin_after_market_information');
             Route::get('/aftermarket/{afterMarket}/pricing_history', 'ItemController@adminAfterMarketPricingHistoryIndex')->name('admin_after_market_pricing_history_index');
-            Route::get('/aftermarket/{afterMarket}/pricing_history/create', 'ItemController@adminAfterMarketPricingHistoryCreate')->name('admin_after_market_pricing_history_create');
+            Route::get('/after_markets/{afterMarket}/pricing_history/create', 'ItemController@adminAfterMarketPricingHistoryCreate')->name('admin_after_market_pricing_history_create');
             Route::patch('/aftermarket/{afterMarket}/update', 'ItemController@adminUpdateAfterMarketInformation')->name('admin_after_market_information_update');
             Route::post('/aftermarket/{afterMarket}/pricing_history/create', 'ItemController@adminAddAfterMarketPricingHistory')->name('admin_add_after_market_pricing_history');
 
@@ -58,7 +58,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
             Route::get('/project/{project}', 'ItemController@showProject')->name('admin_project_show');
             Route::get('/project/{project}/information', 'ItemController@adminProjectInformation')->name('admin_project_information');
             Route::get('/project/{project}/pricing_history', 'ItemController@adminProjectPricingHistoryIndex')->name('admin_project_pricing_history_index');
-            Route::get('/project/{project}/pricing_history/create', 'ItemController@adminProjectPricingHistoryCreate')->name('admin_project_pricing_history_create');
+            Route::get('/projects/{project}/pricing_history/create', 'ItemController@adminProjectPricingHistoryCreate')->name('admin_project_pricing_history_create');
             Route::post('/project/{project}/pricing_history/create', 'ItemController@postAdminProjectPricingHistory')->name('post_admin_project_pricing_history');
             Route::post('/project/{project}/pricing_history/create', 'ItemController@adminAddProjectPricingHistory')->name('admin_add_project_pricing_history');
             Route::patch('/project/{project}/update', 'ItemController@adminUpdateProjectInformation')->name('admin_project_information_update');

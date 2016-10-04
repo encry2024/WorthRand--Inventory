@@ -368,8 +368,9 @@
                             );
                         });
                     } if(Object.keys(suggestions.pricinHistoryArray).length == 0) {
-                        var url = "{{ route('admin_project_pricing_history_create', ':project_id') }}";
-                            url = url.replace(':project_id', suggestions.data);
+                        var url = "{{ url('admin/:item_category/:item_id/pricing_history/create') }}";
+                            url = url.replace(':item_id', suggestions.data);
+                            url = url.replace(':item_category', item_category);
 
                         $(wrapper).append('<div class="alert alert-danger" role="alert" style="background-color: #d9534f; color: white; border-color: #b52b27; font-size: 15px;">Pricing History Data Not Found.... ' + '<a class="btn btn-default btn-sm" style="" href="' + url + '">Add Pricing History</a></div>');
                     }

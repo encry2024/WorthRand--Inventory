@@ -29,6 +29,8 @@ class ProposalController extends Controller
 
     public function adminSubmitIndentedProposal(Request $request)
     {
-        dd($request->all());
+        $save_indented_proposal = IndentedProposal::saveIndentedProposal($request);
+
+        return $save_indented_proposal;
     }
 }
