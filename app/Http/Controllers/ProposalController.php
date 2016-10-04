@@ -26,4 +26,9 @@ class ProposalController extends Controller
 
         return $view_selected_items;
     }
+
+    public function adminSubmitIndentedProposal(Request $request)
+    {
+        dd($request->all());
+    }
 }

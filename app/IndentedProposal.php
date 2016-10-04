@@ -37,6 +37,8 @@ class IndentedProposal extends Model
 
     public static function viewIndentedProposal($indentedProposal)
     {
+        $ctr = 0;
+
         $selectedItems = DB::table('indented_proposal_item')
             ->select('projects.*',
                 DB::raw('wr_crm_projects.name as "project_name"'),
@@ -46,6 +48,7 @@ class IndentedProposal extends Model
                 DB::raw('wr_crm_projects.drawing_number as "project_dn"'),
                 DB::raw('wr_crm_projects.tag_number as "project_tn"'),
                 DB::raw('wr_crm_projects.material_number as "project_mn"'),
+                DB::raw('wr_crm_projects.price as "project_price"'),
             'after_markets.*',
                 DB::raw('wr_crm_after_markets.name as "after_market_name"'),
                 DB::raw('wr_crm_after_markets.model as "after_market_md"'),
@@ -53,7 +56,10 @@ class IndentedProposal extends Model
                 DB::raw('wr_crm_after_markets.drawing_number as "after_market_dn"'),
                 DB::raw('wr_crm_after_markets.material_number as "after_market_mn"'),
                 DB::raw('wr_crm_after_markets.material_number as "after_market_sn"'),
-                DB::raw('wr_crm_after_markets.tag_number as "after_market_tn"'))
+                DB::raw('wr_crm_after_markets.price as "after_market_price"'),
+                DB::raw('wr_crm_after_markets.tag_number as "after_market_tn"'),
+            'indented_proposal_item.*',
+                DB::raw('wr_crm_indented_proposal_item.id as "indented_proposal_item_id"'))
             ->leftJoin('projects', function($join) {
                 $join->on('indented_proposal_item.item_id', '=', 'projects.id')
                     ->where('indented_proposal_item.type', '=', 'projects');
@@ -64,6 +70,6 @@ class IndentedProposal extends Model
             })
             ->where('indented_proposal_item.indented_proposal_id', '=', $indentedProposal->id)->get();
 
-        return view('proposal.admin.indented.create', compact('selectedItems'));
+        return view('proposal.admin.indented.create', compact('selectedItems', 'ctr'));
     }
 }

@@ -92,6 +92,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
             Route::post('/proposal/create', 'ProposalController@adminCreateProposal')->name('admin_create_proposal');
             Route::post('/indented_proposal/create', 'ProposalController@adminPostCreateIndentedProposal')->name('admin_post_indented_proposal');
             Route::get('/indented_proposal/{indentedProposal}', 'ProposalController@adminIndentProposalView')->name('admin_indented_proposal');
+            Route::post('/indented_proposal/submit', 'ProposalController@adminSubmitIndentedProposal')->name('admin_submit_indented_proposal');
 
         # SEARCH
             Route::get('/search', function() { return view('search.admin.index'); })->name('search');
