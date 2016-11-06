@@ -1,3 +1,9 @@
+.search-error {
+    color: white;
+    background-color: #d9534f;
+    border-color: #b52b27;
+}
+
 .form-group:last-child hr
 {
     display: none;

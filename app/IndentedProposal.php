@@ -33,7 +33,8 @@ class IndentedProposal extends Model
     public static function salesEngineerPostCreateIndentedProposal($request)
     {
         if(trim($request->get('array_id')) == "") {
-            return redirect()->back()->with('message', 'You didn\'t select any item')->with('alert', "alert-danger");
+            return redirect()->back()->with('message', 'You didn\'t select any item')
+            ->with('alert', "search-error")->with('msg_icon', "glyphicon glyphicon-warning-sign");
         } else {
             $array_id = [];
             $item_ids = explode(',', $request->get('array_id'));
@@ -108,30 +109,9 @@ class IndentedProposal extends Model
         $indented_proposal = IndentedProposal::find($createIndentedProposalRequest->get('indent_proposal_id'));
         $indented_proposal->customer_id = $createIndentedProposalRequest->get('customer_id');
         $indented_proposal->branch_id = $createIndentedProposalRequest->get('branch_id');
-        $indented_proposal->purchase_order = $createIndentedProposalRequest->get('purchase_order');
-        $indented_proposal->invoice_to = $createIndentedProposalRequest->get('invoice');
-        $indented_proposal->invoice_to_address = $createIndentedProposalRequest->get('invoice_address');
+        $indented_proposal->purchase_order = $createIndentedProposalRequest->get('rfq_number');
         $indented_proposal->ship_to = $createIndentedProposalRequest->get('ship_to');
         $indented_proposal->ship_to_address = $createIndentedProposalRequest->get('ship_to_address');
-        $indented_proposal->special_instructions = $createIndentedProposalRequest->get('special_instruction');
-        $indented_proposal->insurance = $createIndentedProposalRequest->get('insurance');
-        $indented_proposal->ship_via = $createIndentedProposalRequest->get('ship_via');
-        $indented_proposal->packing = $createIndentedProposalRequest->get('packing');
-        $indented_proposal->amount = $createIndentedProposalRequest->get('amount');
-        $indented_proposal->documents = $createIndentedProposalRequest->get('documents');
-        $indented_proposal->wpcoc = "indented";
-        $indented_proposal->order_entry_no = $createIndentedProposalRequest->get('purchase_order');
-        $indented_proposal->terms_of_payment_1 = $createIndentedProposalRequest->get('terms_of_payment_1');
-        $indented_proposal->terms_of_payment_address = $createIndentedProposalRequest->get('terms_of_payment_address');
-        $indented_proposal->bank_detail_name = $createIndentedProposalRequest->get('bank_detail_owner');
-        $indented_proposal->bank_detail_address = $createIndentedProposalRequest->get('bank_detail_address');
-        $indented_proposal->bank_detail_account_no = $createIndentedProposalRequest->get('bank_detail_account_number');
-        $indented_proposal->bank_detail_swift_code = $createIndentedProposalRequest->get('bank_detail_swift_code');
-        $indented_proposal->bank_detail_account_name = $createIndentedProposalRequest->get('bank_detail_account_name');
-        $indented_proposal->commission_note = $createIndentedProposalRequest->get('commission_note');
-        $indented_proposal->commission_address = $createIndentedProposalRequest->get('commission_address');
-        $indented_proposal->commission_account_number = $createIndentedProposalRequest->get('commission_account_number');
-        $indented_proposal->commission_swift_code = $createIndentedProposalRequest->get('commission_swift_code');
         $indented_proposal->status = "SENT";
         $indented_proposal->collection_status = "PENDING";
 
@@ -461,5 +441,46 @@ class IndentedProposal extends Model
             ->where('indented_proposal_item.indented_proposal_id', '=', $indented_proposal->id)->get();
 
         return view('proposal.sales_engineer.indented.sent', compact('ctr', 'selectedItems', 'indented_proposal'));
+    }
+
+    public static function showDraftIndentedProposal($indentedProposal)
+    {
+        $ctr = 0;
+        $selectedItems = DB::table('indented_proposal_item')
+            ->select('projects.*',
+                DB::raw('wr_crm_projects.name as "project_name"'),
+                DB::raw('wr_crm_projects.model as "project_md"'),
+                DB::raw('wr_crm_projects.serial_number as "project_sn"'),
+                DB::raw('wr_crm_projects.part_number as "project_pn"'),
+                DB::raw('wr_crm_projects.drawing_number as "project_dn"'),
+                DB::raw('wr_crm_projects.tag_number as "project_tn"'),
+                DB::raw('wr_crm_projects.material_number as "project_mn"'),
+                DB::raw('wr_crm_projects.price as "project_price"'),
+                'after_markets.*',
+                DB::raw('wr_crm_after_markets.name as "after_market_name"'),
+                DB::raw('wr_crm_after_markets.model as "after_market_md"'),
+                DB::raw('wr_crm_after_markets.part_number as "after_market_pn"'),
+                DB::raw('wr_crm_after_markets.drawing_number as "after_market_dn"'),
+                DB::raw('wr_crm_after_markets.material_number as "after_market_mn"'),
+                DB::raw('wr_crm_after_markets.material_number as "after_market_sn"'),
+                DB::raw('wr_crm_after_markets.tag_number as "after_market_tn"'),
+                DB::raw('wr_crm_after_markets.price as "after_market_price"'),
+                'indented_proposal_item.*',
+                DB::raw('wr_crm_indented_proposal_item.id as "indented_proposal_item_id"'),
+                DB::raw('wr_crm_indented_proposal_item.quantity as "indented_proposal_item_quantity"'),
+                DB::raw('wr_crm_indented_proposal_item.delivery as "indented_proposal_item_delivery"'),
+                DB::raw('wr_crm_indented_proposal_item.price as "indented_proposal_item_price"'),
+                DB::raw('wr_crm_indented_proposal_item.notify_me_after as "indented_proposal_item_notify_me_after"'))
+            ->leftJoin('projects', function($join) {
+                $join->on('indented_proposal_item.item_id', '=', 'projects.id')
+                    ->where('indented_proposal_item.type', '=', 'projects');
+            })
+            ->leftJoin('after_markets', function($join) {
+                $join->on('indented_proposal_item.item_id', '=', 'after_markets.id')
+                    ->where('indented_proposal_item.type', '=', 'after_markets');
+            })
+            ->where('indented_proposal_item.indented_proposal_id', '=', $indentedProposal->id)->get();
+
+        return view('proposal.sales_engineer.indented.draft', compact('indentedProposal', 'selectedItems', 'ctr'));
     }
 }

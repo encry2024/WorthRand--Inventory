@@ -95,7 +95,11 @@
                                                         {{ date('F d, Y', strtotime($indented_proposal->created_at)) }}
                                                     </td>
                                                     <td class="text-right">
+                                                    @if($indented_proposal->status == "SENT")
                                                         <a href="{{ route('se_sent_indented_proposal', $indented_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
+                                                    @else
+                                                        <a href="{{ route('show_draft_proposal', $indented_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
+                                                    @endif
                                                     </td>
                                                 </tr>
                                             @endforeach

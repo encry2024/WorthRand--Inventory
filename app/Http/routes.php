@@ -217,7 +217,7 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
             Route::get('/customers', 'SalesEngineer\CustomerController@index')->name('customer_index');
             Route::get('/customer/{customer}', 'SalesEngineer\CustomerController@show')->name('show_customer');
             Route::get('/customer/{customer}/branches', 'SalesEngineer\CustomerController@customerBranchList')->name('customer_branch_list');
-            Route::get('/fetch_branches/{customer_id}/', 'SalesEngineer\CustomerController@fetchBranchesById');
+            Route::get('/fetch_branches', 'SalesEngineer\CustomerController@fetchBranchesById');
 
         # BRANCHES
             Route::get('/branches', 'SalesEngineer\BranchController@adminBranchIndex')->name('se_branch_index');
@@ -228,11 +228,13 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
             Route::post('/indented_proposal/create', 'SalesEngineer\ProposalController@salesEngineerPostCreateIndentedProposal');
             Route::get('/indented_proposal/{indentedProposal}', 'SalesEngineer\ProposalController@salesEngineerIndentProposalView');
             Route::post('/indented_proposal/submit', 'SalesEngineer\ProposalController@salesEngineerSubmitIndentedProposal')->name('se_submit_indented_proposal');
+            Route::get('/indented_proposals', 'ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
+            Route::get('/indented_proposal/{indentedProposal}/sent', 'SalesEngineer\ProposalController@showSentIndentedProposal')->name('se_sent_indented_proposal');
+            Route::get('/indented_proposal/{indentedProposal}/draft', 'SalesEngineer\ProposalController@showDraftIndentedProposal')->name('show_draft_proposal');
+
             Route::post('/buy_and_sell_proposal/create', 'SalesEngineer\ProposalController@salesEngineerPostCreateBuyAndSellProposal');
             Route::get('/buy_and_sell_proposal/{buyAndSellProposal}', 'SalesEngineer\ProposalController@salesEngineerBuyAndSellProposalView');
             Route::post('/buy_and_sell/create', 'SalesEngineer\ProposalController@salesEngineerPostCreateBuyAndSellProposal')->name('se_create_buy_and_sale_proposal');
-            Route::get('/indented_proposals', 'ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
-            Route::get('/indented_proposal/{indentedProposal}/sent', 'SalesEngineer\ProposalController@showSentIndentedProposal')->name('se_sent_indented_proposal');
             Route::post('/buy_and_sell_proposal/submit', 'SalesEngineer\ProposalController@salesEngineerSubmitBuyAndSellProposal')->name('se_submit_buy_and_sell_proposal');
 
         # SEARCH
