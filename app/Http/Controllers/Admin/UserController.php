@@ -75,4 +75,9 @@ class UserController extends Controller
             return redirect()->back()->with('message', 'You have successfully updates [ User :: ' . $user->name . ' ] Information');
         }
     }
+
+    public function profile()
+    {
+        return view('auth.admin.profile');
+    }
 }

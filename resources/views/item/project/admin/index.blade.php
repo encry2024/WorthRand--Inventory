@@ -33,12 +33,11 @@
                                     <thead>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>No. of Aftermarkets</th>
-                                        <th>No. of Seals</th>
                                         <th>Model</th>
                                         <th>Serial Number</th>
                                         <th>Tag Number</th>
                                         <th>Drawing Number</th>
+                                        <th>Date Created</th>
                                         <th>Actions</th>
                                     </thead>
                                     <tbody>
@@ -46,12 +45,11 @@
                                         <tr>
                                             <td>{{ $project->id }}</td>
                                             <td>{{ $project->name }}</td>
-                                            <td>{{ count($project->after_markets) }}</td>
-                                            <td>{{ count($project->seals) }}</td>
                                             <td>{{ $project->model }}</td>
                                             <td>{{ $project->serial_number }}</td>
                                             <td>{{ $project->tag_number }}</td>
                                             <td>{{ $project->drawing_number }}</td>
+                                            <td>{{ date('F d, Y', strtotime($project->created_at)) }}</td>
                                             <td>
                                                 <a href="{{ route('admin_project_show', $project->id) }}" class="btn btn-sm btn-success">View Project</a>
                                             </td>

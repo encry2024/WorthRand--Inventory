@@ -7,8 +7,9 @@
 
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
                     <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
-                        <li class="nav-item"><a class="nav-link" href="#accept_proposal" onclick='document.getElementById("AcceptBuyAndSellProposal").submit();'><i class="fa fa-paper-plane"></i>&nbsp; Accept Proposal</a></li>
-
+                        <li class="nav-item"><a class="nav-link" href="#accept_proposal" data-toggle="modal" data-target="#BuyAndResaleProposalFormConfirmation"><i class="fa fa-paper-plane"></i>&nbsp; Accept Proposal</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#decline_proposal" data-toggle="modal" data-target="#BuyAndResaleProposalFormConfirmationForDecline"><i class="fa fa-close"></i>&nbsp; Decline Proposal</a></li>
+                        <li class="nav-item"><a href="{{ route('admin_export_pending_bns_proposal', $buyAndSellProposal->id) }}" class="nav-link"><i class="fa fa-download"></i>&nbsp; Export to XLSX</a></li>
                         <li class="nav-item"><a class="nav-link"  href="{{ route('admin_dashboard') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
                     </ul>
                 </div>
@@ -20,11 +21,19 @@
                                 color: white;
                                 background-color: #5cb85c;
                                 border-color: #3d8b3d;">
-                                <div class="container"><i class="fa fa-check"></i> &nbsp;{{ Session::get('message') }}
+                                <div class="container"><i class="fa fa-check"></i> {{ Session::get('message') }}
                                     <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
                             </div>
                         </div>
                     @endif
+
+                        <div class="row">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <label style="font-size: 13px; font-weight: 800;"><i>Blank textboxes will be filled by Racquel after you accept this proposal</i></label>
+                                </div>
+                            </div>
+                        </div>
 
                     <form class="form-horizontal" action="{{ route('admin_accept_buy_and_sell_proposal', $buyAndSellProposal->id) }}" method="POST" id="AcceptBuyAndSellProposal">
                         {{ csrf_field() }}
@@ -70,20 +79,6 @@
                                 <div class="form-group">
                                     <div class="col-sm-5 col-lg-push-2">
                                         <textarea disabled name="to_address" id="to_address" class="form-control" placeholder="Address">{{ $buyAndSellProposal->customer->address }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="branch_field" class="col-sm-2 control-label">Sold To:</label>
-                                    <div class="col-sm-5">
-                                        <input disabled class="form-control" id="branch_field" name="sold" placeholder="Sold To" value="{{ $buyAndSellProposal->branch->name }}">
-
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-sm-5 col-lg-push-2">
-                                        <textarea disabled name="sold_to_address" id="sold_to_address" class="form-control" placeholder="Address">{{ $buyAndSellProposal->branch->address }}</textarea>
                                     </div>
                                 </div>
 
@@ -200,6 +195,42 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="BuyAndResaleProposalFormConfirmation">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Accept Buy and Resale Proposal</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="">Are you sure you want to accept Proposal <b>[ WPC Number/Reference: {{ $buyAndSellProposal->wpc_reference }} ]</b> ?</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick='document.getElementById("AcceptBuyAndSellProposal").submit();'>Accept</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="BuyAndResaleProposalFormConfirmationForDecline">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Decline Buy and Resale Proposal</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="">Are you sure you want to accept Proposal <b>[ WPC Number/Reference: {{ $buyAndSellProposal->wpc_reference }} ]</b> ?</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick='document.getElementById("AcceptBuyAndSellProposal").submit();'>Accept</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>

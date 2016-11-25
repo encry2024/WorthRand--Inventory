@@ -12,15 +12,40 @@
                         <li class="nav-item"><a class="nav-link"  href="{{ route('search') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
                     </ul>
                 </div>
+                
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     <form class="form-horizontal" action="{{ route('se_submit_indented_proposal') }}" method="POST" id="SubmitIndentedProposal" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="indent_proposal_id" value="{{ $indented_proposal->id }}">
                         <input type="hidden" name="customer_id" id="customer_id">
-                        <input type="hidden" name="branch_id" id="branch_id">
+                        
+                        {{-- <div class="row">
+                            <div class="col-lg-12">
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                            </div>
+                        </div> --}}
 
                         <div class="row">
+
+                            <div class="col-lg-12 col-lg-pull-1">
+                                <div class="form-group">
+                                    <label for="uploadPOFile" class="col-sm-2 control-label">Upload P.O File</label>
+                                    <div class="col-sm-5">
+                                        <input class="form-control" type="file" id="uploadPOFile" name="fileField">
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-lg-12 col-lg-pull-1">
                                 <div class="form-group{{ $errors->has('wpc_reference') ? ' has-error' : '' }}">
                                     <label for="wpc_reference" class="col-sm-2 control-label">WPC Reference: </label>
@@ -129,7 +154,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="input-group">
                                                             <div class="input-group-addon">$</div>
-                                                            <input type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->indented_proposal_item_id }}]" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}">
+                                                            <input type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->indented_proposal_item_id }}]" value="{{ $selectedItem->project_price != "" ? number_format($selectedItem->project_price, 2) : number_format($selectedItem->after_market_price, 2) }}">
                                                         </div>
                                                         @if ($errors->has('price.'.$selectedItem->indented_proposal_item_id))
                                                             <span class="help-block">
@@ -164,13 +189,6 @@
                         <div class="row">
                             <hr>
                         </div>
-
-                        <div class="form-group" style="font-size: 16px;">
-                            <label for="exampleInputFile">File input</label>
-                            <br>
-                            <input type="file" id="exampleInputFile" name="fileField">
-                            <p class="help-block">Upload File Here</p>
-                        </div>
                     </form>
                 </div>
 
@@ -183,13 +201,12 @@
             var data;
 
             $('#branch_field').autocomplete({
-                serviceUrl: "{{ URL::to('/') }}/{{ Auth::user()->role }}/fetch_branches/",
+                serviceUrl: "{{ URL::to('/') }}/{{ Auth::user()->role }}/fetch_customers/",
                 dataType: 'json',
                 type: 'get',
                 onSelect: function (suggestions) {
                     document.getElementById('branch_address').value = suggestions.address;
-                    document.getElementById('branch_id').value = suggestions.id;
-                    document.getElementById('customer_id').value = suggestions.customer_id;
+                    document.getElementById('customer_id').value = suggestions.id;
                 }
             });
         });

@@ -18,22 +18,10 @@
                         {{ csrf_field() }}
                         <input type="hidden" name="buy_and_sell_proposal_id" value="{{ $buyAndSellProposal->id }}">
                         <input type="hidden" name="customer_id" id="customer_id">
-                        <input type="hidden" name="branch_id" id="branch_id">
 
                         <div class="row">
                             <div class="col-lg-12 col-lg-pull-1">
-                                <div class="form-group{{ $errors->has('purchase_order') ? ' has-error' : '' }}">
-                                    <label for="purchase_order" class="col-sm-2 control-label">P.O: </label>
-                                    <div class="col-sm-5">
-                                        <input class="form-control" id="purchase_order" name="purchase_order" placeholder="Purchase Order Number" value="{{ old('purchase_order') }}">
-                                        @if ($errors->has('purchase_order'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('purchase_order') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
+                                
                                 <div class="form-group{{ $errors->has('wpc_reference') ? ' has-error' : '' }}">
                                     <label for="wpc_reference" class="col-sm-2 control-label">WPC REFERENCE</label>
                                     <div class="col-sm-5">
@@ -49,7 +37,7 @@
                                 <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
                                     <label for="OfficeSold" class="col-sm-2 control-label">Date</label>
                                     <div class="col-sm-5">
-                                        <input name="date" class="form-control" id="Date" placeholder="Date" value="{{ old('date') }}">
+                                        <input disabled name="date" class="form-control" id="Date" placeholder="Date" value="{{ date('Y') }}">
                                         @if ($errors->has('date'))
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('date') }}</strong>
@@ -58,36 +46,13 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group{{ $errors->has('customer_id') ? ' has-error' : ($errors->has('to') ? ' has-error' : '')  }}">
-                                    <label for="main_company" class="col-sm-2 control-label">To: </label>
+                                <div class="form-group{{ $errors->has('customer_id') ? ' has-error' : '' }}">
+                                    <label for="customer_field" class="col-sm-2 control-label">Sold To:</label>
                                     <div class="col-sm-5">
-                                        <input name="to" id="customer_dropdown" class="form-control" value="{{ old('to') }}"/>
+                                        <input class="form-control" id="customer_field" name="sold" placeholder="Sold To">
                                         @if ($errors->has('customer_id'))
                                             <span class="help-block">
-                                            <strong>{{ $errors->first('customer_id') }}</strong>
-                                        </span>
-                                        @endif
-                                        @if ($errors->has('to'))
-                                            <span class="help-block">
-                                            <strong>{{ $errors->first('to') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-sm-5 col-lg-push-2">
-                                        <textarea name="to_address" id="to_address" class="form-control" placeholder="Address">{{ old('to_address') }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group{{ $errors->has('branch_id') ? ' has-error' : '' }}">
-                                    <label for="branch_field" class="col-sm-2 control-label">Sold To:</label>
-                                    <div class="col-sm-5">
-                                        <input class="form-control" id="branch_field" name="sold" placeholder="Sold To">
-                                        @if ($errors->has('branch_id'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('branch_id') }}</strong>
+                                                <strong>{{ $errors->first('customer_id') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -95,7 +60,7 @@
 
                                 <div class="form-group">
                                     <div class="col-sm-5 col-lg-push-2">
-                                        <textarea name="sold_to_address" id="sold_to_address" class="form-control" placeholder="Address"></textarea>
+                                        <textarea name="customer_address" id="customer_address" class="form-control" placeholder="Address"></textarea>
                                     </div>
                                 </div>
 
@@ -122,7 +87,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group{{ $errors->has('qrc_reference') ? ' has-error' : '' }}">
+                                {{--<div class="form-group{{ $errors->has('qrc_reference') ? ' has-error' : '' }}">
                                     <label for="qrc_reference" class="col-sm-2 control-label">QRC REFERENCE</label>
                                     <div class="col-sm-5">
                                         <input class="form-control" id="qrc_reference" name="qrc_reference" placeholder="QRC Reference">
@@ -132,7 +97,7 @@
                                             </span>
                                         @endif
                                     </div>
-                                </div>
+                                </div>--}}
                             </div>
                         </div>
 
@@ -179,9 +144,12 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="form-group{{ $errors->has('price.'.$selectedItem->buy_and_sell_proposal_item_id) ? ' has-error' : '' }}">
+                                            <div class="form-group{{ $errors->has('price.'.$selectedItem->buy_and_sell_proposal_item_id) ? ' has-error' : '' }}">
                                                     <div class="col-lg-12">
-                                                        <input type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->buy_and_sell_proposal_item_id }}]" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}">
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon">$</div>
+                                                            <input type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->buy_and_sell_proposal_item_id }}]" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}">
+                                                        </div>
                                                         @if ($errors->has('price.'.$selectedItem->buy_and_sell_proposal_item_id))
                                                             <span class="help-block">
                                                             <strong>{{ $errors->first('price.'.$selectedItem->buy_and_sell_proposal_item_id) }}</strong>
@@ -216,7 +184,7 @@
                             <hr>
                         </div>
 
-                        <div class="row">
+                        {{--<div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group{{ $errors->has('validity') ? ' has-error' : '' }}">
                                     <label for="InputSpecialInstruction" class="col-sm-2 control-label"><b><i>Validity:</i></b> </label>
@@ -242,7 +210,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
                     </form>
                 </div>
             </div>
@@ -250,39 +218,14 @@
     </div>
 
     <script>
-
         $(document).ready(function() {
-            var data;
-
-            $('#customer_dropdown').on('blur', function() {
-                if(document.getElementById("customer_dropdown").value.length == 0) {
-                    document.getElementById('customer_id').value = "";
-                } else {}
-            })
-
-            $('#customer_dropdown').autocomplete({
+            $('#customer_field').autocomplete({
                 serviceUrl: "{{ URL::to('/') }}/{{ Auth::user()->role }}/fetch_customers/",
                 dataType: 'json',
                 type: 'get',
                 onSelect: function (suggestions) {
-                    document.getElementById('to_address').value = "";
-                    document.getElementById('sold_to_address').value = "";
-                    document.getElementById('branch_field').value = "";
-                    document.getElementById('customer_id').value = "";
-                    document.getElementById('branch_id').value = "";
-
-                    document.getElementById('to_address').value = suggestions.address;
+                    document.getElementById('customer_address').value = suggestions.address;
                     document.getElementById('customer_id').value = suggestions.id;
-
-                    $('#branch_field').autocomplete({
-                        serviceUrl: "{{ URL::to('/') }}/{{ Auth::user()->role }}/fetch_branches/" + suggestions.id,
-                        dataType: 'json',
-                        type: 'get',
-                        onSelect: function (data) {
-                            document.getElementById('sold_to_address').value = data.address;
-                            document.getElementById('branch_id').value = data.id;
-                        }
-                    });
                 }
             });
         });

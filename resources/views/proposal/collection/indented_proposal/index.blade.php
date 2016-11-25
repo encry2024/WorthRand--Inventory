@@ -26,7 +26,6 @@
                                         <thead>
                                         <th>ID</th>
                                         <th>Purchase Order</th>
-                                        <th>To</th>
                                         <th>Sold To</th>
                                         <th>Status</th>
                                         <th class="text-right">Actions</th>
@@ -44,7 +43,6 @@
                                                 <td>{{ ((($indented_proposals->currentPage() - 1) * $indented_proposals->perPage()) + ($ctr++) + 1) }}</td>
                                                 <td>{{ $indented_proposal->purchase_order }}</td>
                                                 <td>{{ $indented_proposal->customer->name }}</td>
-                                                <td>{{ $indented_proposal->branch->name }}</td>
                                                 <td>{{ $indented_proposal->collection_status }}</td>
                                                 <td class="text-right">
                                                     <a href="{{ route('for_collection', $indented_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>

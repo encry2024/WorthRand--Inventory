@@ -48,7 +48,6 @@
                                             <th>ID</th>
                                             <th>Purchase Order</th>
                                             <th>To</th>
-                                            <th>Sold To</th>
                                             <th>Proposal Status</th>
                                             <th>Collection Status</th>
                                             <th>Date Sent</th>
@@ -70,13 +69,6 @@
                                                             <span class='label label-danger'>Not Provided / Draft Proposal</span>
                                                         @else
                                                             {{ $indented_proposal->customer->name }}
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        @if($indented_proposal->branch_id == 0)
-                                                            <span class='label label-danger'>Not Provided / Draft Proposal</span>
-                                                        @else
-                                                            {{ $indented_proposal->branch->name }}
                                                         @endif
                                                     </td>
                                                     <td>{{ $indented_proposal->status }}</td>
@@ -121,7 +113,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="page-header">
-                                <h1>Buy & Sell Proposals</h1>
+                                <h1>Buy & Resale Proposals</h1>
                             </div>
                             <div class="col-lg-12">
                                 @if(count($buy_and_sell_proposals) != 0)
@@ -131,7 +123,6 @@
                                             <th>ID</th>
                                             <th>Purchase Order</th>
                                             <th>To</th>
-                                            <th>Sold To</th>
                                             <th>Proposal Status</th>
                                             <th>Collection Status</th>
                                             <th>Date Sent</th>
@@ -145,7 +136,7 @@
                                                     <td>@if($indented_proposal->purchase_order == '')
                                                             <span class='label label-danger'>Not Provided / Draft Proposal</span>
                                                         @else
-                                                            {{ $indented_proposal->purchase_order }}
+                                                            {{ $buy_and_sell_proposal->purchase_order }}
                                                         @endif
                                                     </td>
                                                     <td>
@@ -153,13 +144,6 @@
                                                             <span class='label label-danger'>Not Provided / Draft Proposal</span>
                                                         @else
                                                             {{ $indented_proposal->customer->name }}
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        @if($indented_proposal->branch_id == 0)
-                                                            <span class='label label-danger'>Not Provided / Draft Proposal</span>
-                                                        @else
-                                                            {{ $indented_proposal->branch->name }}
                                                         @endif
                                                     </td>
                                                     <td>{{ $buy_and_sell_proposal->status }}</td>
@@ -178,7 +162,7 @@
                                                         {{ date('F d, Y', strtotime($buy_and_sell_proposal->created_at)) }}
                                                     </td>
                                                     <td class="text-right">
-                                                        <a href="{{ route('admin_show_pending_buy_and_sell_proposal', $buy_and_sell_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
+                                                        <a href="{{ route('se_show_draft_buy_and_sell_proposal', $buy_and_sell_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
                                                     </td>
                                                 </tr>
                                             @endforeach

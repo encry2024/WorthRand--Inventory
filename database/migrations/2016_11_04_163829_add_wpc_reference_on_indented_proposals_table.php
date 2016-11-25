@@ -13,7 +13,7 @@ class AddWpcReferenceOnIndentedProposalsTable extends Migration
     public function up()
     {
         Schema::table('indented_proposals', function (Blueprint $table) {
-            //
+            $table->string('wpc_reference');
         });
     }
 
@@ -25,7 +25,7 @@ class AddWpcReferenceOnIndentedProposalsTable extends Migration
     public function down()
     {
         Schema::table('indented_proposals', function (Blueprint $table) {
-            //
+            $table->dropColumn('wpc_reference');
         });
     }
 }

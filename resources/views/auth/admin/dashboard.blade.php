@@ -10,6 +10,15 @@
             <div class="row">
                 @include('layouts.admin-sidebar')
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
+                    @if(Session::has('message'))
+                        <div class="row">
+                            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="margin-top: -1.05rem; border-radius: 0px 0px 0px 0px; font-size: 15px; margin-bottom: 1rem;">
+                                <div class="container"><span class="{{ Session::get('msg_icon') }}"></span>&nbsp;{{ Session::get('message') }}
+                                    <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="row">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -43,7 +52,6 @@
                                         <thead>
                                             <th>ID</th>
                                             <th>Purchase Order</th>
-                                            <th>To</th>
                                             <th>Sold To</th>
                                             <th>Submitted By:</th>
                                             <th>Status</th>
@@ -68,13 +76,6 @@
                                                         <span class='label label-danger'>Not Provided / Draft Proposal</span>
                                                     @else
                                                         {{ $indented_proposal->customer->name }}
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($indented_proposal->branch_id == 0)
-                                                        <span class='label label-danger'>Not Provided / Draft Proposal</span>
-                                                    @else
-                                                        {{ $indented_proposal->branch->name }}
                                                     @endif
                                                 </td>
                                                 <td>{{ $indented_proposal->user->name }}</td>
@@ -113,7 +114,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="page-header">
-                                <h1>Buy & Sell Proposals</h1>
+                                <h1>Buy & Resale Proposals</h1>
                             </div>
                             <div class="col-lg-12">
                                 @if(count($buy_and_sell_proposals) != 0)
@@ -122,7 +123,6 @@
                                         <thead>
                                         <th>ID</th>
                                         <th>Purchase Order</th>
-                                        <th>To</th>
                                         <th>Sold To</th>
                                         <th>Submitted By:</th>
                                         <th>Status</th>
@@ -145,13 +145,6 @@
                                                         <span class='label label-danger'>Not Provided / Draft Proposal</span>
                                                     @else
                                                         {{ $buy_and_sell_proposal->customer->name }}
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($buy_and_sell_proposal->branch_id == 0)
-                                                        <span class='label label-danger'>Not Provided / Draft Proposal</span>
-                                                    @else
-                                                        {{ $buy_and_sell_proposal->branch->name }}
                                                     @endif
                                                 </td>
                                                 <td>{{ $buy_and_sell_proposal->user->name }}</td>

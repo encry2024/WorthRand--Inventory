@@ -278,7 +278,7 @@
     <script>
 
         $("#BuyAndSellBtn").on('click', function() {
-            $("#createProposal").attr('action', '/sales_engineer/buy_and_sell_proposal/create').submit();
+            $("#createProposal").attr('action', '/sales_engineer/buy_and_resale_proposal/create').submit();
         });
 
         $("#IndentedProposalBtn").on('click', function() {

@@ -27,13 +27,11 @@ class CreateIndentedProposalRequest extends Request
             'indent_proposal_id' => 'required',
             'wpc_reference'    => 'required|unique:indented_proposals,wpc_reference',
             'customer_id'       => 'required|exists:customers,id',
-            'branch_id'         => 'required|exists:branches,id',
             'rfq_number'        => 'required',
-            'ship_to'           => 'required',
-            'ship_to_address'   => 'required',
             'quantity.*'        => 'required',
             'price.*'           => 'required',
             'delivery.*'        => 'required',
+            'fileField'         => 'mimes:pdf|max:10000'
         ];
     }
 

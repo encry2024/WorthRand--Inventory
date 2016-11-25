@@ -17,14 +17,7 @@
             </li>
         </li>
         
-        <li>
-            <li class="nav-item {{ Request::route()->getName() == 'admin_customer_index' ? 'active' : ''}}"><a class="nav-link"  href="#"><i class="fa fa-star" aria-hidden="true"></i>&nbsp; Customers & Branches</a>
-                <ul class="sub">
-                    <li><a href="{{ route('admin_customer_index') }}"><i class="fa fa-star"></i>&nbsp;Customer List</a></li>
-                    <li><a href="{{ route('admin_branch_index') }}"><i class="fa fa-code-fork" aria-hidden="true"></i>&nbsp;Branch List</a></li>
-                </ul>
-            </li>
-        </li>
+        <li class="nav-item {{ Request::route()->getName() == 'admin_customer_index' ? 'active' : ''}}"><a class="nav-link"  href="{{ route('admin_customer_index') }}"><i class="fa fa-star" aria-hidden="true"></i>&nbsp; Customers</a></li>
 
         <li>
             <li class="nav-item {{ Request::route()->getName() == 'items' ? 'active' : '' }}"><a class="nav-link" href="{{ route('items') }}"><i class="fa fa-diamond" aria-hidden="true"></i>&nbsp; Items</a>
@@ -39,7 +32,7 @@
         </li>
 
         <li>
-            <li class="nav-item {{ Request::route()->getName() == 'admin_customer_index' ? 'active' : ''}}"><a class="nav-link"  href="#"><i class="fa fa-star" aria-hidden="true"></i>&nbsp; Proposals</a>
+            <li class="nav-item {{ Request::route()->getName() == 'admin_customer_index' ? 'active' : ''}}"><a class="nav-link"  href="#"><i class="fa fa-star" aria-hidden="true"></i>&nbsp; Pending Proposals</a>
                 <ul class="sub">
                     <li><a href="{{ route('admin_indented_proposal_index') }}"><i class="fa fa-star"></i>&nbsp;Indented Proposal</a></li>
                     <li><a href="{{ route('admin_buy_and_sell_proposal_index') }}"><i class="fa fa-code-fork" aria-hidden="true"></i>&nbsp;Buy and Sell Proposal</a></li>

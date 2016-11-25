@@ -25,20 +25,17 @@ class CreateBuyAndSellProposalRequest extends Request
     {
         return [
             'buy_and_sell_proposal_id' => 'required',
-            'purchase_order' => 'required|unique:buy_and_sell_proposals,purchase_order',
-            'terms' => 'required',
-            'validity' => 'required',
-            'qrc_reference' => 'required',
+            // 'purchase_order' => 'required|unique:buy_and_sell_proposals,purchase_order',
+            // 'terms' => 'required',
+            // 'validity' => 'required',
             'invoice_to' => 'required',
             'invoice_address' => 'required',
-            'qrc_reference' => 'required',
+            // 'qrc_reference' => 'required',
             'quantity.*' => 'required',
             'price.*' => 'required',
             'delivery.*' => 'required',
-            'date' => 'required|digits:4|integer|min:1900|max:'.\Carbon\Carbon::tomorrow()->year,
-            'wpc_reference' => 'required',
+            'wpc_reference' => 'required|unique:buy_and_sell_proposals,wpc_reference',
             'customer_id' => 'required|exists:customers,id',
-            'branch_id' => 'required|exists:branches,id'
         ];
     }
 
@@ -46,7 +43,6 @@ class CreateBuyAndSellProposalRequest extends Request
     {
         return [
             'customer_id.required' => 'Please provide a legal Customer',
-            'branch_id.required' => 'Please provide a legal Branch',
         ];
     }
 }
