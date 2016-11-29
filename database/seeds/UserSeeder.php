@@ -30,9 +30,9 @@ class UserSeeder extends Seeder
                     'updated_at' => date('Y-m-d h:i:s')
                 ),
                 array(
-                    'name'       => env('NAME', 'Tester Assistant'),
-                    'email'      => env('EMAIL', 'test_assistant@yahoo.com'),
-                    'password'   => bcrypt(env('PASS', 'admin123')),
+                    'name'       => env('NAME', 'Rakel Keeno'),
+                    'email'      => env('EMAIL', 'rakel_keeno@yahoo.com'),
+                    'password'   => bcrypt(env('PASS', 'assistant123')),
                     'role'       => 'assistant',
                     'created_at' => date('Y-m-d h:i:s'),
                     'updated_at' => date('Y-m-d h:i:s')

@@ -7,9 +7,8 @@
 
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
                     <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
-                        <li class="nav-item"><a class="nav-link" style="cursor: pointer;" onclick='document.getElementById("AcceptIndentedProposal").submit();'><i class="fa fa-check"></i>&nbsp; Update Proposal</a></li>
-                        <li class="nav-item"><a href="{{ route('admin_export_pending_proposal', $indentedProposal->id) }}" class="nav-link"><i class="fa fa-download"></i>&nbsp; Export to XLSX</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('admin_indented_proposal_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
+                        <li class="nav-item"><a class="nav-link" style="cursor: pointer;" data-toggle="modal" data-target="#indentedProposalFormConfirmation"><i class="fa fa-check"></i>&nbsp; Accept Proposal</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('assistant_dashboard') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
                     </ul>
                 </div>
 
@@ -17,7 +16,7 @@
                     @if(Session::has('message'))
                         <div class="row">
                             <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="margin-top: -1.05rem; border-radius: 0px 0px 0px 0px; font-size: 15px; margin-bottom: 1rem;">
-                                <div class="container">&nbsp;&nbsp;{{ Session::get('message') }}
+                                <div class="container"><i class="glyphicon {{ Session::get('msg_icon') }}"></i>&nbsp;{{ Session::get('message') }}
                                     <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
                             </div>
                         </div>
@@ -49,15 +48,6 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="OfficeSold" class="col-sm-2 control-label">Sold To:</label>
-                                    <div class="col-sm-5">
-                                        <input name="sold_to" class="form-control" id="OfficeSold" placeholder="Sold To" value="{{ $indentedProposal->branch->name }}" disabled>
-                                        <br>
-                                        <textarea disabled name="sold_to_address" class="form-control" placeholder="Address">{{ $indentedProposal->branch->address }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
                                     <label for="inputInvoice" class="col-sm-2 control-label">Invoice To:</label>
                                     <div class="col-sm-5">
                                         <input class="form-control" disabled id="inputInvoice" name="invoice" placeholder="Enter Invoice" value="{{ $indentedProposal->invoice_to != '' ? $indentedProposal->invoice_to : '' }}">
@@ -83,7 +73,7 @@
 
                         <div class="row">
                             <div class="col-lg-12">
-                                <table class="table">
+                                <table class="table table-striped">
                                     <thead>
                                     <th>ITEM NO#</th>
                                     <th>MATERIAL CODE</th>
@@ -91,7 +81,7 @@
                                     <th>QUANTITY</th>
                                     <th>PRICE</th>
                                     <th>DELIVERY</th>
-                                    <th>Notify me Afetr</th>
+                                    <th>Notify me Aftr</th>
                                     <th>ACTIONS</th>
                                     </thead>
 
@@ -121,7 +111,10 @@
                                             <td>
                                                 <div class="form-group">
                                                     <div class="col-lg-12">
-                                                        <input type="text" disabled placeholder="Enter item price" class="form-control" name="price-{{ $selectedItem->indented_proposal_item_id }}" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}">
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon">$</div>
+                                                            <input type="text" disabled placeholder="Enter item price" class="form-control" name="price-{{ $selectedItem->indented_proposal_item_id }}" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -139,32 +132,36 @@
                                                 <div class="form-group">
                                                     <div class="col-lg-12">
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" name="delivery[{{ $selectedItem->indented_proposal_item_id }}]" value="{{ $selectedItem->delivery != "" ? $selectedItem->notify_me_after : $selectedItem->notify_me_after }}">
+                                                            <input disabled type="text" class="form-control" name="delivery[{{ $selectedItem->indented_proposal_item_id }}]" value="{{ $selectedItem->delivery != "" ? $selectedItem->notify_me_after / 7 : $selectedItem->notify_me_after / 7 }}">
                                                             <div class="input-group-addon">Weeks</div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td style="width: 15%;">
-                                                <a href="#" class="btn btn-success btn-sm">Delivered</a>
-                                                <a href="#" class="btn btn-danger btn-sm">Delayed</a>
-                                            </td>
+                                            @if($selectedItem->status != "DELIVERED")
+                                                <td style="width: 15%;">
+                                                    <div class="dropdown">
+                                                        <button class="btn {{ $selectedItem->status == "DELAYED" ? "btn-danger" : "btn-default" }} dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                            {{ $selectedItem->status }}
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                            <li><a href="#delivered" data-toggle="modal" data-target="#changeItemDeliveryStatus" onclick="getDeliveredItem({{ $selectedItem->indented_proposal_item_id }});"><span class="glyphicon glyphicon-ok"></span> Delivered</a></li>
+                                                            <li><a href="#update_notification" data-toggle="modal" data-target="#updateNotifyMeForm" onclick="getNotifyMe({{ $selectedItem->indented_proposal_item_id }});"><span class="glyphicon glyphicon-pushpin"></span> Notify Me</a></li>
+                                                            <li><a href="#delayed" data-toggle="modal" data-target="#updateDeliveryStatusForm" onclick="getDeliveryStatus({{ $selectedItem->indented_proposal_item_id }});"><span class="glyphicon glyphicon-warning-sign"></span> Delayed</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            @elseif($selectedItem->status == "DELIVERED")
+                                                <td>
+                                                    <label style="font-size: 14px;" class="label label-success">DELIVERED</label>
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <hr>
-                        </div>
-
-                        <div class="form-group" style="font-size: 16px;">
-                            <label for="exampleInputFile">File input</label>
-                            <br>
-                            <input type="file" id="exampleInputFile" name="fileField">
-                            <p class="help-block">Upload File Here</p>
                         </div>
 
                         <div class="row">
@@ -189,13 +186,6 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="InputAmount" class="col-sm-2 control-label">AMOUNT:</label>
-                                    <div class="col-sm-5">
-                                        <input class="form-control" disabled id="InputAmount" name="amount" placeholder="Amount" value="{{ $indentedProposal->amount != '' ? $indentedProposal->amount : '' }}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
                                     <label for="InputPacking" class="col-sm-2 control-label">PACKING:</label>
                                     <div class="col-sm-5">
                                         <textarea disabled name="packing" id="InputPacking" class="form-control" placeholder="Packing" >{{ $indentedProposal->packing != '' ? $indentedProposal->packing : '' }}</textarea>
@@ -213,15 +203,6 @@
                                     <label for="InputInsurance" class="col-sm-2 control-label">INSURANCE:</label>
                                     <div class="col-sm-5">
                                         <input class="form-control" disabled id="InputInsurance" name="insurance" placeholder="Insurance"  value="{{ $indentedProposal->insurance != '' ? $indentedProposal->insurance : '' }}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="InputTermsOfPayment" class="col-sm-2 control-label">TERMS OF PAYMENT: </label>
-                                    <div class="col-sm-5">
-                                        <input class="form-control" disabled id="InputTermsOfPayment" name="terms_of_payment_1" placeholder="Note"  value="{{ $indentedProposal->terms_of_payment_1 != '' ? $indentedProposal->terms_of_payment_1 : '' }}">
-                                        <br>
-                                        <textarea disabled name="terms_of_payment_address" id="InputTermsOfPayment2" class="form-control" placeholder="Address">{{ $indentedProposal->terms_of_payment_address != '' ? $indentedProposal->terms_of_payment_address : '' }}</textarea>
                                     </div>
                                 </div>
 
@@ -262,15 +243,19 @@
         </div>
     </div>
 
-    {{--<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="indentedProposalFormConfirmation">
+    <form class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="indentedProposalFormConfirmation">
+        {{ method_field('PATCH') }}
+        {{ csrf_field() }}
+        <input type="hidden" name="indented_proposal_id" id="ipi_id">
+
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">You are about to accept this Indented Proposal</h4>
+                    <h4 class="modal-title" id="myModalLabel">WPC Number/Reference: {{ $indentedProposal->wpc_reference }}</h4>
                 </div>
                 <div class="modal-body">
-                    <label for="">Are you sure you want to accept this Proposal <b>[ Purchase Order Number: {{ $indentedProposal->purchase_order }} ]</b> ?</label>
+                    <label for="">Are you sure you want to accept this Proposal <b>[ WPC Number/Reference: {{ $indentedProposal->wpc_reference }} ]</b> ?</label>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick='document.getElementById("AcceptIndentedProposal").submit();'>Accept</button>
@@ -278,5 +263,107 @@
                 </div>
             </div>
         </div>
-    </div>--}}
+    </form>
+
+    <form class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="changeItemDeliveryStatus" method="POST">
+        {{ method_field('PATCH') }}
+        {{ csrf_field() }}
+        <input type="hidden" name="indented_proposal_id" id="ipi_id">
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">WPC Number/Reference: {{ $indentedProposal->wpc_reference }}</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="">You are about to change the delivery status of the selected item.</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Accept</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form class="modal fade form-horizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="updateNotifyMeForm" method="POST">
+        {{ method_field('PATCH') }}
+        {{ csrf_field() }}
+        <input type="hidden" name="indented_proposal_item_id" id="indentedProposalItemId">
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">Updating Notify Me Scheduled Date</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Notification Date:</label>
+                        <div class="col-lg-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="notify_me_after">
+                                <div class="input-group-addon">Weeks</div>
+                            </div>
+                        </div>
+                    </div>
+                    {{--You are about to changed the <label class="label label-info" style="color: black;">Notify Me After</label> of this item. The System will notify you about the delivery status of this item based on the number of weeks you set on the <label class="label label-info" style="color: black;">Notify Me After</label> column.--}}
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Change Notification Date</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form class="modal fade form-horizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="updateDeliveryStatusForm" method="POST">
+        {{ method_field('PATCH') }}
+        {{ csrf_field() }}
+        <input type="hidden" name="indented_proposal_item_id" id="indentedProposalItemId">
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">Change Delivery Statys</h3>
+                </div>
+                <div class="modal-body">
+                    <p>You are about to change the delivery status of this item to </p>
+                    {{--You are about to changed the <label class="label label-info" style="color: black;">Notify Me After</label> of this item. The System will notify you about the delivery status of this item based on the number of weeks you set on the <label class="label label-info" style="color: black;">Notify Me After</label> column.--}}
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Change Delivery Status</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        function getDeliveredItem(indented_proposal_item_id)
+        {
+            var deliverFormAction = "{{ route('change_indented_item_delivery_status', ':indented_proposal_item_id') }}";
+                deliverFormAction = deliverFormAction.replace(':indented_proposal_item_id', indented_proposal_item_id);
+            document.getElementById("ipi_id").value = indented_proposal_item_id;
+            document.getElementById("changeItemDeliveryStatus").action = deliverFormAction;
+        }
+
+        function getNotifyMe(indented_proposal_item_id)
+        {
+            var deliverFormAction = "{{ route('change_indented_proposal_notify_me_date', ':indented_proposal_item_id') }}";
+                deliverFormAction = deliverFormAction.replace(':indented_proposal_item_id', indented_proposal_item_id);
+            document.getElementById("indentedProposalItemId").value = indented_proposal_item_id;
+            document.getElementById("updateNotifyMeForm").action = deliverFormAction;
+        }
+
+        function getDeliveryStatus(indented_proposal_item_id)
+        {
+            var deliverFormAction = "{{ route('change_indented_proposal_delivery_status_to_delayed', ':indented_proposal_item_id') }}";
+            deliverFormAction = deliverFormAction.replace(':indented_proposal_item_id', indented_proposal_item_id);
+            document.getElementById("indentedProposalItemId").value = indented_proposal_item_id;
+            document.getElementById("updateDeliveryStatusForm").action = deliverFormAction;
+        }
+    </script>
 @stop

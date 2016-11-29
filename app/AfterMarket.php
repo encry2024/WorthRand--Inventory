@@ -24,7 +24,6 @@ class AfterMarket extends Model
     public static function postAfterMarket($createAfterMarketRequest)
     {
         $after_market = new AfterMarket();
-        $after_market->project_id = $createAfterMarketRequest->get('project_id');
         $after_market->name = ucwords($createAfterMarketRequest->get('name'), " ");
         $after_market->model = strtoupper($createAfterMarketRequest->get('model'));
         $after_market->part_number = strtoupper($createAfterMarketRequest->get('part_number'));

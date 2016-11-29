@@ -8,7 +8,6 @@
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
                     <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
                         <li class="nav-item"><a class="nav-link" style="cursor: pointer;" data-toggle="modal" data-target="#collectionIndentedProposalForm"><i class="fa fa-check"></i>&nbsp; Collect Proposal</a></li>
-                        <li class="nav-item"><a class="nav-link" ><i class="fa fa-close"></i>&nbsp; Decline Proposal</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('index_indented_proposal') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
                     </ul>
                 </div>
@@ -17,12 +16,51 @@
 
                     @if(Session::has('message'))
                         <div class="row">
-                            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="background-color: {{ Session::get('bg-error') }}; color: white; margin-top: -1.05rem; border-radius: 0px 0px 0px 0px; font-size: 15px; margin-bottom: 1rem;">
+                            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="background-color: {{ Session::get('bg-alert') }}; color: white; margin-top: -1.05rem; border-radius: 0px 0px 0px 0px; font-size: 15px; margin-bottom: 1rem;">
                                 <div class="container"><i class="{{ Session::get('alert-icon') }}"></i>&nbsp;&nbsp;{{ Session::get('message') }}
                                     <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
                             </div>
                         </div>
                     @endif
+
+                    <div class="row">
+                        <div class="page-header">
+                            <h1>Cheque Details</h1>
+                        </div>
+                    </div>
+
+                    <form class="form-horizontal" action="{{ route('collect_indented_proposal', $indentedProposal->id) }}" method="POST" id="AcceptIndentedProposal" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+
+                        <input type="hidden" name="indent_proposal_id" value="{{ $indentedProposal->id }}">
+
+                        <div class="row">
+                            <div class="col-lg-12 col-lg-pull-1">
+                                <div class="form-group">
+                                    <label for="company_name" class="col-sm-2 control-label">Company Name: </label>
+                                    <div class="col-sm-5">
+                                        <input class="form-control" id="company_name" name="company_name" placeholder="Company Name"
+                                               value="{{ old('company_name') }}" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="amount" class="col-sm-2 control-label">Amount: </label>
+                                    <div class="col-sm-5 ">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">$</div>
+                                            <input class="form-control" id="amount" name="amount" placeholder="Amount (USD) " value="{{ old('amount') }}" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row">
+                        <hr>
+                    </div>
 
                     <form class="form-horizontal" action="{{ route('collect_indented_proposal', $indentedProposal->id) }}" method="POST" id="AcceptIndentedProposal" enctype="multipart/form-data">
                         {{ csrf_field() }}
@@ -45,15 +83,6 @@
                                         <input class="form-control" disabled id="main_company" name="to" placeholder="To" value="{{ $indentedProposal->customer->name }}">
                                         <br>
                                         <textarea disabled name="to_address" id="" class="form-control" placeholder="Address">{{ $indentedProposal->customer->address }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="OfficeSold" class="col-sm-2 control-label">Sold To:</label>
-                                    <div class="col-sm-5">
-                                        <input name="sold_to" class="form-control" id="OfficeSold" placeholder="Sold To" value="{{ $indentedProposal->branch->name }}" disabled>
-                                        <br>
-                                        <textarea disabled name="sold_to_address" class="form-control" placeholder="Address">{{ $indentedProposal->branch->address }}</textarea>
                                     </div>
                                 </div>
 
@@ -108,26 +137,31 @@
                                                 <b>TAG NO.:&nbsp;</b> {{ $selectedItem->project_tn != "" ? $selectedItem->project_tn : $selectedItem->after_market_tn }}
                                             </td>
                                             <td><input type="text" disabled class="form-control" name="quantity-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter item Quantity" value="{{ $selectedItem->quantity != "" ? $selectedItem->quantity : $selectedItem->after_market_price }}"></td>
-                                            <td><input type="text" disabled placeholder="Enter item price" class="form-control" name="price-{{ $selectedItem->indented_proposal_item_id }}" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}"></td>
                                             <td>
-                                                <input type="text" disabled class="form-control" name="delivery-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter number of Weeks" value="{{ $selectedItem->delivery != "" ? $selectedItem->delivery : $selectedItem->delivery }}">
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon">$</div>
+                                                            <input type="text" disabled placeholder="Enter item price" class="form-control" name="price-{{ $selectedItem->indented_proposal_item_id }}" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <div class="input-group">
+                                                            <input type="text" disabled class="form-control" name="delivery[{{ $selectedItem->indented_proposal_item_id }}]" placeholder="Enter number of Weeks" value="{{ $selectedItem->delivery != "" ? ($selectedItem->delivery / 7) : ($selectedItem->delivery / 7) }}">
+                                                            <div class="input-group-addon">Weeks</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <hr>
-                        </div>
-
-                        <div class="form-group" style="font-size: 16px;">
-                            <label for="exampleInputFile">File input</label>
-                            <br>
-                            <input type="file" id="exampleInputFile" name="fileField">
-                            <p class="help-block">Upload File Here</p>
                         </div>
 
                         <div class="row">

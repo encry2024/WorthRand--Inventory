@@ -54,6 +54,7 @@ class Kernel extends HttpKernel
         'verify_if_user_is_admin'       => \App\Http\Middleware\VerifyIfUserIsAdmin::class,
         'verify_if_user_is_collection'  => \App\Http\Middleware\VerifyIfUserIsCollection::class,
         'verify_if_user_is_sales_engineer' => \App\Http\Middleware\VerifyIfUserIsSalesEngineer::class,
-        'verify_if_user_is_assistant'   => \App\Http\Middleware\VerifyIfUserIsAssistant::class
+        'verify_if_user_is_assistant'   => \App\Http\Middleware\VerifyIfUserIsAssistant::class,
+        'verify_if_user_is_secretary'   => \App\Http\Middleware\VerifyIfUserIsSecretary::class
     ];
 }

@@ -45,26 +45,28 @@ class CustomerController extends Controller
             $jsonData['suggestions'][] = [
                 'id' => $customer->id,
                 'value' => $customer->name,
-                'address' => $customer->address
+                'address' => $customer->address,
+                'customer_id' => $customer->id
             ];
         }
 
         return json_encode($jsonData);
     }
 
-    public function fetchBranchesById($customer_id)
+    /*public function fetchCustomers()
     {
         $jsonified = [];
-        $branches = Branch::whereCustomerId($customer_id)->get();
+        $branches = Customer::all();
 
         foreach($branches as $branch) {
             $jsonified['suggestions'][] = [
                 'id' => $branch->id,
                 'value' => $branch->name,
-                'address' => $branch->address
+                'address' => $branch->address,
+                'customer_id' => $branch->customer_id
             ];
         }
 
         return json_encode($jsonified);
-    }
+    }*/
 }

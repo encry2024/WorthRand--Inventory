@@ -65,4 +65,18 @@ class ProposalController extends Controller
 
         return $view_sent_indented_proposal;
     }
+
+    public function showDraftIndentedProposal(IndentedProposal $indentedProposal)
+    {
+        $showDraftIndentedProposal = IndentedProposal::showDraftIndentedProposal($indentedProposal);
+
+        return $showDraftIndentedProposal;
+    }
+
+    public function showDraftBuyAndResaleProposal(BuyAndSellProposal $buyAndSellProposal)
+    {
+        $showDraftBuyAndResaleProposal = BuyAndSellProposal::draftBuyAndResaleProposal($buyAndSellProposal);
+
+        return $showDraftBuyAndResaleProposal;
+    }
 }

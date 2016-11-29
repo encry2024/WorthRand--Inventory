@@ -12,14 +12,14 @@
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
                     <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
                         <li>
-                        <li class="nav-item"><a class="nav-link"><i class="fa fa-cog"></i>&nbsp;{{ $project->name }}</a>
-                            <ul class="sub">
-                                <li><a href="{{ route('admin_project_show', $project->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
-                                <li><a href="{{ route('admin_project_information', $project->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
-                                <li class="nav-item"><a class="nav-link"  href="{{ route('admin_create_aftermarket_on_project', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add AfterMarket</a></li>
-                                <li class="nav-item"><a class="nav-link"  href="{{ route('admin_seal_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Seal</a></li>
-                            </ul>
-                        </li>
+                            <li class="nav-item"><a class="nav-link"><i class="fa fa-cog"></i>&nbsp;{{ $project->name }}</a>
+                                <ul class="sub">
+                                    <li><a href="{{ route('admin_project_show', $project->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
+                                    <li><a href="{{ route('admin_project_information', $project->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
+                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_create_aftermarket_on_project', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add AfterMarket</a></li>
+                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_seal_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Seal</a></li>
+                                </ul>
+                            </li>
                         </li>
 
                         <li>

@@ -20,6 +20,12 @@
 
                     <div class="row">
                         <div class="col-lg-12">
+                            <a href="{{ route('admin_seal_create') }}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add Seal</a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
@@ -28,7 +34,7 @@
                                         <th>Model</th>
                                         <th>Seal Type</th>
                                         <th>Model</th>
-                                        <th>Material Code</th>
+                                        <th>Material Number</th>
                                         <th>Actions</th>
                                     </thead>
                                     <tbody>
@@ -39,7 +45,7 @@
                                             <td>{{ $seal->model }}</td>
                                             <td>{{ $seal->seal_type }}</td>
                                             <td>{{ $seal->model }}</td>
-                                            <td>{{ $seal->material_code }}</td>
+                                            <td>{{ $seal->material_number }}</td>
                                             <td>
                                                 <a href="{{ route('admin_seal_show', $seal->id) }}" class="btn btn-sm btn-success">View Seal</a>
                                             </td>

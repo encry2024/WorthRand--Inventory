@@ -99,20 +99,6 @@
                                             </div>
                                         </div>
 
-                                        <div class=" form-group{{ $errors->has('operation_customer_account_no') ? ' has-error' : '' }}">
-                                            <label for="postal_code" class="col-lg-pull-1 col-md-5 control-label">Operation Customer Account Number</label>
-
-                                            <div class="col-lg-pull-1 col-md-7">
-                                                <input id="operation_customer_account_no" type="text" class="form-control" name="operation_customer_account_no" required>
-
-                                                @if ($errors->has('operation_customer_account_no'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('operation_customer_account_no') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
                                     </form>
                                 </div>
                             </div>

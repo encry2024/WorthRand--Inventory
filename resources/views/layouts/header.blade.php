@@ -21,15 +21,14 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
                 @else
-                <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hello, {{ Auth::user()->name }} <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"><i class="fa fa-user"></i>&nbsp;&nbsp;Profile</a></li>
-                        <li><a href="#"><i class="fa fa-lock"></i>&nbsp;&nbsp;Change Password</a></li>
-                        <li><a href="{{ url('logout') }}"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;Logout</a></li>
-                    </ul>
-                </li>
-                <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;&nbsp;Report an issue</a></li>
-                <li><a href="#"><i class="fa fa-question-circle" aria-hidden="true"></i>&nbsp;&nbsp;Help</a></li>
+                    <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hello, {{ Auth::user()->name }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route(Auth::user()->role . '_user_profile') }}"><i class="fa fa-user"></i>&nbsp;&nbsp;Profile</a></li>
+                            <li><a href="{{ url('logout') }}"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;Logout</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;&nbsp;Report an issue</a></li>
+                    <li><a href="#"><i class="fa fa-question-circle" aria-hidden="true"></i>&nbsp;&nbsp;Help</a></li>
                 @endif
             </ul>
 

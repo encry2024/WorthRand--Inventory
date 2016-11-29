@@ -15,7 +15,7 @@
                             <ul class="sub">
                                 <li><a href="{{ route('admin_seal_show', $seal->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
                                 <li><a href="{{ route('admin_seal_information', $seal->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
-                                <li class="nav-item"><a class="nav-link"  href="{{ route('admin_after_market_pricing_history_create', $seal->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Seal</a></li>
+                                <li class="nav-item"><a class="nav-link"  href="{{ route('admin_seal_create') }}"><i class="fa fa-plus"></i>&nbsp; Add Seal</a></li>
                             </ul>
                         </li>
                         </li>
@@ -68,7 +68,7 @@
                                         {{ method_field('PATCH') }}
                                         <input type="hidden" name="seal_id" value="{{ $seal->id }}">
 
-                                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                        {{--<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                             <label for="name" class="col-md-4 control-label">Name:</label>
 
                                             <div class="col-md-6">
@@ -84,7 +84,7 @@
                                                 </span>
                                                 @endif
                                             </div>
-                                        </div>
+                                        </div>--}}
 
                                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                             <label for="name" class="col-md-4 control-label">Name:</label>
@@ -170,15 +170,15 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group{{ $errors->has('material_code') ? ' has-error' : '' }}">
-                                            <label for="material_code" class="col-md-4 control-label">Material Code:</label>
+                                        <div class="form-group{{ $errors->has('material_number') ? ' has-error' : '' }}">
+                                            <label for="material_number" class="col-md-4 control-label">Material Number:</label>
 
                                             <div class="col-md-6">
-                                                <input id="material_code" type="text" class="form-control" name="material_code" value="{{ $seal->material_code }}" required autofocus>
+                                                <input id="material_number" type="text" class="form-control" name="material_number" value="{{ $seal->material_number }}" required autofocus>
 
-                                                @if ($errors->has('material_code'))
+                                                @if ($errors->has('material_number'))
                                                     <span class="help-block">
-                                                    <strong>{{ $errors->first('material_code') }}</strong>
+                                                    <strong>{{ $errors->first('material_number') }}</strong>
                                                 </span>
                                                 @endif
                                             </div>
@@ -235,6 +235,23 @@
                                                 @if ($errors->has('tag'))
                                                     <span class="help-block">
                                                     <strong>{{ $errors->first('tag') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
+                                            <label for="price" class="col-md-4 control-label">Price:</label>
+
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">$</div>
+                                                <input id="price" type="text" class="form-control" name="price" value="{{ $seal->price }}" required autofocus>
+                                                </div>
+
+                                                @if ($errors->has('price'))
+                                                    <span class="help-block">
+                                                    <strong>{{ $errors->first('price') }}</strong>
                                                 </span>
                                                 @endif
                                             </div>

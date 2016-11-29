@@ -56,7 +56,7 @@ class ProposalController extends Controller
         $indented_proposal = IndentedProposal::find($indented_proposal->id);
         $indented_proposal->update(['collection_status' => 'ACCEPTED']);
 
-        return redirect()->back()->with('message', 'Indented Proposal [ Purchase Order Number: #' . $indented_proposal->purchase_order . ' ] Accepted')->with('alert', "alert-success");
+        return redirect()->back()->with('message', 'Indented Proposal [ WPC Number/Reference: #' . $indented_proposal->wpc_reference . ' ] Accepted')->with('alert', "alert-success");
     }
 
     public function adminShowPendingBuyAndSellProposal(BuyAndSellProposal $buy_and_sell_proposal)
@@ -75,8 +75,8 @@ class ProposalController extends Controller
 
     public function adminAcceptBuyAndSellProposal(BuyAndSellProposal $buyAndSellProposal)
     {
-        $buyAndSellProposal->update(['collection_status' => 'ACCEPTED']);
+        $buyAndSellProposal->update(['collection_status' => 'FOR-FILL']);
 
-        return redirect()->back()->with('message', 'Buy and Sell Proposal [ Purchase Order Number: #' . $buyAndSellProposal->purchase_order . ' ] Accepted')->with('alert', "alert-success");
+        return redirect()->back()->with('message', 'Buy and Resale Proposal [ WPC Number/Reference: #' . $buyAndSellProposal->wpc_reference . ' ] Accepted')->with('alert', "alert-success");
     }
 }
