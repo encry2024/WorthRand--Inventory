@@ -27,13 +27,12 @@ class UpdateSealInformationRequest extends Request
     {
         return [
             'name' => 'required',
-            'project_id' => 'required',
-            'drawing_number' => 'required|unique:seals,drawing_number,'.Input::get('seal_id'),
+            'drawing_number' => 'required|unique:seals,drawing_number,'.$this->request->get('seal_id'),
             'bom_number' => 'required',
             'end_user' => 'required',
             'seal_type' => 'required',
             'size' => 'required',
-            'material_code' => 'required',
+            'material_number' => 'required',
             'code' => 'required',
             'model' => 'required',
             'serial_number' => 'required',

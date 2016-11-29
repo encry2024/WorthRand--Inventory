@@ -10,6 +10,9 @@ use App\IndentedProposal;
 use App\BuyAndSellProposal;
 use App\IndentedProposalItem;
 use App\BuyAndSellProposalItem;
+use App\Http\Requests\UpdateUserProfile;
+use App\User;
+use Auth;
 
 class UserController extends Controller
 {
@@ -30,5 +33,38 @@ class UserController extends Controller
 
         return view('auth.assistant.dashboard', compact('ctr', 'ctr2', 'indented_proposals', 'buy_and_sell_proposals', 'getIncomingItems_IndentedProposalItem',
             'getIncomingItems_BuyAndSellProposalItem'));
+    }
+
+    public function profile()
+    {
+        return view('auth.assistant.profile');
+    }
+
+    public function updateProfile(UpdateUserProfile $updateUserProfile)
+    {
+        if($updateUserProfile->has('password')) {
+            $user = User::find(Auth::user()->id);
+            $user->name = ucwords($updateUserProfile->get('name'), ' ');
+            $user->email = $updateUserProfile->get('email');
+            $user->password = bcrypt($updateUserProfile->get('password'));
+
+            if($user->save()) {
+                return redirect()->back()
+                    ->with('msg_icon', 'glyphicon glyphicon-ok')
+                    ->with('message', 'You have successfully update your information')
+                    ->with('alert', 'alert alert-success');
+            }
+        }
+
+        $user = User::find(Auth::user()->id);
+        $user->name = ucwords($updateUserProfile->get('name'), ' ');
+        $user->email = $updateUserProfile->get('email');
+
+        if($user->save()) {
+            return redirect()->back()
+                ->with('msg_icon', 'glyphicon glyphicon-ok')
+                ->with('message', 'You have successfully update your information')
+                ->with('alert', 'alert alert-success');
+        }
     }
 }

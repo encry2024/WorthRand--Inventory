@@ -23,8 +23,7 @@
                 @else
                     <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hello, {{ Auth::user()->name }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ route('user_profile') }}"><i class="fa fa-user"></i>&nbsp;&nbsp;Profile</a></li>
-                            <li><a href="#"><i class="fa fa-lock"></i>&nbsp;&nbsp;Change Password</a></li>
+                            <li><a href="{{ route(Auth::user()->role . '_user_profile') }}"><i class="fa fa-user"></i>&nbsp;&nbsp;Profile</a></li>
                             <li><a href="{{ url('logout') }}"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;Logout</a></li>
                         </ul>
                     </li>

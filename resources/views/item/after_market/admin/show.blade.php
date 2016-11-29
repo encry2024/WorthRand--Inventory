@@ -37,12 +37,6 @@
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
 
                     <div class="row">
-                        <a href="{{ route('admin_project_show', $afterMarket->project->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-arrow-circle-left"></i> Go to Project {{ $afterMarket->project->name }}</a>
-                    </div>
-
-                    <br>
-
-                    <div class="row">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 {{ strtoupper($afterMarket->name) }}

@@ -40,22 +40,6 @@
                                 <div class="panel-body">
                                     <form class="form-horizontal" id="createAfterMarketForm" action="{{ route('post_after_market') }}" method="POST">
                                         {{ csrf_field() }}
-                                        
-
-                                        <div class="form-group{{ $errors->has('project_id') ? ' has-error' : '' }}">
-                                            <label for="name" class="col-md-4 control-label">Project:</label>
-
-                                            <div class="col-md-6">
-                                                <input type="text" class="form-control" name="project" id="project_dropdown" required autofocus />
-                                                <input type="hidden" name="project_id" id="project_id">
-
-                                                @if ($errors->has('project_id'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('project_id') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
 
                                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                             <label for="name" class="col-md-4 control-label">Name:</label>
@@ -192,15 +176,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        $('#project_dropdown').autocomplete({
-            serviceUrl: "{{ route('fetch_projects') }}",
-            type: 'get',
-            dataType: 'json',
-            onSelect: function (suggestions) {
-                document.getElementById("project_id").value = suggestions.data;
-            }
-        });
-    </script>
 @endsection

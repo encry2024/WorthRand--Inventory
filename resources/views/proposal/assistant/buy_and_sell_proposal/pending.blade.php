@@ -330,7 +330,7 @@
     <script>
         function getDeliveredItem(buy_and_sell_proposal_id)
         {
-            var deliverFormAction = "{{ route('change_item_delivery_status', ':buy_and_sell_proposal_id') }}";
+            var deliverFormAction = "{{ route('change_buy_and_sell_item_delivery_status', ':buy_and_sell_proposal_id') }}";
                 deliverFormAction = deliverFormAction.replace(':buy_and_sell_proposal_id', buy_and_sell_proposal_id);
             document.getElementById("basp_id").value = buy_and_sell_proposal_id;
             document.getElementById("deliverForm").action = deliverFormAction;

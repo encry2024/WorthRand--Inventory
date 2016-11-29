@@ -46,7 +46,8 @@ Route::group(['middlewareGroups' => 'web'], function() {
             Route::group(['prefix' => 'admin'], function() {
                 # DASHBOARD
                 Route::get('/dashboard', 'Admin\UserController@adminDashboard')->name('admin_dashboard');
-                Route::get('/profile', 'Admin\UserController@profile')->name('user_profile');
+                Route::get('/profile', 'Admin\UserController@profile')->name('admin_user_profile');
+                Route::patch('/profile/update', 'Admin\UserController@updateProfile')->name('admin_update_profile');
 
                 # USERS
                 Route::get('/users', 'Admin\UserController@adminUserIndex')->name('admin_user_index');
@@ -89,12 +90,13 @@ Route::group(['middlewareGroups' => 'web'], function() {
                 Route::get('/project/{project}/aftermarket/create', 'Admin\ItemController@adminCreateAfterMarketOnProject')->name('admin_create_aftermarket_on_project');
 
                 # SEAL
-                Route::get('/seal/create/{project}', 'Admin\ItemController@adminSealCreate')->name('admin_seal_create');
+                Route::get('/seal/create', 'Admin\ItemController@adminSealCreate')->name('admin_seal_create');
                 Route::post('/seal/create', 'Admin\ItemController@adminPostSealCreate')->name('admin_post_seal_create');
                 Route::get('/seals', 'Admin\ItemController@indexSeal')->name('admin_seal_index');
                 Route::get('/seal/{seal}', 'Admin\ItemController@showSeal')->name('admin_seal_show');
                 Route::get('/seal/{seal}/information', 'Admin\ItemController@adminSealInformation')->name('admin_seal_information');
                 Route::patch('/seal/update', 'Admin\ItemController@adminUpdateSealInformation')->name('admin_seal_information_update');
+                Route::get('/seal/{seal}/pricing_history', 'Admin\ItemController@showSealPricingHistory')->name('admin_seal_pricing_history_create');
 
                 # PRICING HISTORY
                 Route::get('/pricing_history', 'Admin\ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');
@@ -262,7 +264,8 @@ Route::group(['middlewareGroups' => 'web'], function() {
         Route::group(['prefix' => 'sales_engineer'], function() {
             # DASHBOARD
                 Route::get('/dashboard', 'SalesEngineer\UserController@dashboard')->name('se_dashboard');
-                Route::get('/profile', 'SalesEngineer\UserController@profile')->name('user_profile');
+                Route::get('/profile', 'SalesEngineer\UserController@profile')->name('sales_engineer_user_profile');
+                Route::patch('/profile/update', 'SalesEngineer\UserController@updateProfile')->name('sales_engineer_update_profile');
 
             # AFTERMARKETS
                 Route::get('/after_markets', 'SalesEngineer\ItemController@indexAftermarket')->name('aftermarket_index');
@@ -322,15 +325,16 @@ Route::group(['middlewareGroups' => 'web'], function() {
        Route::group(['prefix' => 'assistant'], function() {
            # DASHBOARD
                 Route::get('/dashboard', 'Assistant\UserController@dashboard')->name('assistant_dashboard');
-                Route::get('/profile', 'Assistant\UserController@profile')->name('user_profile');
+                Route::get('/profile', 'Assistant\UserController@profile')->name('assistant_user_profile');
+                Route::patch('/profile/update', 'Assistant\UserController@updateProfile')->name('assistant_update_profile');
 
            # PROPOSALS
                 Route::get('/proposal/indented/{indentedProposal}/accepted', 'Assistant\ProposalController@showAcceptedIndentedProposal')->name('assistant_show_pending_proposal');
                 Route::patch('/proposal/indented/{indentedProposal}/update', 'Assistant\ProposalController@updateIndentedProposal')->name('assistant_update_accepted_proposal');
                 Route::get('/proposal/buy_and_sell/{buyAndSellProposal}/accepted', 'Assistant\ProposalController@assistantShowPendingBuyAndSellProposal')->name('assistant_show_pending_buy_and_sell_proposal');
                 Route::patch('/proposal/buy_and_sell/{buyAndSellProposal}/update', 'Assistant\ProposalController@acceptBuyAndSellProposal')->name('assistant_accept_buy_and_sell_proposal');
-                Route::patch('/proposal/indented/item/{indentedProposalItem}/delivery/change_status', 'Assistant\ProposalController@changeItemDeliveryStatus')->name('change_item_delivery_status');
-                Route::patch('/proposal/buy_and_resale/item/{buyAndSellProposalItem}/delivery/change_status', 'Assistant\ProposalController@buyAndSellProposalChangeItemStatus')->name('change_item_delivery_status');
+                Route::patch('/proposal/indented/item/{indentedProposalItem}/delivery/change_status', 'Assistant\ProposalController@changeItemDeliveryStatus')->name('change_indented_item_delivery_status');
+                Route::patch('/proposal/buy_and_resale/item/{buyAndSellProposalItem}/delivery/change_status', 'Assistant\ProposalController@buyAndSellProposalChangeItemStatus')->name('change_buy_and_sell_item_delivery_status');
                 Route::patch('/proposal/buy_and_resale/item/{buyAndSellProposalItem}/delivery/change_notification', 'Assistant\ProposalController@buyAndSellProposalChangeItemNotifyMeDate')->name('change_item_notify_me_date');
                 Route::patch('/proposal/indented/item/{indentedProposalItem}/delivery/change_notification', 'Assistant\ProposalController@indentedProposalChangeItemNotifyMeDate')->name('change_indented_proposal_notify_me_date');
                 Route::patch('/proposal/indented/item/{indentedProposalItem}/delivery/status', 'Assistant\ProposalController@indentedProposalChangeDeliveryStatusToDelayed')->name('change_indented_proposal_delivery_status_to_delayed');
@@ -344,8 +348,8 @@ Route::group(['middlewareGroups' => 'web'], function() {
         Route::group(['prefix' => 'secretary'], function() {
             # DASHBOARD
                 Route::get('/dashboard', 'Secretary\UserController@dashboard')->name('secretary_dashboard');
-                Route::get('/profile', 'Secretary\UserController@profile')->name('user_profile');
-                Route::patch('/profile/update', 'Secretary\UserController@updateProfile')->name('user_update_profile');
+                Route::get('/profile', 'Secretary\UserController@profile')->name('secretary_user_profile');
+                Route::patch('/profile/update', 'Secretary\UserController@updateProfile')->name('secretary_update_profile');
 
             # PROPOSAL
                 Route::get('/proposal/indented/{indentedProposal}/approved', 'Secretary\ProposalController@pendingIndentedProposal')->name('secretary_pending_proposal');

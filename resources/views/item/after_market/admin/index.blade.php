@@ -34,7 +34,6 @@
                                         <thead>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Project</th>
                                         <th>Model</th>
                                         <th>Material Number</th>
                                         <th>Tag Number</th>
@@ -46,7 +45,6 @@
                                             <tr>
                                                 <td>{{ $aftermarket->id }}</td>
                                                 <td>{{ $aftermarket->name }}</td>
-                                                <td><a href="{{ route('admin_project_show', $aftermarket->project->id) }}">{{ $aftermarket->project->name }}</a></td>
                                                 <td>{{ $aftermarket->model }}</td>
                                                 <td>{{ $aftermarket->serial_number }}</td>
                                                 <td>{{ $aftermarket->tag_number }}</td>

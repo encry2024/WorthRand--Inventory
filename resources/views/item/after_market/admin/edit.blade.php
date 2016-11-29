@@ -44,12 +44,6 @@
                     @endif
 
                     <div class="row">
-                        <a href="{{ route('admin_project_show', $afterMarket->project->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-arrow-circle-left"></i> Go to Project {{ $afterMarket->project->name }}</a>
-                    </div>
-
-                    <br>
-
-                    <div class="row">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <i class="fa fa-info-circle"></i> {{ strtoupper($afterMarket->name) }} INFORMATION

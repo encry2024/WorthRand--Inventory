@@ -8,44 +8,28 @@
     <div class="container-fluid">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="row">
-
-                <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
-                    <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
-                        <li>
-                            <li class="nav-item"><a class="nav-link"><i class="fa fa-cog"></i>&nbsp;{{ $project->name }}</a>
-                                <ul class="sub">
-                                    <li><a href="{{ route('admin_project_show', $project->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
-                                    <li><a href="{{ route('admin_project_information', $project->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
-                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_create_aftermarket_on_project', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add AfterMarket</a></li>
-                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_seal_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Seal</a></li>
-                                </ul>
-                            </li>
-                        </li>
-
-                        <li>
-                        <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a>
-                            <ul class="sub">
-                                <li><a href="{{ route('admin_project_pricing_history_index', $project->id) }}"><i class="fa fa-th-list"></i>&nbsp;Pricing History List</a></li>
-                                <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_pricing_history_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Pricing History</a></li>
-                            </ul>
-                        </li>
-                        </li>
-
-
-                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; back</a></li>
-                    </ul>
-                </div>
-
+                @include('layouts.admin-sidebar')
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     @if(Session::has('message'))
                         <div class="row">
-                            <div class="alert alert-success alert-dismissible" role="alert" style="margin-top: -1.3rem; border-radius: 0px 0px 0px 0px;">
-                                <div class="container"><i class="fa fa-check"></i>&nbsp;&nbsp;{{ Session::get('message') }}
+                            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="margin-top: -1.3rem; border-radius: 0px 0px 0px 0px;">
+                                <div class="container"><i class="fa {{ Session::get('msg_icon') }}"></i>&nbsp;&nbsp;{{ Session::get('message') }}
                                     <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
                             </div>
                         </div>
                     @endif
+
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                     <div class="row">
                         <div class="panel panel-default">
@@ -57,7 +41,8 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <a class="btn btn-success" href="#" onclick='document.getElementById("createSealForm").submit();'><i class="fa fa-check"></i>&nbsp; Create Seal</a>
+                            <a href="{{ route('admin_seal_index') }}" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Back</a>
+                            <a class="btn btn-success" href="#" onclick='document.getElementById("createAfterMarketForm").submit();'><i class="fa fa-check"></i>&nbsp; Create Seal</a>
                         </div>
                     </div>
                     <br>
@@ -65,10 +50,24 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <form class="form-horizontal" id="createSealForm" action="{{ route('admin_post_seal_create') }}" method="POST">
+                                    <form class="form-horizontal" id="createAfterMarketForm" action="{{ route('admin_post_seal_create') }}" method="POST">
                                         {{ csrf_field() }}
 
-                                        <input type="hidden" name="project_id" value="{{ $project->id }}">
+                                       {{--<div class="form-group{{ $errors->has('project_id') ? ' has-error' : '' }}">
+                                            <label for="name" class="col-md-4 control-label">Project:</label>
+
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control" name="project" id="project_dropdown" required autofocus />
+                                                <input type="hidden" name="project_id" id="project_id">
+
+                                                @if ($errors->has('project_id'))
+                                                    <span class="help-block">
+                                                    <strong>{{ $errors->first('project_id') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>--}}
+
                                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                             <label for="name" class="col-md-4 control-label">Name:</label>
 
@@ -91,14 +90,14 @@
 
                                                 @if ($errors->has('drawing_number'))
                                                     <span class="help-block">
-                                                    <strong>{{ $errors->first('model') }}</strong>
+                                                    <strong>{{ $errors->first('drawing_number') }}</strong>
                                                 </span>
                                                 @endif
                                             </div>
                                         </div>
 
                                         <div class="form-group{{ $errors->has('bom_number') ? ' has-error' : '' }}">
-                                            <label for="bom_number" class="col-md-4 control-label">BOM Number:</label>
+                                            <label for="bom_number" class="col-md-4 control-label">B.O.M Number:</label>
 
                                             <div class="col-md-6">
                                                 <input id="bom_number" type="text" class="form-control" name="bom_number" value="{{ old('bom_number') }}" required autofocus>
@@ -153,15 +152,15 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group{{ $errors->has('material_code') ? ' has-error' : '' }}">
-                                            <label for="serial_number" class="col-md-4 control-label">Material Code:</label>
+                                        <div class="form-group{{ $errors->has('material_number') ? ' has-error' : '' }}">
+                                            <label for="material_number" class="col-md-4 control-label">Material Number:</label>
 
                                             <div class="col-md-6">
-                                                <input id="material_code" type="text" class="form-control" name="material_code" value="{{ old('material_code') }}" required autofocus>
+                                                <input id="material_number" type="text" class="form-control" name="material_number" value="{{ old('material_number') }}" required autofocus>
 
-                                                @if ($errors->has('material_code'))
+                                                @if ($errors->has('material_number'))
                                                     <span class="help-block">
-                                                    <strong>{{ $errors->first('material_code') }}</strong>
+                                                    <strong>{{ $errors->first('material_number') }}</strong>
                                                 </span>
                                                 @endif
                                             </div>
@@ -220,6 +219,17 @@
                                                     <strong>{{ $errors->first('tag') }}</strong>
                                                 </span>
                                                 @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="price" class="col-md-4 control-label">Price:</label>
+
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">$</div>
+                                                    <input id="price" type="text" class="form-control" name="price" value="{{ old('price') }}" required autofocus>
+                                                </div>
                                             </div>
                                         </div>
 

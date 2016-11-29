@@ -25,8 +25,6 @@
                     <li><a href="{{ route('admin_project_index') }}"><i class="fa fa-cog"></i>&nbsp;Project List</a></li>
                     <li><a href="{{ route('admin_after_market_index') }}"><i class="fa fa-cogs"></i>&nbsp;AfterMarket List</a></li>
                     <li><a class="nav-link"  href="{{ route('admin_seal_index') }}"><i class="fa fa-file-text-o"></i>&nbsp; Seal List</a></li>
-                    <li><a href="{{ route('admin_project_dashboard') }}"><i class="fa fa-bar-chart"></i>&nbsp;Project Report</a></li>
-                    <li><a href="{{ route('admin_project_dashboard') }}"><i class="fa fa-bar-chart"></i>&nbsp;AM Dashboard</a></li>
                 </ul>
             </li>
         </li>

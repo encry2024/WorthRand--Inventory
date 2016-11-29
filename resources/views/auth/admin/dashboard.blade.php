@@ -27,13 +27,13 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-lg-6">
+                        {{--<div class="col-lg-6">
                             <div id="chart"></div>
                             {!! $lava->render('PieChart', 'USERS', 'chart') !!}
-                        </div>
+                        </div>--}}
 
-                        <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12">
                             <div id="target_sale_div"></div>
                             {!! $target_chart->render('ColumnChart', 'TARGETSALE', 'target_sale_div') !!}
                         </div>

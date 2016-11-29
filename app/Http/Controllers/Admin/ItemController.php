@@ -192,33 +192,32 @@ class ItemController extends Controller
         return view('item.project.admin.seal.index', compact('seals'));
     }
 
-    public function adminSealCreate(Project $project)
+    public function adminSealCreate()
     {
-        //dd($project);
-        return view('item.project.admin.seal.create', compact('project'));
+        return view('item.seal.create');
     }
 
-    public function adminPostSealCreate(CreateSealRequest $createSealRequest)
+    public function adminPostSealCreate(Request $request, CreateSealRequest $createSealRequest)
     {
         $seal = new Seal();
         $seal->name = trim(ucwords($createSealRequest->get('name'), " "));
-        $seal->project_id = trim(strtoupper($createSealRequest->get('project_id')));
         $seal->drawing_number = trim(strtoupper($createSealRequest->get('drawing_number')));
         $seal->bom_number = trim(strtoupper($createSealRequest->get('bom_number')));
-        $seal->end_user = trim(strtoupper($createSealRequest->get('end_user')));
+        $seal->end_user = trim(ucwords($createSealRequest->get('end_user'), ' '));
         $seal->seal_type = trim(strtoupper($createSealRequest->get('seal_type')));
         $seal->size = trim(strtoupper($createSealRequest->get('size')));
-        $seal->material_code = trim(strtoupper($createSealRequest->get('material_code')));
+        $seal->material_number = trim(strtoupper($createSealRequest->get('material_number')));
         $seal->code = trim(strtoupper($createSealRequest->get('code')));
         $seal->model = trim(strtoupper($createSealRequest->get('model')));
         $seal->serial_number = trim(strtoupper($createSealRequest->get('serial_number')));
         $seal->tag = trim(strtoupper($createSealRequest->get('tag')));
+        $seal->price = $request->get('price');
 
         if($seal->save())
         {
-            return redirect()->back()->with('message', 'Seal Successfully Added');
+            return redirect()->back()->with('message', 'Seal Successfully Added')->with('msg_icon', 'fa-check')->with('alert', 'alert-success');
         }
-        return redirect()->back()->with('message', 'Seal Not Added');
+        return redirect()->back()->with('message', 'Seal Not Added')->with('msg_icon', 'fa-check')->with('alert', 'alert-success');
     }
 
     public function showSeal(Seal $seal)
@@ -238,5 +237,10 @@ class ItemController extends Controller
         $seal->update($updateSealInformationRequest->except(array('_token', '_method')));
 
         return redirect()->back()->with('message', 'Seal ['.$seal->name.'] was successfully updated');
+    }
+
+    public function showSealPricingHistory(Seal $seal)
+    {
+        return view('item.project.admin.seal.pricing_history.create');
     }
 }

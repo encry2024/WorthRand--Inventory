@@ -188,40 +188,6 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="col-lg-12">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Model</th>
-                                            <th>Serial Number</th>
-                                            <th>Tag Number</th>
-                                            <th>Drawing Number</th>
-                                            <th>Actions</th>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($project->after_markets as $after_market)
-                                            <tr>
-                                                <td>{{ $after_market->id }}</td>
-                                                <td>{{ $after_market->name }}</td>
-                                                <td>{{ $after_market->model }}</td>
-                                                <td>{{ $after_market->serial_number }}</td>
-                                                <td>{{ $after_market->tag_number }}</td>
-                                                <td>{{ $after_market->drawing_number }}</td>
-                                                <td>
-                                                    <a href="{{ route('admin_after_market_show', $after_market->id) }}" class="btn btn-sm btn-success">View After Market</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

@@ -146,7 +146,7 @@
                                                             <span class="caret"></span>
                                                         </button>
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                            <li><a href="#delivered" data-toggle="modal" data-target="#deliverForm" onclick="getDeliveredItem({{ $selectedItem->indented_proposal_item_id }});"><span class="glyphicon glyphicon-ok"></span> Delivered</a></li>
+                                                            <li><a href="#delivered" data-toggle="modal" data-target="#changeItemDeliveryStatus" onclick="getDeliveredItem({{ $selectedItem->indented_proposal_item_id }});"><span class="glyphicon glyphicon-ok"></span> Delivered</a></li>
                                                             <li><a href="#update_notification" data-toggle="modal" data-target="#updateNotifyMeForm" onclick="getNotifyMe({{ $selectedItem->indented_proposal_item_id }});"><span class="glyphicon glyphicon-pushpin"></span> Notify Me</a></li>
                                                             <li><a href="#delayed" data-toggle="modal" data-target="#updateDeliveryStatusForm" onclick="getDeliveryStatus({{ $selectedItem->indented_proposal_item_id }});"><span class="glyphicon glyphicon-warning-sign"></span> Delayed</a></li>
                                                         </ul>
@@ -265,6 +265,28 @@
         </div>
     </form>
 
+    <form class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="changeItemDeliveryStatus" method="POST">
+        {{ method_field('PATCH') }}
+        {{ csrf_field() }}
+        <input type="hidden" name="indented_proposal_id" id="ipi_id">
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">WPC Number/Reference: {{ $indentedProposal->wpc_reference }}</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="">You are about to change the delivery status of the selected item.</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Accept</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
     <form class="modal fade form-horizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="updateNotifyMeForm" method="POST">
         {{ method_field('PATCH') }}
         {{ csrf_field() }}
@@ -322,10 +344,10 @@
     <script>
         function getDeliveredItem(indented_proposal_item_id)
         {
-            var deliverFormAction = "{{ route('change_item_delivery_status', ':indented_proposal_item_id') }}";
+            var deliverFormAction = "{{ route('change_indented_item_delivery_status', ':indented_proposal_item_id') }}";
                 deliverFormAction = deliverFormAction.replace(':indented_proposal_item_id', indented_proposal_item_id);
             document.getElementById("ipi_id").value = indented_proposal_item_id;
-            document.getElementById("indentedProposalFormConfirmation").action = deliverFormAction;
+            document.getElementById("changeItemDeliveryStatus").action = deliverFormAction;
         }
 
         function getNotifyMe(indented_proposal_item_id)

@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
                     <ul id="accordion" class="nav nav-pills nav-stacked  sidebar-menu">
-                        <li class="nav-item {{ Request::route()->getName() == 'secretary_dashboard' ? 'active' : '' }}"><a class="nav-link" href="{{ route('secretary_dashboard') }}" class="nav-link"><i class="fa fa-tachometer"></i>&nbsp; Dashboard</a></li>
+                        <li class="nav-item {{ Request::route()->getName() == Auth::user()->role . '_dashboard' ? 'active' : '' }}"><a class="nav-link" href="{{ route(Auth::user()->role . '_dashboard') }}" class="nav-link"><i class="fa fa-tachometer"></i>&nbsp; Dashboard</a></li>
                     </ul>
                 </div>
 
@@ -29,7 +29,7 @@
                     </div>
 
                     <div class="row">
-                        <form action="{{ route('user_update_profile') }}" class="form-horizontal" method="POST">
+                        <form action="{{ route(Auth::user()->role . '_update_profile') }}" class="form-horizontal" method="POST">
                             {{ csrf_field() }}
                             {{ method_field('PATCH') }}
 
