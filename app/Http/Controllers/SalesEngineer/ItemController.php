@@ -60,7 +60,9 @@ class ItemController extends Controller
         $items = DB::table($category)->get();
 
         foreach($items as $item) {
-            $pricing_history = DB::table(str_singular($category).'_pricing_histories')->where(str_singular($category).'_pricing_histories.' . str_singular($category) . '_id', '=', $item->id)->latest()->get();
+            $pricing_history = DB::table(str_singular($category).'_pricing_histories')
+            ->where(str_singular($category).'_pricing_histories.' . str_singular($category) . '_id', '=', $item->id)
+            ->latest()->get();
 
             $itemArray['suggestions'][] = [
                 'data' => $item->id,
