@@ -87,7 +87,7 @@
                                                 </div>
 
                                                 <div class="form-group{{ $errors->has('ccn_number') ? ' has-error' : '' }}">
-                                                    <label for="ccn_number" class="col-md-4 control-label">CCN Number:</label>
+                                                    <label id="data1" for="ccn_number" class="col-md-4 control-label"></label>
 
                                                     <div class="col-md-6">
                                                         <input id="ccn_number" type="text" class="form-control" name="ccn_number" value="{{ old('ccn_number') }}" disabled autofocus>
@@ -101,7 +101,7 @@
                                                 </div>
 
                                                 <div class="form-group{{ $errors->has('part_number') ? ' has-error' : '' }}">
-                                                    <label for="part_number" class="col-md-4 control-label">Part Number:</label>
+                                                    <label id="data2" for="part_number" class="col-md-4 control-label"></label>
 
                                                     <div class="col-md-6">
                                                         <input id="part_number" type="text" class="form-control" name="part_number" value="{{ old('part_number') }}" disabled autofocus>
@@ -115,7 +115,7 @@
                                                 </div>
 
                                                 <div class="form-group{{ $errors->has('reference_number') ? ' has-error' : '' }}">
-                                                    <label for="reference_number" class="col-md-4 control-label">Reference Number:</label>
+                                                    <label id="data3" for="reference_number" class="col-md-4 control-label"></label>
 
                                                     <div class="col-md-6">
                                                         <input id="reference_number" type="text" class="form-control" name="reference_number" value="{{ old('reference_number') }}" disabled autofocus>
@@ -129,7 +129,7 @@
                                                 </div>
 
                                                 <div class="form-group{{ $errors->has('material_number') ? ' has-error' : '' }}">
-                                                    <label for="material_number" class="col-md-4 control-label">Material Number:</label>
+                                                    <label id="data4" for="material_number" class="col-md-4 control-label"></label>
 
                                                     <div class="col-md-6">
                                                         <input id="material_number" type="text" class="form-control" name="material_number" value="{{ old('material_number') }}" disabled autofocus>
@@ -143,7 +143,7 @@
                                                 </div>
 
                                                 <div class="form-group{{ $errors->has('drawing_number') ? ' has-error' : '' }}">
-                                                    <label for="drawing_number" class="col-md-4 control-label">Drawing Number:</label>
+                                                    <label id="data5" for="drawing_number" class="col-md-4 control-label"></label>
 
                                                     <div class="col-md-6">
                                                         <input id="drawing_number" type="text" class="form-control" name="drawing_number" value="{{ old('drawing_number') }}" disabled autofocus>
@@ -173,7 +173,7 @@
                                                 {{ csrf_field() }}
 
                                                 <div class="form-group{{ $errors->has('model') ? ' has-error' : '' }}">
-                                                    <label for="model" class="col-md-4 control-label">Model:</label>
+                                                    <label id="data6" for="model" class="col-md-4 control-label"></label>
 
                                                     <div class="col-md-6">
                                                         <input id="model" type="text" class="form-control" name="model" value="{{ old('model') }}" disabled autofocus>
@@ -187,7 +187,7 @@
                                                 </div>
 
                                                 <div class="form-group{{ $errors->has('serial_number') ? ' has-error' : '' }}">
-                                                    <label for="serial_number" class="col-md-4 control-label">Serial Number:</label>
+                                                    <label id="data7" for="serial_number" class="col-md-4 control-label"></label>
 
                                                     <div class="col-md-6">
                                                         <input id="serial_number" type="text" class="form-control" name="serial_number" value="{{ old('serial_number') }}" disabled autofocus>
@@ -201,7 +201,7 @@
                                                 </div>
 
                                                 <div class="form-group{{ $errors->has('tag_number') ? ' has-error' : '' }}">
-                                                    <label for="tag_number" class="col-md-4 control-label">Tag Number:</label>
+                                                    <label id="data8" for="tag_number" class="col-md-4 control-label"></label>
 
                                                     <div class="col-md-6">
                                                         <input id="tag_number" type="text" class="form-control" name="tag_number" value="{{ old('tag_number') }}" disabled autofocus>
@@ -301,11 +301,40 @@
             document.getElementById("serial_number").value = "";
             document.getElementById("tag_number").value = "";
             document.getElementById("item_id").value = "";
+
+            document.getElementById('data1').innerHTML = '';
+            document.getElementById('data2').innerHTML = '';
+            document.getElementById('data3').innerHTML = '';
+            document.getElementById('data4').innerHTML = '';
+            document.getElementById('data5').innerHTML = '';
+            document.getElementById('data6').innerHTML = '';
+            document.getElementById('data7').innerHTML = '';
+            document.getElementById('data8').innerHTML = '';
             $(wrapper).html('');
 
             $( "select option:selected" ).each(function() {
                 item_category = "";
                 item_category += $( this ).val();
+
+                if($(this).val() == "seals") {
+                    document.getElementById('data1').innerHTML = 'Material Number:';
+                    document.getElementById('data2').innerHTML = 'Drawing Number:';
+                    document.getElementById('data3').innerHTML = 'BOM Number:';
+                    document.getElementById('data4').innerHTML = 'End User:';
+                    document.getElementById('data5').innerHTML = 'Seal type:';
+                    document.getElementById('data6').innerHTML = 'Size:';
+                    document.getElementById('data7').innerHTML = 'Code:';
+                    document.getElementById('data8').innerHTML = 'Model:';
+                } else {
+                    document.getElementById('data1').innerHTML = 'Material Number:';
+                    document.getElementById('data2').innerHTML = 'CCN Number:';
+                    document.getElementById('data3').innerHTML = 'Part Number:';
+                    document.getElementById('data4').innerHTML = 'Model:';
+                    document.getElementById('data5').innerHTML = 'Reference Number:';
+                    document.getElementById('data6').innerHTML = 'Searial Number:';
+                    document.getElementById('data7').innerHTML = 'Drawing Number:';
+                    document.getElementById('data8').innerHTML = 'Tag Number:';
+                }
             });
 
             $('#project_dropdown').autocomplete({
@@ -313,14 +342,14 @@
                 dataType: 'json',
                 type: 'get',
                 onSelect: function (suggestions) {
-                    document.getElementById("ccn_number").value = suggestions.ccn_number;
-                    document.getElementById("part_number").value = suggestions.part_number;
-                    document.getElementById("model").value = suggestions.model;
-                    document.getElementById("reference_number").value = suggestions.reference_number;
-                    document.getElementById("material_number").value = suggestions.material_number;
-                    document.getElementById("drawing_number").value = suggestions.drawing_number;
-                    document.getElementById("serial_number").value = suggestions.serial_number;
-                    document.getElementById("tag_number").value = suggestions.tag_number;
+                    document.getElementById("ccn_number").value = suggestions.dataCollection1;
+                    document.getElementById("part_number").value = suggestions.dataCollection2;
+                    document.getElementById("model").value = suggestions.dataCollection3;
+                    document.getElementById("reference_number").value = suggestions.dataCollection4;
+                    document.getElementById("material_number").value = suggestions.dataCollection5;
+                    document.getElementById("drawing_number").value = suggestions.dataCollection6;
+                    document.getElementById("serial_number").value = suggestions.dataCollection7;
+                    document.getElementById("tag_number").value = suggestions.dataCollection8;
                     document.getElementById("item_id").value = suggestions.item_id + "-" + item_category;
                     $(wrapper).html('');
 

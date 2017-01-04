@@ -23,6 +23,7 @@
                             <a href="{{ route('admin_seal_create') }}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add Seal</a>
                         </div>
                     </div>
+                    <br>
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -35,17 +36,19 @@
                                         <th>Seal Type</th>
                                         <th>Model</th>
                                         <th>Material Number</th>
+                                        <th>Date Added</th>
                                         <th>Actions</th>
                                     </thead>
                                     <tbody>
                                     @foreach($seals as $seal)
                                         <tr>
-                                            <td>{{ $seal->id }}</td>
+                                            <td>{{ ((($seals->currentPage() - 1) * $seals->perPage()) + ($ctr++) + 1) }}</td>
                                             <td>{{ $seal->name }}</td>
                                             <td>{{ $seal->model }}</td>
                                             <td>{{ $seal->seal_type }}</td>
                                             <td>{{ $seal->model }}</td>
                                             <td>{{ $seal->material_number }}</td>
+                                            <td>{{ date('F d, Y', strtotime($seal->created_at)) }}</td>
                                             <td>
                                                 <a href="{{ route('admin_seal_show', $seal->id) }}" class="btn btn-sm btn-success">View Seal</a>
                                             </td>
@@ -53,6 +56,7 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+                                {{ $seals->links() }}
                             </div>
                         </div>
                     </div>

@@ -8,61 +8,79 @@
     <div class="container-fluid">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="row">
-                @include('layouts.admin-sidebar')
+                <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
+                    <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
+                        <li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp; {{ $seal->name }}</a>
+                            <ul class="sub">
+                                <li><a href="{{ route('admin_seal_show', $seal->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
+                                <li><a href="{{ route('admin_seal_information', $seal->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
+                                <li class="nav-item"><a class="nav-link"  href="{{ route('admin_seal_create') }}"><i class="fa fa-plus"></i>&nbsp; Add Seal</a></li>
+                            </ul>
+                        </li>
+                        </li>
+
+                        <li>
+                        <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a>
+                            <ul class="sub">
+                                <li><a href="{{ route('admin_seal_pricing_history_index', $seal->id) }}"><i class="fa fa-th-list"></i>&nbsp;Pricing History List</a></li>
+                                <li class="nav-item"><a class="nav-link"  href="{{ route('admin_seal_pricing_history_create', $seal->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Pricing History</a></li>
+                            </ul>
+                        </li>
+                        </li>
+
+                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_seal_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; back</a></li>
+                    </ul>
+                </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     @if(Session::has('message'))
                         <div class="row">
-                            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="margin-top: -1.3rem; border-radius: 0px 0px 0px 0px;">
-                                <div class="container"><i class="fa {{ Session::get('msg_icon') }}"></i>&nbsp;&nbsp;{{ Session::get('message') }}
+                            <div class="alert alert-success alert-dismissible" role="alert" style="margin-top: -1.3rem; border-radius: 0px 0px 0px 0px;">
+                                <div class="container"><i class="fa fa-check"></i>&nbsp;&nbsp;{{ Session::get('message') }}
                                     <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
                             </div>
                         </div>
                     @endif
 
-                        @if (count($errors) > 0)
-                            <div class="alert alert-danger" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
                     <div class="row">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <i class="fa fa-plus-circle"></i> ADD SEAL
+                                <i class="fa fa-info-circle"></i> {{ strtoupper($seal->name) }} INFORMATION
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <a href="{{ route('admin_seal_index') }}" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Back</a>
-                            <a class="btn btn-success" href="#" onclick='document.getElementById("createAfterMarketForm").submit();'><i class="fa fa-check"></i>&nbsp; Create Seal</a>
+                            <button class="btn btn-success" onclick='document.getElementById("updateSealForm").submit();'>Update</button>
                         </div>
                     </div>
+
                     <br>
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <form class="form-horizontal" id="createAfterMarketForm" action="{{ route('admin_post_seal_create') }}" method="POST">
+                                    <form class="form-horizontal" id="updateSealForm" action="{{ route('admin_seal_information_update') }}" method="POST">
                                         {{ csrf_field() }}
+                                        {{ method_field('PATCH') }}
+                                        <input type="hidden" name="seal_id" value="{{ $seal->id }}">
 
-                                       {{--<div class="form-group{{ $errors->has('project_id') ? ' has-error' : '' }}">
-                                            <label for="name" class="col-md-4 control-label">Project:</label>
+                                        {{--<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                            <label for="name" class="col-md-4 control-label">Name:</label>
 
                                             <div class="col-md-6">
-                                                <input type="text" class="form-control" name="project" id="project_dropdown" required autofocus />
-                                                <input type="hidden" name="project_id" id="project_id">
+                                                <select name="project_id" id="" class="form-control">
+                                                    @foreach($projects as $project)
+                                                        <option value="{{$project->id}}" {{ $seal->project_id == $project->id ? "selected" : "" }}>{{$project->name}}</option>
+                                                    @endforeach
+                                                </select>
 
-                                                @if ($errors->has('project_id'))
+                                                @if ($errors->has('name'))
                                                     <span class="help-block">
-                                                    <strong>{{ $errors->first('project_id') }}</strong>
+                                                    <strong>{{ $errors->first('name') }}</strong>
                                                 </span>
                                                 @endif
                                             </div>
@@ -72,7 +90,7 @@
                                             <label for="name" class="col-md-4 control-label">Name:</label>
 
                                             <div class="col-md-6">
-                                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                                                <input id="name" type="text" class="form-control" name="name" value="{{ $seal->name }}" required autofocus>
 
                                                 @if ($errors->has('name'))
                                                     <span class="help-block">
@@ -86,7 +104,7 @@
                                             <label for="drawing_number" class="col-md-4 control-label">Drawing Number:</label>
 
                                             <div class="col-md-6">
-                                                <input id="drawing_number" type="text" class="form-control" name="drawing_number" value="{{ old('drawing_number') }}" required autofocus>
+                                                <input id="drawing_number" type="text" class="form-control" name="drawing_number" value="{{ $seal->drawing_number }}" required autofocus>
 
                                                 @if ($errors->has('drawing_number'))
                                                     <span class="help-block">
@@ -97,10 +115,10 @@
                                         </div>
 
                                         <div class="form-group{{ $errors->has('bom_number') ? ' has-error' : '' }}">
-                                            <label for="bom_number" class="col-md-4 control-label">B.O.M Number:</label>
+                                            <label for="bom_number" class="col-md-4 control-label">BOM Number:</label>
 
                                             <div class="col-md-6">
-                                                <input id="bom_number" type="text" class="form-control" name="bom_number" value="{{ old('bom_number') }}" required autofocus>
+                                                <input id="bom_number" type="text" class="form-control" name="bom_number" value="{{ $seal->bom_number }}" required autofocus>
 
                                                 @if ($errors->has('bom_number'))
                                                     <span class="help-block">
@@ -114,7 +132,7 @@
                                             <label for="end_user" class="col-md-4 control-label">End User:</label>
 
                                             <div class="col-md-6">
-                                                <input id="end_user" type="text" class="form-control" name="end_user" value="{{ old('end_user') }}" required autofocus>
+                                                <input id="end_user" type="text" class="form-control" name="end_user" value="{{ $seal->end_user }}" required autofocus>
 
                                                 @if ($errors->has('end_user'))
                                                     <span class="help-block">
@@ -128,7 +146,7 @@
                                             <label for="seal_type" class="col-md-4 control-label">Seal Type:</label>
 
                                             <div class="col-md-6">
-                                                <input id="seal_type" type="text" class="form-control" name="seal_type" value="{{ old('seal_type') }}" required autofocus>
+                                                <input id="seal_type" type="text" class="form-control" name="seal_type" value="{{ $seal->seal_type }}" required autofocus>
 
                                                 @if ($errors->has('seal_type'))
                                                     <span class="help-block">
@@ -142,7 +160,7 @@
                                             <label for="size" class="col-md-4 control-label">Size:</label>
 
                                             <div class="col-md-6">
-                                                <input id="size" type="text" class="form-control" name="size" value="{{ old('size') }}" required autofocus>
+                                                <input id="size" type="text" class="form-control" name="size" value="{{ $seal->size }}" required autofocus>
 
                                                 @if ($errors->has('size'))
                                                     <span class="help-block">
@@ -156,7 +174,7 @@
                                             <label for="material_number" class="col-md-4 control-label">Material Number:</label>
 
                                             <div class="col-md-6">
-                                                <input id="material_number" type="text" class="form-control" name="material_number" value="{{ old('material_number') }}" required autofocus>
+                                                <input id="material_number" type="text" class="form-control" name="material_number" value="{{ $seal->material_number }}" required autofocus>
 
                                                 @if ($errors->has('material_number'))
                                                     <span class="help-block">
@@ -170,7 +188,7 @@
                                             <label for="code" class="col-md-4 control-label">Code:</label>
 
                                             <div class="col-md-6">
-                                                <input id="code" type="text" class="form-control" name="code" value="{{ old('code') }}" required autofocus>
+                                                <input id="code" type="text" class="form-control" name="code" value="{{ $seal->code }}" required autofocus>
 
                                                 @if ($errors->has('code'))
                                                     <span class="help-block">
@@ -184,7 +202,7 @@
                                             <label for="model" class="col-md-4 control-label">Model:</label>
 
                                             <div class="col-md-6">
-                                                <input id="model" type="text" class="form-control" name="model" value="{{ old('model') }}" required autofocus>
+                                                <input id="model" type="text" class="form-control" name="model" value="{{ $seal->model }}" required autofocus>
 
                                                 @if ($errors->has('model'))
                                                     <span class="help-block">
@@ -198,7 +216,7 @@
                                             <label for="serial_number" class="col-md-4 control-label">Serial Number:</label>
 
                                             <div class="col-md-6">
-                                                <input id="serial_number" type="text" class="form-control" name="serial_number" value="{{ old('serial_number') }}" required autofocus>
+                                                <input id="serial_number" type="text" class="form-control" name="serial_number" value="{{ $seal->serial_number }}" required autofocus>
 
                                                 @if ($errors->has('serial_number'))
                                                     <span class="help-block">
@@ -212,7 +230,7 @@
                                             <label for="tag" class="col-md-4 control-label">Tag:</label>
 
                                             <div class="col-md-6">
-                                                <input id="tag" type="text" class="form-control" name="tag" value="{{ old('tag') }}" required autofocus>
+                                                <input id="tag" type="text" class="form-control" name="tag" value="{{ $seal->tag }}" required autofocus>
 
                                                 @if ($errors->has('tag'))
                                                     <span class="help-block">
@@ -222,14 +240,20 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
                                             <label for="price" class="col-md-4 control-label">Price:</label>
 
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <div class="input-group-addon">$</div>
-                                                    <input id="price" type="text" class="form-control" name="price" value="{{ old('price') }}" required autofocus>
+                                                <input id="price" type="text" class="form-control" name="price" value="{{ $seal->price }}" required autofocus>
                                                 </div>
+
+                                                @if ($errors->has('price'))
+                                                    <span class="help-block">
+                                                    <strong>{{ $errors->first('price') }}</strong>
+                                                </span>
+                                                @endif
                                             </div>
                                         </div>
 

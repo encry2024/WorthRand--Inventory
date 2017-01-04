@@ -28,35 +28,35 @@
                     @if(count($aftermarkets) != 0)
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="col-lg-12">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Model</th>
                                         <th>Material Number</th>
                                         <th>Tag Number</th>
                                         <th>Drawing Number</th>
+                                        <th>Date Added</th>
                                         <th>Actions</th>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($aftermarkets as $aftermarket)
-                                            <tr>
-                                                <td>{{ $aftermarket->id }}</td>
-                                                <td>{{ $aftermarket->name }}</td>
-                                                <td>{{ $aftermarket->model }}</td>
-                                                <td>{{ $aftermarket->serial_number }}</td>
-                                                <td>{{ $aftermarket->tag_number }}</td>
-                                                <td>{{ $aftermarket->drawing_number }}</td>
-                                                <td>
-                                                    <a href="{{ route('admin_after_market_show', $aftermarket->id) }}" class="btn btn-sm btn-success">View Aftermarket</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($aftermarkets as $aftermarket)
+                                        <tr>
+                                            <td>{{ $aftermarket->id }}</td>
+                                            <td>{{ $aftermarket->name }}</td>
+                                            <td>{{ $aftermarket->model }}</td>
+                                            <td>{{ $aftermarket->serial_number }}</td>
+                                            <td>{{ $aftermarket->tag_number }}</td>
+                                            <td>{{ $aftermarket->drawing_number }}</td>
+                                            <td>{{ date('F d, Y', strtotime($aftermarket->created_at)) }}</td>
+                                            <td>
+                                                <a href="{{ route('admin_after_market_show', $aftermarket->id) }}" class="btn btn-sm btn-success">View Aftermarket</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

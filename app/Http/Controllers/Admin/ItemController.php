@@ -21,13 +21,11 @@ use App\Http\Requests\CreateSealRequest;
 use App\Http\Controllers\Controller;
 use App\Seal;
 use App\Http\Requests\UpdateSealInformationRequest;
-
-
+use App\Http\Requests\CreatePricingHistoryForSealRequest;
+use App\SealPricingHistory;
 
 class ItemController extends Controller
 {
-
-
     /**
      * ItemController constructor.
      */
@@ -187,14 +185,16 @@ class ItemController extends Controller
 
     public function indexSeal()
     {
-        $seals = Seal::all();
+        $ctr = 0;
+        $seals = Seal::simplePaginate(30);
+        $seals->setPath('/seals');
 
-        return view('item.project.admin.seal.index', compact('seals'));
+        return view('item.seal.admin.index', compact('seals', 'ctr'));
     }
 
     public function adminSealCreate()
     {
-        return view('item.seal.create');
+        return view('item.seal.admin.create');
     }
 
     public function adminPostSealCreate(Request $request, CreateSealRequest $createSealRequest)
@@ -222,13 +222,13 @@ class ItemController extends Controller
 
     public function showSeal(Seal $seal)
     {
-        return view('item.project.admin.seal.show', compact('seal'));
+        return view('item.seal.admin.show', compact('seal'));
     }
 
     public function adminSealInformation(Seal $seal)
     {
         $projects = Project::all();
-        return view('item.project.admin.seal.edit', compact('seal','projects'));
+        return view('item.seal.admin.edit', compact('seal','projects'));
     }
 
     public function adminUpdateSealInformation(Request $request, UpdateSealInformationRequest $updateSealInformationRequest)
@@ -241,6 +241,22 @@ class ItemController extends Controller
 
     public function showSealPricingHistory(Seal $seal)
     {
-        return view('item.project.admin.seal.pricing_history.create');
+        return view('item.seal.admin.pricing_history.create', compact('seal'));
+    }
+
+    public function postSealPricingHistory(CreatePricingHistoryForSealRequest $createPricingHistoryForSealRequest, Seal $seal)
+    {
+        $postSealPricingHistory = SealPricingHistory::postSealPricingHistory($createPricingHistoryForSealRequest, $seal);
+
+        return $postSealPricingHistory;
+    }
+
+    public function adminShowSealPricingHistory(Seal $seal)
+    {
+        $ctr = 0;
+        $sealPricingHistory = $seal->seal_pricing_history()->paginate(30);
+        $sealPricingHistory->setPath('/seals');
+
+        return view('item.seal.admin.pricing_history.index', compact('sealPricingHistory', 'seal', 'ctr'));
     }
 }

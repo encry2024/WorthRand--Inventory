@@ -96,7 +96,9 @@ Route::group(['middlewareGroups' => 'web'], function() {
                 Route::get('/seal/{seal}', 'Admin\ItemController@showSeal')->name('admin_seal_show');
                 Route::get('/seal/{seal}/information', 'Admin\ItemController@adminSealInformation')->name('admin_seal_information');
                 Route::patch('/seal/update', 'Admin\ItemController@adminUpdateSealInformation')->name('admin_seal_information_update');
-                Route::get('/seal/{seal}/pricing_history', 'Admin\ItemController@showSealPricingHistory')->name('admin_seal_pricing_history_create');
+                Route::get('/seal/{seal}/pricing_history', 'Admin\ItemController@adminShowSealPricingHistory')->name('admin_seal_pricing_history_index');
+                Route::get('/seal/{seal}/pricing_history/create', 'Admin\ItemController@showSealPricingHistory')->name('admin_seal_pricing_history_create');
+                Route::post('/seal/{seal}/pricing_history/create', 'Admin\ItemController@postSealPricingHistory')->name('admin_add_seal_pricing_history');
 
                 # PRICING HISTORY
                 Route::get('/pricing_history', 'Admin\ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');

@@ -28,12 +28,7 @@ class Customer extends Model
         $customer->city = trim(ucfirst($createCustomerRequest->get('city')));
         $customer->postal_code = trim($createCustomerRequest->get('postal_code'));
         $customer->operation_customer_account_no = trim($createCustomerRequest->get('operation_customer_account_no'));
-        /*
-         * we
-         * rwer
-         * wer
-         * wer
-         * */
+
         if($customer->save()) {
             return redirect()->back()->with('message', 'Customer [' . $customer->name . '] was successfully created');
         }

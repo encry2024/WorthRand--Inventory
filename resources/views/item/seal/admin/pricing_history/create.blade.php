@@ -10,34 +10,37 @@
             <div class="row">
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
                     <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
-                        <li>
-                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_seal_show', $seal->id) }}"><i class="fa fa-cog"></i>&nbsp; {{ $seal->name }}</a>
-                            <ul class="sub">
-                                <li><a href="{{ route('admin_seal_show', $seal->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
-                                <li><a href="{{ route('admin_seal_information', $seal->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
-                            </ul>
-                        </li>
-                        </li>
 
                         <li>
-                        <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a>
-                            <ul class="sub">
-                                <li><a href="{{ route('admin_after_market_pricing_history_index', $seal->id) }}"><i class="fa fa-th-list"></i>&nbsp;Pricing History List</a></li>
-                                <li class="nav-item"><a class="nav-link"  href="{{ route('admin_after_market_pricing_history_create', $seal->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Pricing History</a></li>
-                            </ul>
+                            <li class="nav-item"><a class="nav-link"  href="{{ route('admin_seal_show', $seal->id) }}"><i class="fa fa-cog"></i>&nbsp; {{ $seal->name }}</a>
+                                <ul class="sub">
+                                    <li><a href="{{ route('admin_seal_show', $seal->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
+                                    <li><a href="{{ route('admin_seal_information', $seal->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
+                                </ul>
+                            </li>
                         </li>
+
+                        <li>
+                            <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a>
+                                <ul class="sub">
+                                    <li><a href="{{ route('admin_seal_pricing_history_index', $seal->id) }}"><i class="fa fa-th-list"></i>&nbsp;Pricing History List</a></li>
+                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_seal_pricing_history_create', $seal->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Pricing History</a></li>
+                                </ul>
+                            </li>
                         </li>
 
 
-                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_after_market_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; back</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin_after_market_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; back</a>
+                        </li>
                     </ul>
                 </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     @if(Session::has('message'))
                         <div class="row">
-                            <div class="alert alert-success alert-dismissible" role="alert" style="margin-top: -1.3rem; margin-bottom: 1rem; border-radius: 0px 0px 0px 0px;">
-                                <div class="container"><i class="fa fa-check"></i>&nbsp;&nbsp;{{ Session::get('message') }}
+                            <div class="alert alert-{{ Session::get('alert-type') }} alert-dismissible" role="alert" style="margin-top: -1.3rem; margin-bottom: 1rem; border-radius: 0px 0px 0px 0px;">
+                                <div class="container"><i class="fa {{ Session::get('alert-icon') }}"></i> {{ Session::get('message') }}
                                     <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
                             </div>
                         </div>
@@ -46,7 +49,7 @@
                     <div class="row">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <i class="fa fa-plus-circle"></i> ADD PRICING HISTORY FOR {{ strtoupper($project->name) }}
+                                <i class="fa fa-plus-circle"></i> ADD PRICING HISTORY FOR {{ strtoupper($seal->name) }}
                             </div>
                         </div>
                     </div>
@@ -67,7 +70,7 @@
                                             Item History
                                         </div>
                                         <div class="panel-body">
-                                            <form class="form-horizontal" id="addProjectPricingHistoryForm" action="{{ route('admin_add_project_pricing_history', $project->id) }}" method="POST">
+                                            <form class="form-horizontal" id="addProjectPricingHistoryForm" action="{{ route('admin_add_seal_pricing_history', $seal->id) }}" method="POST">
                                                 {{ csrf_field() }}
 
                                                 <div class="form-group{{ $errors->has('po_number') ? ' has-error' : '' }}">
@@ -100,10 +103,11 @@
 
                                                 <div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
                                                     <label for="price" class="col-md-4 control-label">Price:</label>
-
                                                     <div class="col-md-6">
-                                                        <input id="price" type="text" class="form-control" name="price" value="{{ old('price') }}" required autofocus>
-
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon">$</div>
+                                                            <input id="price" type="text" class="form-control" name="price" value="{{ old('price') }}" required autofocus>
+                                                        </div>
                                                         @if ($errors->has('price'))
                                                             <span class="help-block">
                                                             <strong>{{ $errors->first('price') }}</strong>

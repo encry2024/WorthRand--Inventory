@@ -110,9 +110,17 @@ class IndentedProposal extends Model
                 DB::raw('wr_crm_after_markets.part_number as "after_market_pn"'),
                 DB::raw('wr_crm_after_markets.drawing_number as "after_market_dn"'),
                 DB::raw('wr_crm_after_markets.material_number as "after_market_mn"'),
-                DB::raw('wr_crm_after_markets.material_number as "after_market_sn"'),
+                DB::raw('wr_crm_after_markets.serial_number as "after_market_sn"'),
                 DB::raw('wr_crm_after_markets.tag_number as "after_market_tn"'),
                 DB::raw('wr_crm_after_markets.price as "after_market_price"'),
+            'seals.*',
+                DB::raw('wr_crm_seals.name as "seal_name"'),
+                DB::raw('wr_crm_seals.mode as "seal_model"'),
+                DB::raw('wr_crm_seals.drawing_number as "seal_drawing_number'),
+                DB::raw('wr_crm_seals.material_number as "seal_material_number"'),
+                DB::raw('wr_crm_seals.serial_number as "seal_serial_number"'),
+                DB::raw('wr_crm_seals.tag_number as "seal_tag_number"'),
+                DB::raw('wr_crm_seals.price as "seal_price"'),
             'indented_proposal_item.*',
                 DB::raw('wr_crm_indented_proposal_item.id as "indented_proposal_item_id"'),
                 DB::raw('wr_crm_indented_proposal_item.quantity as "indented_proposal_item_quantity"'),
@@ -126,6 +134,10 @@ class IndentedProposal extends Model
             ->leftJoin('after_markets', function($join) {
                 $join->on('indented_proposal_item.item_id', '=', 'after_markets.id')
                     ->where('indented_proposal_item.type', '=', 'after_markets');
+            })
+            ->leftJoin('seals', function($join) {
+                $join->on('indented_proposal_item.item_id', '=', 'seals.id')
+                    ->where('indented_proposal_item.type', '=', 'seals');
             })
             ->where('indented_proposal_item.indented_proposal_id', '=', $indentedProposal->id)->get();
 
@@ -496,7 +508,7 @@ class IndentedProposal extends Model
                     DB::raw('wr_crm_projects.tag_number as "project_tn"'),
                     DB::raw('wr_crm_projects.material_number as "project_mn"'),
                     DB::raw('wr_crm_projects.price as "project_price"'),
-                    'after_markets.*',
+                'after_markets.*',
                     DB::raw('wr_crm_after_markets.name as "after_market_name"'),
                     DB::raw('wr_crm_after_markets.model as "after_market_md"'),
                     DB::raw('wr_crm_after_markets.part_number as "after_market_pn"'),
@@ -505,7 +517,15 @@ class IndentedProposal extends Model
                     DB::raw('wr_crm_after_markets.material_number as "after_market_sn"'),
                     DB::raw('wr_crm_after_markets.tag_number as "after_market_tn"'),
                     DB::raw('wr_crm_after_markets.price as "after_market_price"'),
-                    'indented_proposal_item.*',
+                'seals.*',
+                    DB::raw('wr_crm_seals.name as "seal_name"'),
+                    DB::raw('wr_crm_seals.model as "seal_model"'),
+                    DB::raw('wr_crm_seals.drawing_number as "seal_drawing_number"'),
+                    DB::raw('wr_crm_seals.material_number as "seal_material_number"'),
+                    DB::raw('wr_crm_seals.serial_number as "seal_serial_number"'),
+                    DB::raw('wr_crm_seals.bom_number as "seal_bom_number"'),
+                    DB::raw('wr_crm_seals.price as "seal_price"'),
+                'indented_proposal_item.*',
                     DB::raw('wr_crm_indented_proposal_item.id as "indented_proposal_item_id"'),
                     DB::raw('wr_crm_indented_proposal_item.quantity as "indented_proposal_item_quantity"'),
                     DB::raw('wr_crm_indented_proposal_item.delivery as "indented_proposal_item_delivery"'),
@@ -518,6 +538,10 @@ class IndentedProposal extends Model
                 ->leftJoin('after_markets', function($join) {
                     $join->on('indented_proposal_item.item_id', '=', 'after_markets.id')
                         ->where('indented_proposal_item.type', '=', 'after_markets');
+                })
+                ->leftJoin('seals', function($join) {
+                    $join->on('indented_proposal_item.item_id', '=', 'seals.id')
+                        ->where('indented_proposal_item.type', '=', 'seals');
                 })
                 ->where('indented_proposal_item.indented_proposal_id', '=', $indentedProposal->id)->get();
 

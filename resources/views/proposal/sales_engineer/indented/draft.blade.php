@@ -112,9 +112,9 @@
                                             <td>{{ ++$ctr }}</td>
                                             <td>
                                                 <b>NAME:&nbsp;</b>
-                                                {{ $selectedItem->project_name != "" ? $selectedItem->project_name : $selectedItem->after_market_name }}
+                                                {{ $selectedItem->project_name != "" ? $selectedItem->project_name : ( $selectedItem->after_market_name != '' ? $selectedItem->after_market_name : $selectedItem->seal_name ) }}
                                                 <br>
-                                                <b>PN:&nbsp;</b> {{ $selectedItem->project_pn != "" ? $selectedItem->project_pn : $selectedItem->after_market_pn }}
+                                                <b>PN/BOM Number:&nbsp;</b> {{ $selectedItem->project_pn != "" ? $selectedItem->project_pn : ( $selectedItem->after_market_pn != '' ? $selectedItem->after_market_pn : $selectedItem->seal_bom_number ) }}
                                                 <br>
                                                 <b>MODEL NO.:&nbsp;</b> {{ $selectedItem->project_md != "" ? $selectedItem->project_md : $selectedItem->after_market_md }}
                                                 <br>

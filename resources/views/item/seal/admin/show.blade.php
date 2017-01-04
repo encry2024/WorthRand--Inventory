@@ -23,7 +23,7 @@
                         <li>
                             <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a>
                                 <ul class="sub">
-                                    <li><a href="{{ route('admin_after_market_pricing_history_index', $seal->id) }}"><i class="fa fa-th-list"></i>&nbsp;Pricing History List</a></li>
+                                    <li><a href="{{ route('admin_seal_pricing_history_index', $seal->id) }}"><i class="fa fa-th-list"></i>&nbsp;Pricing History List</a></li>
                                     <li class="nav-item"><a class="nav-link"  href="{{ route('admin_seal_pricing_history_create', $seal->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Pricing History</a></li>
                                 </ul>
                             </li>
@@ -134,7 +134,7 @@
                                                 <label for="material_code" class="col-md-4 control-label">Material Number:</label>
 
                                                 <div class="col-md-6">
-                                                    <input id="material_code" type="text" class="form-control" name="material_code" value="{{ $seal->material_code }}" disabled autofocus>
+                                                    <input id="material_code" type="text" class="form-control" name="material_code" value="{{ $seal->material_number }}" disabled autofocus>
 
                                                     @if ($errors->has('material_code'))
                                                         <span class="help-block">

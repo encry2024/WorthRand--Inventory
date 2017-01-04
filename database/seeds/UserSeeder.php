@@ -54,14 +54,14 @@ class UserSeeder extends Seeder
                     'updated_at' => date('Y-m-d h:i:s')
                 ),
 
-                array(
+                /*array(
                     'name'       => env('NAME', 'Demo User'),
                     'email'      => env('EMAIL', 'demo123@yahoo.com'),
                     'password'   => bcrypt(env('PASS', 'demo123')),
                     'role'       => 'admin',
                     'created_at' => date('Y-m-d h:i:s'),
                     'updated_at' => date('Y-m-d h:i:s')
-                ),
+                ),*/
             )
         );
     }
