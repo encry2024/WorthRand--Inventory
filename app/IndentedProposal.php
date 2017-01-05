@@ -147,7 +147,11 @@ class IndentedProposal extends Model
     public static function saveIndentedProposal($createIndentedProposalRequest)
     {
         $path = storage_path() . '/uploads/users/' . Auth::user()->id . '/indented_proposals';
-        $fileName = $createIndentedProposalRequest->file('fileField')->getClientOriginalName();
+        if($createIndentedProposalRequest->has('fileField')) {
+            $fileName = $createIndentedProposalRequest->file('fileField')->getClientOriginalName();
+        } else {
+            $fileName = '<File not provided>';
+        }
         $indented_proposal = IndentedProposal::find($createIndentedProposalRequest->get('indent_proposal_id'));
         $indented_proposal->customer_id = $createIndentedProposalRequest->get('customer_id');
         $indented_proposal->rfq_number = $createIndentedProposalRequest->get('rfq_number');
@@ -158,7 +162,9 @@ class IndentedProposal extends Model
         $indented_proposal->wpc_reference = $createIndentedProposalRequest->get('wpc_reference');
         $indented_proposal->file_name = $fileName;
 
-        $createIndentedProposalRequest->file('fileField')->move($path , $fileName);
+        if($createIndentedProposalRequest->has('fileField')) {
+            $createIndentedProposalRequest->file('fileField')->move($path , $fileName);
+        }
 
         if($indented_proposal->save()) {
             foreach($createIndentedProposalRequest->all() as $key => $value) {
@@ -228,10 +234,11 @@ class IndentedProposal extends Model
                     }
                 }
             }
-
-
             return redirect()->to('/sales_engineer/search')->with('message', 'Indented Proposal [ WPC Reference: #'.$indented_proposal->wpc_reference.' ] was successfully sent.')
                 ->with('alert', "alert-success")->with('alert-icon', 'glyphicon glyphicon-ok');
+        } else {
+            return redirect()->back()->with('message', 'Failed to send Indented Proposal. Please review your inputs before sending. <i>The System only accepts PDF files.</i>')
+                ->with('alert', "alert-danger")->with('alert-icon', 'glyphicon glyphicon-remove');
         }
     }
 
