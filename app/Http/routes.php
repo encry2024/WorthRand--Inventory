@@ -57,6 +57,10 @@ Route::group(['middlewareGroups' => 'web'], function() {
                 Route::get('/sales_engineer/{sales_engineer}', 'Admin\UserController@showSalesEngineer')->name('admin_show_sales_engineer');
                 Route::get('/sales_engineer/{sales_engineer}/edit', 'Admin\UserController@adminEditSalesEngineer')->name('admin_edit_sales_engineer_information');
                 Route::post('/sales_engineer/{salesEngineer}/update', 'Admin\UserController@adminUpdateSalesEngineer')->name('admin_update_sales_engineer');
+                Route::group(['prefix' => 'user'], function() {
+                    Route::get('/{user}/profile', 'Admin\UserController@showUserProfile')->name('show_user_profile');
+                    Route::patch('/{user}/update', 'Admin\UserController@updateUserProfile')->name('user_update_profile');
+                });
 
                 # ITEMS
                 Route::get('/items', 'Admin\ItemController@index')->name('items');

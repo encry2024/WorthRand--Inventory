@@ -5,143 +5,127 @@
 @stop
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="row">
 
-                <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
-                    <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
-                        <li>
-                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp; {{ $sales_engineer->name }}</a>
-                                <ul class="sub">
-                                    <li><a href="{{ route('admin_show_sales_engineer', $sales_engineer->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
-                                    <li><a href="{{ route('admin_edit_sales_engineer_information', $sales_engineer->id) }}"><i class="fa fa-pencil"></i>&nbsp;Edit</a></li>
-                                </ul>
-                            </li>
-                        </li>
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="{{ route('admin_sales_engineer_index') }}" class="list-group-item" style="font-size: 13px;">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Back
+                    </a>
+                </div>
+            </div>
 
-                        <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#assignCustomerToSalesEngineerModal"><i class="fa fa-map-marker"></i>&nbsp; Assign Customer</a></li>
 
-                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_sales_engineer_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; back</a></li>
-                    </ul>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 ">
+
+                @if(Session::has('message'))
+                    <div class="row">
+                        <div class="alert alert-success alert-dismissible" role="alert" style="margin-top: -1.3rem; border-radius: 0px 0px 0px 0px;">
+                            <div class="container"><i class="fa fa-check"></i>&nbsp;&nbsp;{{ Session::get('message') }}
+                                <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                        </div>
+                    </div>
+                @endif
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="border-top: saddlebrown 3px solid;">
+                            <h4><i class="fa fa-certificate" aria-hidden="true"></i>&nbsp;&nbsp;{{ strtoupper($sales_engineer->name) }}</h4>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active" style="margin-left: 3rem;"><a href="#information" aria-controls="information" role="tab" data-toggle="tab">Information</a></li>
+                    <li role="presentation"><a href="#engineer_customer" aria-controls="engineer_customer" role="tab" data-toggle="tab">Customers</a></li>
+                    <li role="presentation"><a href="#target_revenue" aria-controls="target_revenue" role="tab" data-toggle="tab">Target Revenue</a></li>
+                </ul>
 
-                    @if(Session::has('message'))
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="information">
+                        <br>
                         <div class="row">
-                            <div class="alert alert-success alert-dismissible" role="alert" style="margin-top: -1.3rem; border-radius: 0px 0px 0px 0px;">
-                                <div class="container"><i class="fa fa-check"></i>&nbsp;&nbsp;{{ Session::get('message') }}
-                                    <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-                            </div>
-                        </div>
-                    @endif
+                            <div class="col-lg-12">
+                                <form class="form-horizontal">
+                                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                        <label for="name" class="col-md-4 control-label">Name:</label>
 
-                    <div class="row">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                {{ strtoupper($sales_engineer->name) }}
+                                        <div class="col-md-6">
+                                            <input id="name" type="text" class="form-control" name="name" value="{{ $sales_engineer->name }}" disabled autofocus>
+
+                                            @if ($errors->has('name'))
+                                                <span class="help-block">
+                                                <strong>{{ $errors->first('name') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+                                        <label for="email" class="col-md-4 control-label">E-Mail Address:</label>
+
+                                        <div class="col-md-6">
+                                            <input id="email" type="email" class="form-control" name="email" value="{{ $sales_engineer->email }}" disabled autofocus>
+
+                                            @if ($errors->has('email'))
+                                                <span class="help-block">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h1 class="panel-title">
-                                        Information
-                                    </h1>
-                                </div>
-                                <div class="panel-body">
-                                    <form class="form-horizontal">
-
-                                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                            <label for="name" class="col-md-4 control-label">Name:</label>
-
-                                            <div class="col-md-6">
-                                                <input id="name" type="text" class="form-control" name="name" value="{{ $sales_engineer->name }}" disabled autofocus>
-
-                                                @if ($errors->has('name'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('name') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
-                                            <label for="email" class="col-md-4 control-label">E-Mail Address:</label>
-
-                                            <div class="col-md-6">
-                                                <input id="email" type="email" class="form-control" name="email" value="{{ $sales_engineer->email }}" disabled autofocus>
-
-                                                @if ($errors->has('email'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('email') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                    </form>
+                    <div role="tabpanel" class="tab-pane fade in" id="engineer_customer">
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                            <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">ID</th>
+                                            <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Company Name</th>
+                                            <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;" class="text-right">Actions</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($sales_engineer->customers as $customer)
+                                            <tr>
+                                                <td>{{ $customer->id }}</td>
+                                                <td>{{ $customer->name }}</td>
+                                                <td></td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h1 class="panel-title">Target Revenue</h1>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <label for="targetSale">Target Sale</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">PHP</div>
-                                            <input type="text" class="form-control" name="target_sale" id="targetSale" value="{{ count($sales_engineer->target_revenue) == 0 ? '0.00' : $sales_engineer->target_revenue->target_sale }}" disabled>
-                                        </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade in" id="target_revenue">
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="targetSale">Target Sale</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">PHP</div>
+                                        <input type="text" class="form-control" name="target_sale" id="targetSale" value="{{ count($sales_engineer->target_revenue) == 0 ? '0.00' : $sales_engineer->target_revenue->target_sale }}" disabled>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="targetSale">Current Sale</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">PHP</div>
-                                            <input type="text" class="form-control" name="target_sale" id="targetSale" value="{{ count($sales_engineer->target_revenue) == "" ? '0.00' : $sales_engineer->target_revenue->current_sale }}" disabled>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="targetSale">Current Sale</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">PHP</div>
+                                        <input type="text" class="form-control" name="target_sale" id="targetSale" value="{{ count($sales_engineer->target_revenue) == "" ? '0.00' : $sales_engineer->target_revenue->current_sale }}" disabled>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-lg-6">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h1 class="panel-title">
-                                        {{ $sales_engineer->name }}'s Customers
-                                    </h1>
-                                </div>
-                                <ul class="list-group">
-                                    @foreach($sales_engineer->customers as $customer)
-                                        <li class="list-group-item">
-                                            <div class="row">
-                                                <div class="col-lg-6" style="margin-top: 0.35rem;">
-                                                    <label for="removeBtn" class="control-label col-lg-12" style="font-size: 15px;">{{ $customer->name }}</label>
-                                                </div>
-
-                                                <div class="col-lg-6">
-                                                    <span class=" pull-right" >
-                                                        <a class="btn btn-danger btn-sm" style="font-size: 9px;">
-                                                            <i class="fa fa-remove fa-2x"></i>
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
                     </div>
-
                 </div>
+
             </div>
         </div>
     </div>

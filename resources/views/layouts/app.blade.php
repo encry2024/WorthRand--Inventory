@@ -5,12 +5,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::to('/') }}/logo_4.png">
 
         <title>WorthRand-CRM</title>
 
-        {{-- <link rel="stylesheet" href="{{ URL::to('/') }}/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css"> --}}
+        <link rel="stylesheet" href="{{ URL::to('/') }}/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/bootstrap-3.3.7-dist/css/bootstrap.css">
-        <link rel="stylesheet" href="{{ URL::to('/') }}/font-awesome-4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{ URL::to('/') }}/font-awesome-4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/font-css/worthrand-css.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/searchable-dropdown/content/styles.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/accordion-menu/css/dcaccordion.css">
@@ -44,7 +45,6 @@
         <style>
             body {
                 background-color: white;
-                font-family: "Droid Sans","Droid Arabic Kufi","Helvetica Neue","Helvetica","Arial",sans-serif !important;
             }
         </style>
     </body>

@@ -115,8 +115,8 @@ class User extends Authenticatable
             ->setOptions(array(
                     'datatable' => $data,
                     'title' => 'Total Sales',
-                    'height' => 400,
-                    'width' => 500
+                    'height' => 500,
+                    'width' => 700
                 )
             );
 

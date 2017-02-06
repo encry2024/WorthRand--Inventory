@@ -45,7 +45,8 @@ class UserController extends Controller
 
     public function showSalesEngineers()
     {
-        $users = User::whereRole('sales_engineer')->get();
+        $users = User::whereRole('sales_engineer')->paginate(20);
+        $users->setPath('/sales_engineer');
 
         return view('sales_engineer.admin.index', compact('users'));
     }
@@ -108,5 +109,10 @@ class UserController extends Controller
                 ->with('message', 'You have successfully update your information')
                 ->with('alert', 'alert alert-success');
         }
+    }
+
+    public function showUserProfile(User $user)
+    {
+        return view('user.show', compact('user'));
     }
 }

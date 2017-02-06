@@ -7,8 +7,8 @@ namespace Composer\Autoload;
 class ComposerStaticInit011164d78866555b94f07a18a36aad7c
 {
     public static $files = array (
-        '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
@@ -86,10 +86,12 @@ class ComposerStaticInit011164d78866555b94f07a18a36aad7c
             'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
             'Doctrine\\Common\\Cache\\' => 22,
+            'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
         ),
         'C' => 
         array (
+            'Cron\\' => 5,
             'ClassPreloader\\' => 15,
             'Carbon\\' => 7,
         ),
@@ -103,8 +105,8 @@ class ComposerStaticInit011164d78866555b94f07a18a36aad7c
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -230,9 +232,17 @@ class ComposerStaticInit011164d78866555b94f07a18a36aad7c
         array (
             0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
         ),
+        'Doctrine\\Common\\Annotations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
+        ),
         'Doctrine\\Common\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
+        ),
+        'Cron\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron',
         ),
         'ClassPreloader\\' => 
         array (
@@ -300,17 +310,6 @@ class ComposerStaticInit011164d78866555b94f07a18a36aad7c
             array (
                 0 => __DIR__ . '/..' . '/doctrine/collections/lib',
             ),
-            'Doctrine\\Common\\Annotations\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/doctrine/annotations/lib',
-            ),
-        ),
-        'C' => 
-        array (
-            'Cron' => 
-            array (
-                0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src',
-            ),
         ),
     );
 
@@ -325,6 +324,7 @@ class ComposerStaticInit011164d78866555b94f07a18a36aad7c
         'AddColumnsOnIndentedProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_12_054141_add_columns_on_indented_proposals_table.php',
         'AddColumnsOnTargetRevenueHistoriesTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_16_035416_add_columns_on_target_revenue_histories_table.php',
         'AddDrawingNumberColumnOnAfterMarketsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_13_192257_add_drawing_number_column_on_after_markets_table.php',
+        'AddFileNameOnProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_16_013034_add_file_name_on_proposals_table.php',
         'AddForeignKeyToIndentedProposalItemTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_03_172224_add_foreign_key_to_indented_proposal_item_table.php',
         'AddIndexFieldOnAllColumnsOnAfterMarketsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_13_181031_add_index_field_on_all_columns_on_after_markets_table.php',
         'AddIndexOnCcnNumberOnAfterMarketsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_13_221705_add_index_on_ccn_number_on_after_markets_table.php',
@@ -332,12 +332,15 @@ class ComposerStaticInit011164d78866555b94f07a18a36aad7c
         'AddInvoiceToAddressOnIndentedProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_05_215030_add_invoice_to_address_on_indented_proposals_table.php',
         'AddMoreColumnOnTableIndentedProposals' => __DIR__ . '/../..' . '/database/migrations/2016_10_11_060048_add_more_column_on_table_indented_proposals.php',
         'AddMorphColumnsOnIndentedProposalItemTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_03_192159_add_morph_columns_on_indented_proposal_item_table.php',
+        'AddNotificationDateOnProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_21_163219_add_notification_date_on_proposals_table.php',
         'AddOtherColumns' => __DIR__ . '/../..' . '/database/migrations/2016_10_11_003120_add_other_columns.php',
         'AddPoNumberColumnOnProjectPricingHistoryTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_21_053508_add_po_number_column_on_project_pricing_history_table.php',
         'AddPriceColumnOnAfterMarketsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_04_235127_add_price_column_on_after_markets_table.php',
         'AddPriceColumnOnProjectsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_23_105336_add_price_column_on_projects_table.php',
         'AddProjectIdOnAfterMarketsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_13_231726_add_project_id_on_after_markets_table.php',
+        'AddRfqNumberOnIndentedProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_04_150922_add_rfq_number_on_indented_proposals_table.php',
         'AddRoleColumnOnTableUsers' => __DIR__ . '/../..' . '/database/migrations/2016_09_12_190530_add_role_column_on_table_users.php',
+        'AddSecretaryOnUsersTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_07_052643_add_secretary_on_users_table.php',
         'AddShipToAddressOnIndentedProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_05_215433_add_ship_to_address_on_indented_proposals_table.php',
         'AddStatusColumnOnIndentedProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_03_164138_add_status_column_on_indented_proposals_table.php',
         'AddTermsOfPaymentOnIndentedProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_04_225815_add_terms_of_payment_on_indented_proposals_table.php',
@@ -348,8 +351,10 @@ class ComposerStaticInit011164d78866555b94f07a18a36aad7c
         'AddUniqueOnMaterialNumberColumn' => __DIR__ . '/../..' . '/database/migrations/2016_09_18_095141_add_unique_on_material_number_column.php',
         'AddUserIdOnBuyAndSellProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_20_042257_add_user_id_on_buy_and_sell_proposals_table.php',
         'AddUserIdOnCustomersTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_12_063633_add_user_id_on_customers_table.php',
+        'AddWpcReferenceOnIndentedProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_04_163829_add_wpc_reference_on_indented_proposals_table.php',
         'ChangeDataFieldsOnIndentedProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_03_173422_change_data_fields_on_indented_proposals_table.php',
         'ChangePricingDateDataFiledToInteger' => __DIR__ . '/../..' . '/database/migrations/2016_09_21_173755_change_pricing_date_data_filed_to_integer.php',
+        'ChangePricingDateOnSealPricingHistoryTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_24_152052_change_pricing_date_on_seal_pricing_history_table.php',
         'ChangeProposalsToIndentedProposals' => __DIR__ . '/../..' . '/database/migrations/2016_10_03_164133_change_proposals_to_indented_proposals.php',
         'CreateAfterMarketPricingHistories' => __DIR__ . '/../..' . '/database/migrations/2016_09_29_055403_create_after_market_pricing_histories.php',
         'CreateAfterMarketsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_13_180522_create_after_markets_table.php',
@@ -358,6 +363,7 @@ class ComposerStaticInit011164d78866555b94f07a18a36aad7c
         'CreateBuyAndSellProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_04_172029_create_buy_and_sell_proposals_table.php',
         'CreateCategoriesTabe' => __DIR__ . '/../..' . '/database/migrations/2016_09_01_221949_create_categories_tabe.php',
         'CreateCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_08_153257_create_categories_table.php',
+        'CreateChequesTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_14_223724_create_cheques_table.php',
         'CreateCollectionsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_06_112134_create_collections_table.php',
         'CreateCustomerUserTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_11_185725_create_customer_user_table.php',
         'CreateCustomersTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_08_092112_create_customers_table.php',
@@ -378,6 +384,8 @@ class ComposerStaticInit011164d78866555b94f07a18a36aad7c
         'DropCustomerUserTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_12_063422_drop_customer_user_table.php',
         'DropEntrustSetupTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_12_181035_drop_entrust_setup_table.php',
         'DropPolymorphicColumnOnIndentedProposalItemTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_04_225926_drop_polymorphic_column_on_indented_proposal_item_table.php',
+        'DropProjectIdOnAftermarketsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_29_090149_drop_project_id_on_aftermarkets_table.php',
+        'DropProjectIdOnSealsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_27_152516_drop_project_id_on_seals_table.php',
         'DropProjectsTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_08_093808_drop_projects_table.php',
         'EntrustSetupTables' => __DIR__ . '/../..' . '/database/migrations/2016_09_11_204014_entrust_setup_tables.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
@@ -844,6 +852,7 @@ class ComposerStaticInit011164d78866555b94f07a18a36aad7c
         'PHP_Token_STRING' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_STRING_CAST' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_STRING_VARNAME' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'PHP_Token_SUPER' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_SWITCH' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_Stream' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token/Stream.php',
         'PHP_Token_Stream_CachingFactory' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token/Stream/CachingFactory.php',
@@ -858,6 +867,7 @@ class ComposerStaticInit011164d78866555b94f07a18a36aad7c
         'PHP_Token_UNSET' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_UNSET_CAST' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_USE' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'PHP_Token_USE_FUNCTION' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_VAR' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_VARIABLE' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_WHERE' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
@@ -875,6 +885,7 @@ class ComposerStaticInit011164d78866555b94f07a18a36aad7c
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'RemoveBranchIdOnIndentedAndBuyAndSellProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_07_004545_remove_branch_id_on_indented_and_buy_and_sell_proposals_table.php',
         'RemoveColumnsOnBuyAndSellProposal' => __DIR__ . '/../..' . '/database/migrations/2016_10_04_195803_remove_columns_on_buy_and_sell_proposal.php',
         'RemoveColumnsOnBuyAndSellProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_20_041956_remove_columns_on_buy_and_sell_proposals_table.php',
         'RemoveColumnsOnIndentedProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_15_135209_remove_columns_on_indented_proposals_table.php',

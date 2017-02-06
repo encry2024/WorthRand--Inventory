@@ -5,33 +5,12 @@
 @stop
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="row">
 
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
-                    <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
-                        <li>
-                            <li class="nav-item"><a class="nav-link"  href="{{ route('admin_show_branch', $branch->id) }}"><i class="fa fa-cog"></i>&nbsp; {{ $branch->name }}</a>
-                                <ul class="sub">
-                                    <li><a href="{{ route('admin_show_branch', $branch->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
-                                    <li><a href="{{ route('admin_edit_branch_information', $branch->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
-                                </ul>
-                            </li>
-                        </li>
-
-                        <li>
-                            <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Branch</a>
-                                <ul class="sub">
-                                    <li><a href="{{ route('admin_branch_branch_list', $branch->id) }}"><i class="fa fa-th-list"></i>&nbsp;Branch List</a></li>
-                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_create_branch', $branch->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Branch</a></li>
-                                </ul>
-                            </li>
-                        </li>
-
-
-                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_branch_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; back</a></li>
-                    </ul>
+                    
                 </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">

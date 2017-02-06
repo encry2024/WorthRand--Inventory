@@ -62,7 +62,7 @@
                                         <tbody>
                                         @foreach($project->project_pricing_history as $pricing_history)
                                             <tr>
-                                                <td>{{ ((($seals->currentPage() - 1) * $seals->perPage()) + ($ctr++) + 1) }}</td>
+                                                <td></td>
                                                 <td>{{ $pricing_history->po_number }}</td>
                                                 <td>{{ $pricing_history->pricing_date }}</td>
                                                 <td>{{ $pricing_history->price }}</td>
