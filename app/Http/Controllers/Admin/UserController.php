@@ -113,6 +113,25 @@ class UserController extends Controller
 
     public function showUserProfile(User $user)
     {
-        return view('user.show', compact('user'));
+        return view('user.admin.show', compact('user'));
+    }
+
+    public function adminEditUser(User $user)
+    {
+        return view('user.admin.edit', compact('user'));
+    }
+
+    public function updateUserProfile(Request $request, User $user)
+    {
+        $user->update(['name' => $request->get('name'), 'email' => $request->get('email')]);
+
+        return redirect()->back()->with('message', 'User ' . $user->name . '\'s information was successfully updated');
+    }
+
+    public function adminResetPasswordUser(User $user)
+    {
+        $user->update(['password' => bcrypt('worthrand123')]);
+
+        return redirect()->back()->with('message', 'Reset Password was successful');
     }
 }

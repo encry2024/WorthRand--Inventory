@@ -58,8 +58,10 @@ Route::group(['middlewareGroups' => 'web'], function() {
                 Route::get('/sales_engineer/{sales_engineer}/edit', 'Admin\UserController@adminEditSalesEngineer')->name('admin_edit_sales_engineer_information');
                 Route::post('/sales_engineer/{salesEngineer}/update', 'Admin\UserController@adminUpdateSalesEngineer')->name('admin_update_sales_engineer');
                 Route::group(['prefix' => 'user'], function() {
+                    Route::get('/{user}/edit', 'Admin\UserController@adminEditUser')->name('admin_edit_user');
                     Route::get('/{user}/profile', 'Admin\UserController@showUserProfile')->name('show_user_profile');
-                    Route::patch('/{user}/update', 'Admin\UserController@updateUserProfile')->name('user_update_profile');
+                    Route::patch('/{user}/update', 'Admin\UserController@updateUserProfile')->name('admin_update_user');
+                    Route::patch('/{user}/reset_password', 'Admin\UserController@adminResetPasswordUser')->name('admin_reset_password_user');
                 });
 
                 # ITEMS
@@ -287,6 +289,11 @@ Route::group(['middlewareGroups' => 'web'], function() {
                 Route::get('/project/{project}/pricing_history', 'SalesEngineer\ItemController@salesEngineerProjectPricingHistoryIndex')->name('se_project_pricing_history_index');
                 Route::get('/project/dashboard', 'SalesEngineer\ItemController@adminProjectDashboard')->name('se_project_dashboard');
 
+            # SEALS
+                Route::get('/seals', 'SalesEngineer\ItemController@salesEngineerSealIndex')->name('se_seal_index');
+                Route::group(['prefix' => 'seal'], function() {
+                    Route::get('/{seal}', 'SalesEngineer\ItemController@salesEngineerShowSeal')->name('se_show_seal');
+                });
 
             # PRICING HISTORY
                 Route::get('/pricing_history', 'SalesEngineer\ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');

@@ -24,6 +24,7 @@
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped">
                                 <thead>
+                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;"><input type="checkbox" id="select_all" name="selector" value="Select All"></th>
                                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">ID</th>
                                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Name</th>
                                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">E-mail</th>
@@ -33,6 +34,9 @@
                                 <tbody>
                                 @foreach($users as $user)
                                     <tr>
+                                        <td id="checkboxColumn" style="border: none; border-bottom: 1px solid #ddd;">
+                                            <input type="checkbox" class="users" name="users[]" value="{{ $user->name.'/'.$user->id }}">
+                                        </td>
                                         <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $user->id }}</b></td>
                                         <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $user->name }}</b></td>
                                         <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $user->email }}</b></td>
@@ -50,4 +54,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() { 
+            var count = 0;
+            var checkCount = 0;
+            var singularCount = 0;
+
+            $("#select_all").change(function() {
+                $(".users").prop('checked', $(this).prop("checked"));
+                count = document.querySelectorAll('.users:checked').length;
+                en_dis_delBtn(count);
+            });
+
+            $(".users").change(function() {
+                singularCount = document.querySelectorAll('.users:checked').length;
+
+                en_dis_delBtn(singularCount);
+            });
+
+            function en_dis_delBtn (checkCount) {
+                if (checkCount == 0) {
+                    $("#delBtn").addClass('disabled');
+                } else {
+                    $("#delBtn").removeClass('disabled');
+                }
+            }
+        });
+    </script>
 @endsection

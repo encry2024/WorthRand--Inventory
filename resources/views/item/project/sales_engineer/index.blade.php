@@ -5,62 +5,58 @@
 @stop
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="row">
-                @include('layouts.se-sidebar')
-                <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
+            @include('layouts.se-sidebar')
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="border-top: saddlebrown 3px solid;">
+                            <h4><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;PROJECTS</h4>
+                        </div>
+                    </div>
+                </div>
+
+                @if(count($projects) != 0)
                     <div class="row">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                PROJECT
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">#</th>
+                                        <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Name</th>
+                                        <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Model</th>
+                                        <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Serial Number</th>
+                                        <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Tag Number</th>
+                                        <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Drawing Number</th>
+                                        <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;" class="text-right">Actions</th>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($projects as $project)
+                                        <tr>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $project->id }}</b></td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $project->name }}</b></td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $project->model }}</b></td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $project->serial_number }}</b></td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $project->tag_number }}</b></td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $project->drawing_number }}</b></td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;" class="text-right">
+                                                <b><a href="{{ route('se_project_show', $project->id) }}" class="btn btn-sm btn-success">View Project</a></b>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-
-                    @if(count($projects) != 0)
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>No. of After Markets</th>
-                                            <th>Model</th>
-                                            <th>Serial Number</th>
-                                            <th>Tag Number</th>
-                                            <th>Drawing Number</th>
-                                            <th>Actions</th>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($projects as $project)
-                                            <tr>
-                                                <td>{{ $project->id }}</td>
-                                                <td>{{ $project->name }}</td>
-                                                <td>{{ count($project->after_markets) }}</td>
-                                                <td>{{ $project->model }}</td>
-                                                <td>{{ $project->serial_number }}</td>
-                                                <td>{{ $project->tag_number }}</td>
-                                                <td>{{ $project->drawing_number }}</td>
-                                                <td>
-                                                    <a href="{{ route('se_project_show', $project->id) }}" class="btn btn-sm btn-success">View Project</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                @else
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="alert search-error" role="alert" >There are no currently available Projects</div>
                         </div>
-                    @else
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;">There are no currently available Projects</div>
-                            </div>
-                        </div>
-                    @endif
-                </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

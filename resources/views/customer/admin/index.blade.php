@@ -52,7 +52,7 @@
                 @else
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;"><b>You have 0 records for Customers.</b></div>
+                            <div class="alert search-error" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;"><b>You have 0 records for Customers.</b></div>
                         </div>
                     </div>
                 @endif

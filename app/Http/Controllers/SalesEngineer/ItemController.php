@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Project;
+use App\Seal;
 use DB;
 use App\Http\Controllers\Controller;
 
@@ -52,6 +53,19 @@ class ItemController extends Controller
     public function afterMarketPricingHistoryIndex(AfterMarket $afterMarket)
     {
         return view('item.after_market.sales_engineer.pricing_history.index', compact('afterMarket'));
+    }
+
+    public function salesEngineerSealIndex()
+    {
+        $seals = Seal::paginate(20);
+        $seals->setPath('/seals');
+
+        return view('item.seal.sales_engineer.index', compact('seals'));
+    }
+
+    public function salesEngineerShowSeal(Seal $seal)
+    {
+        # code...
     }
 
     public function getItemBasedOnCategory($category)

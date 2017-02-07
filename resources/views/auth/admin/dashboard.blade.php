@@ -54,9 +54,7 @@
 
                                         <tbody>
                                         @foreach($indented_proposals as $indented_proposal)
-                                            <tr class="
-
-                                            ">
+                                            <tr>
                                                 <td style="border: none; border-bottom: 1px solid #ddd;">{{ ((($indented_proposals->currentPage() - 1) * $indented_proposals->perPage()) + ($ctr++) + 1) }}</td>
                                                 <td style="border: none; border-bottom: 1px solid #ddd;">@if($indented_proposal->purchase_order == '')
                                                         <span class='label label-danger'>Not Provided / Draft Proposal</span>

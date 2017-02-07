@@ -24,6 +24,7 @@ class CreateIndentedProposalRequest extends Request
     public function rules()
     {
         return [
+            'order_entry_no'    => 'required|unique:indented_proposals,order_entry_no',
             'indent_proposal_id' => 'required',
             'wpc_reference'    => 'required|unique:indented_proposals,wpc_reference',
             'customer_id'       => 'required|exists:customers,id',
@@ -31,7 +32,19 @@ class CreateIndentedProposalRequest extends Request
             'quantity.*'        => 'required',
             'price.*'           => 'required',
             'delivery.*'        => 'required',
-            'fileField'         => 'mimes:pdf|max:10000'
+            'fileField'         => 'mimes:pdf,xlsx,xls|max:10000',
+            'ship_via'          => 'required',
+            'packing'           => 'required',
+            'documents'         => 'required',
+            'insurance'         => 'required',
+            'bank_detail_owner' => 'required',
+            'bank_detail_address' => 'required',
+            'bank_detail_swift_code' => 'required',
+            'bank_detail_account_name' => 'required',
+            'commission_note' => 'required',
+            'commission_address' => 'required',
+            'commission_account_number' => 'required',
+            'commission_swift_code' => 'required'
         ];
     }
 

@@ -9,13 +9,11 @@
 
         <title>WorthRand-CRM</title>
 
-        <link rel="stylesheet" href="{{ URL::to('/') }}/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="{{ URL::to('/') }}/bootstrap-3.3.7-dist/css/bootstrap.css">
+        <link rel="stylesheet" href="{{ URL::to('/') }}/bootstrap-3.3.7/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{{ URL::to('/') }}/bootstrap-3.3.7/css/bootstrap.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/font-awesome-4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/font-css/worthrand-css.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/searchable-dropdown/content/styles.css">
-        <link rel="stylesheet" href="{{ URL::to('/') }}/accordion-menu/css/dcaccordion.css">
-        <link rel="stylesheet" href="{{ URL::to('/') }}/accordion-menu/css/skins/black.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/alertifyjs/css/themes/default.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/alertifyjs/css/alertify.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/select2.css">
@@ -32,8 +30,17 @@
     </head>
 
     <body id="app-layout">
+        <div class="container">
+            @yield('content')
 
-        @yield('content')
+            <div class="footer">
+                <div class="col-lg-12">
+                    <hr/>
+                    <label class="size-12 app-info-label" for=""><span class=""><kbd>© 2016 WORTHRAND INVENTORY CRM</kbd></span></label>
+                    <label class=" size-12 app-info-label" for="" style="float: right;"><kbd>WORTHRAND INVENTORY CRM &mdash; Version: 0.1.0-BETA</kbd></label>
+                </div>
+            </div>
+        </div>
         <script>
         jQuery(document).ready(function($) {
             jQuery('#accordion').dcAccordion();

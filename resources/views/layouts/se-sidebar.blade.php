@@ -1,21 +1,12 @@
-<div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
-    <ul id="accordion" class="nav nav-pills nav-stacked  sidebar-menu">
-        <li class="nav-item {{ Request::route()->getName() == 'se_dashboard' ? 'active' : '' }}"><a class="nav-link" href="{{ route('se_dashboard') }}" class="nav-link"><i class="fa fa-tachometer"></i>&nbsp; Dashboard</a></li>
-
-        <li class="nav-item {{ Request::route()->getName() == 'customer_index' ? 'active' : ''}}"><a class="nav-link" href="{{ route('customer_index') }}"><i class="fa fa-star" aria-hidden="true"></i>&nbsp; My Customer List</a></li>
-
-        <li>
-            <li class="nav-item {{ Request::route()->getName() == 'items' ? 'active' : '' }}"><a class="nav-link" href="{{ route('items') }}"><i class="fa fa-diamond" aria-hidden="true"></i>&nbsp; Items</a>
-                <ul class="sub">
-                    <li><a href="{{ route('se_project_index') }}"><i class="fa fa-cog"></i>&nbsp;Project List</a></li>
-                    <li><a href="{{ route('aftermarket_index') }}"><i class="fa fa-cogs"></i>&nbsp;AfterMarket List</a></li>
-                    <li><a class="nav-link"  href="#"><i class="fa fa-file-text-o"></i>&nbsp; Seal</a></li>
-                </ul>
-            </li>
-        </li>
-
-        {{--<li class="nav-item {{ Request::route()->getName() == 'se_pricing_history_index' ? 'active' : '' }}"><a class="nav-link" href="{{ route('se_pricing_history_index') }}"><i class="fa fa-list-alt"></i>&nbsp; Pricing History</a></li>--}}
-
-        <li class="nav-item {{ Request::route()->getName() == 'search' ? 'active' : '' }}"><a class="nav-link" href="{{ route('search') }}"><i class="fa fa-search"></i>&nbsp; Search</a></li>
-    </ul>
+<div class="col-md-3">
+    <div class="list-group">
+        <a href="{{ route('se_dashboard') }}" class="list-group-item {!! Request::route()->getName() == 'se_dashboard' ? 'active' : '' !!}" style="font-size: 13px;">
+            <i class="fa fa-th-large" aria-hidden="true"></i>&nbsp;&nbsp;Dashboard
+        </a>
+        <a href="{{ route('customer_index') }}" class="list-group-item {!! Request::route()->getName() == 'customer_index' ? 'active' : '' !!}" style="font-size: 13px;"><i class="fa fa-users"></i>&nbsp;&nbsp;My Customers</a>
+        <a href="{{ route('se_project_index') }}" class="list-group-item {!! Request::route()->getName() == 'se_project_index' ? 'active' : '' !!}" style="font-size: 13px;"><i class="fa fa-cog"></i>&nbsp;&nbsp;Project List</a></li>
+        <a href="{{ route('aftermarket_index') }}" class="list-group-item {!! Request::route()->getName() == 'aftermarket_index' ? 'active' : '' !!}" style="font-size: 13px;"><i class="fa fa-cogs"></i>&nbsp;&nbsp;AfterMarket List</a>
+        <a href="{{ route('se_seal_index') }}" class="list-group-item {!! Request::route()->getName() == 'se_seal_index' ? 'active' : '' !!}"><i class="fa fa-file-text-o" style="font-size: 13px;"></i>&nbsp;&nbsp;Seal List</a>
+        <a href="{{ route('search') }}" class="list-group-item {!! Request::route()->getName() == 'search' ? 'active' : '' !!}" style="font-size: 13px;"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;&nbsp;Make An Order</a>
+    </div>
 </div>

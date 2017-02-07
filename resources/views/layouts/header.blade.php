@@ -28,6 +28,7 @@
                             <li><a href="{{ url('logout') }}"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;Logout</a></li>
                             <li><a href="#"><i class="fa fa-question-circle" aria-hidden="true"></i>&nbsp;&nbsp;Help</a></li>
                             <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;&nbsp;Report an issue</a></li>
+                            <li><a href="#"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;&nbsp;Patch Notes</a></li>
                         </ul>
                     </li>
                 @endif
