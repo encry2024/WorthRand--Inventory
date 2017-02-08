@@ -1,5 +1,5 @@
-<nav class="navbar navbar-default navbar-fixed-top" style="order-radius: 0px 0px 0px 0px; background-color: white;">
-    <div class="container-fluid">
+<nav class="navbar navbar-default" style="border-radius: 0px 0px 0px 0px; background-color: white;">
+    <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -17,21 +17,22 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
                 @else
-                    <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hello, {{ Auth::user()->name }} <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
+                <p class="navbar-text" style="margin-top: 2rem;">Welcome,</p>
+                    <li class="dropdown">
+                    <button href="#" style="outline: none; margin-top: 0.75rem; text-shadow: none; font-size: 14px;" class="btn btn-default navbar-btn btn-lg dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }} <span class="caret"></span></button>
+                        <ul class="dropdown-menu" style="margin-top: 0.55rem;">
                             <li><a href="{{ route(Auth::user()->role . '_user_profile') }}"><i class="fa fa-user"></i>&nbsp;&nbsp;Profile</a></li>
                             <li><a href="{{ url('logout') }}"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;Logout</a></li>
+                            <li><a href="#"><i class="fa fa-question-circle" aria-hidden="true"></i>&nbsp;&nbsp;Help</a></li>
+                            <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;&nbsp;Report an issue</a></li>
+                            <li><a href="#"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;&nbsp;Patch Notes</a></li>
                         </ul>
                     </li>
-                    <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;&nbsp;Report an issue</a></li>
-                    <li><a href="#"><i class="fa fa-question-circle" aria-hidden="true"></i>&nbsp;&nbsp;Help</a></li>
                 @endif
             </ul>
-
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>

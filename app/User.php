@@ -115,8 +115,8 @@ class User extends Authenticatable
             ->setOptions(array(
                     'datatable' => $data,
                     'title' => 'Total Sales',
-                    'height' => 400,
-                    'width' => 500
+                    'height' => 500,
+                    'width' => 700
                 )
             );
 
@@ -174,7 +174,7 @@ class User extends Authenticatable
                 'title' => '[5] Most Sold Projects',
                 'is3D' => true,
                 'height' => 400,
-                'width' => 570
+                'width' => 500
             ));
 
         // Aftermarket Chart
@@ -218,7 +218,7 @@ class User extends Authenticatable
                 'title' => '[5] Most Sold Aftermarkets',
                 'is3D' => true,
                 'height' => 400,
-                'width' => 600
+                'width' => 500
             ));
 
         return view('auth.sales_engineer.dashboard', compact('chartForMostSoldProjects', 'chartForMostSoldAftermarket',

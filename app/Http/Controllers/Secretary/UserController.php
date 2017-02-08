@@ -15,7 +15,6 @@ use App\BuyAndSellProposalItem;
 
 class UserController extends Controller
 {
-    //
     public function dashboard()
     {
         $ctr = 0;

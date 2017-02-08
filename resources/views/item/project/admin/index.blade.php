@@ -5,69 +5,64 @@
 @stop
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="row">
-                @include('layouts.admin-sidebar')
-                <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-                    <div class="row">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                PROJECT
-                            </div>
+
+            @include('layouts.admin-sidebar')
+
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="border-top: saddlebrown 3px solid;">
+                            <h4><i class="fa fa-cog"></i>&nbsp;&nbsp;PROJECTS</h4>
                         </div>
                     </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <a href="{{ route('create_project') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add Project</a>
-                        </div>
-                    </div>
-                    <br>
-
-                    @if(count($projects) != 0)
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Model</th>
-                                        <th>Serial Number</th>
-                                        <th>Tag Number</th>
-                                        <th>Drawing Number</th>
-                                        <th>Date Created</th>
-                                        <th>Actions</th>
-                                    </thead>
-                                    <tbody>
+                @if(count($projects) != 0)
+                <div class="row">
+                    <div class="col-lg-12">
+                        <a href="{{ route('create_project') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add Project</a>
+                        <hr>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">ID</th>
+                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Name</th>
+                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Model</th>
+                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Serial Number</th>
+                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Tag Number</th>
+                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Drawing Number</th>
+                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Date Created</th>
+                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;" class="text-right">Actions</th>
+                                </thead>
+                                <tbody>
                                     @foreach($projects as $project)
                                         <tr>
-                                            <td>{{ $project->id }}</td>
-                                            <td>{{ $project->name }}</td>
-                                            <td>{{ $project->model }}</td>
-                                            <td>{{ $project->serial_number }}</td>
-                                            <td>{{ $project->tag_number }}</td>
-                                            <td>{{ $project->drawing_number }}</td>
-                                            <td>{{ date('F d, Y', strtotime($project->created_at)) }}</td>
-                                            <td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;">{{ $project->id }}</td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;">{{ $project->name }}</td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;">{{ $project->model }}</td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;">{{ $project->serial_number }}</td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;">{{ $project->tag_number }}</td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;">{{ $project->drawing_number }}</td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;">{{ date('m/d/Y', strtotime($project->created_at)) }}</td>
+                                            <td class="text-right">
                                                 <a href="{{ route('admin_project_show', $project->id) }}" class="btn btn-sm btn-success">View Project</a>
                                             </td>
                                         </tr>
                                     @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    @else
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;">You have 0 records for Projects.</div>
-                            </div>
-                        </div>
-                    @endif
                 </div>
+                @else
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;"><b>You have 0 records for Projects.</b></div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

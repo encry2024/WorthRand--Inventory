@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Project;
+use App\Seal;
 use DB;
 use App\Http\Controllers\Controller;
 
@@ -54,31 +55,69 @@ class ItemController extends Controller
         return view('item.after_market.sales_engineer.pricing_history.index', compact('afterMarket'));
     }
 
+    public function salesEngineerSealIndex()
+    {
+        $seals = Seal::paginate(20);
+        $seals->setPath('/seals');
+
+        return view('item.seal.sales_engineer.index', compact('seals'));
+    }
+
+    public function salesEngineerShowSeal(Seal $seal)
+    {
+        # code...
+    }
+
     public function getItemBasedOnCategory($category)
     {
         $itemArray = array();
         $items = DB::table($category)->get();
 
-        foreach($items as $item) {
-            $pricing_history = DB::table(str_singular($category).'_pricing_histories')
-            ->where(str_singular($category).'_pricing_histories.' . str_singular($category) . '_id', '=', $item->id)
-            ->latest()->get();
+        if($category != 'seals') {
+            foreach($items as $item) {
+                $pricing_history = DB::table(str_singular($category).'_pricing_histories')
+                ->where(str_singular($category).'_pricing_histories.' . str_singular($category) . '_id', '=', $item->id)
+                ->latest()->get();
 
-            $itemArray['suggestions'][] = [
-                'data' => $item->id,
-                'item_id' => $item->id,
-                'value' => $item->name,
-                'material_number' => $item->material_number,
-                'ccn_number' => $item->ccn_number,
-                'part_number' => $item->part_number,
-                'model' => $item->model,
-                'reference_number' => $item->reference_number,
-                'serial_number' => $item->serial_number,
-                'drawing_number' => $item->drawing_number,
-                'tag_number' => $item->tag_number,
-                'table_name' => $category,
-                'pricinHistoryArray' => $pricing_history
-            ];
+                $itemArray['suggestions'][] = [
+                    'data' => $item->id,
+                    'item_id' => $item->id,
+                    'value' => $item->name,
+                    'dataCollection1' => $item->material_number,
+                    'dataCollection2' => $item->ccn_number,
+                    'dataCollection3' => $item->part_number,
+                    'dataCollection4' => $item->model,
+                    'dataCollection5' => $item->reference_number,
+                    'dataCollection6' => $item->serial_number,
+                    'dataCollection7' => $item->drawing_number,
+                    'dataCollection8' => $item->tag_number,
+                    'table_name' => $category,
+                    'pricinHistoryArray' => $pricing_history,
+
+                ];
+            }
+        } else {
+            foreach($items as $item) {
+                $pricing_history = DB::table('seal_pricing_histories')
+                    ->where('seal_pricing_histories.seal_id', '=', $item->id)
+                    ->latest()->get();
+
+                $itemArray['suggestions'][] = [
+                    'data' => $item->id,
+                    'item_id' => $item->id,
+                    'value' => $item->name,
+                    'dataCollection1' => $item->material_number,
+                    'dataCollection2' => $item->drawing_number,
+                    'dataCollection3' => $item->bom_number,
+                    'dataCollection4' => $item->end_user,
+                    'dataCollection5' => $item->seal_type,
+                    'dataCollection6' => $item->size,
+                    'dataCollection7' => $item->code,
+                    'dataCollection8' => $item->model,
+                    'table_name' => $category,
+                    'pricinHistoryArray' => $pricing_history,
+                ];
+            }
         }
 
         return json_encode($itemArray);

@@ -33,7 +33,7 @@ class BuyAndSellProposal extends Model
     public static function salesEngineerPostCreateBuyAndSellProposal($request)
     {
         if(trim($request->get('array_id')) == "") {
-            return redirect()->back()->with('message', 'You didn\'t select any item')->with('msg_icon', "alert-danger");
+            return redirect()->back()->with('message', 'You didn\'t select any item')->with('alert', "search-error")->with('msg_icon', 'glyphicon glyphicon-warning-sign');
         } else {
             $array_id = [];
             $item_ids = explode(',', $request->get('array_id'));

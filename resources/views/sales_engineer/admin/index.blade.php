@@ -5,46 +5,50 @@
 @stop
 
 @section('content')
-    <div class="container-fluid">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="row">
+    <div class="container">
+        <div class="col-lg-12">
                 @include('layouts.admin-sidebar')
-                <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                     
                     <div class="row">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                                SALES ENGINEERS
+                            <div class="panel-heading" style="border-top: saddlebrown 3px solid;">
+                                <h4><i class="fa fa-certificate" aria-hidden="true"></i>&nbsp;&nbsp;SALES ENGINEER</h4>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="col-lg-12">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>E-mail</th>
-                                        <th class="text-right">Actions</th>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($users as $user)
-                                            <tr>
-                                                <td>{{ $user->id }}</td>
-                                                <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td class="text-right">
-                                                    <a href="#" class="btn btn-sm btn-danger">Deactivate</a>
-                                                    <a href="{{ route('admin_show_sales_engineer', $user->id) }}" class="btn btn-sm btn-primary">View Profile</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">ID</th>
+                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Name</th>
+                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">E-mail</th>
+                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;" class="text-right">Actions</th>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($users as $user)
+                                        <tr>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;">{{ $user->id }}</td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;">{{ $user->name }}</td>
+                                            <td style="border: none; border-bottom: 1px solid #ddd;">{{ $user->email }}</td>
+                                            <td class="text-right">
+                                                <a href="{{ route('admin_show_sales_engineer', $user->id) }}" class="btn btn-sm btn-primary">View Profile</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                                <form class="form-inline">
+                                    <div class="form-group left" style=" margin-top: 2.55rem; ">
+                                        <label class="" for="">Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} out of {{ $users->total() }} Sales Engineer(s)</label>
+                                    </div>
+                                    {{-- <div class="form-group right">
+                                        <span class="right">{!! $users->appends(['filter' => Request::get('filter')])->render() !!}</span>
+                                    </div> --}}
+                                </form>
                             </div>
                         </div>
                     </div>

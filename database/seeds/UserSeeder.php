@@ -33,6 +33,14 @@ class UserSeeder extends Seeder
                     'name'       => env('NAME', 'Rakel Keeno'),
                     'email'      => env('EMAIL', 'rakel_keeno@yahoo.com'),
                     'password'   => bcrypt(env('PASS', 'assistant123')),
+                    'role'       => 'secretary',
+                    'created_at' => date('Y-m-d h:i:s'),
+                    'updated_at' => date('Y-m-d h:i:s')
+                ),
+                array(
+                    'name'       => env('NAME', 'Test Assistant'),
+                    'email'      => env('EMAIL', 'test_assistant@yahoo.com'),
+                    'password'   => bcrypt(env('PASS', 'admin123')),
                     'role'       => 'assistant',
                     'created_at' => date('Y-m-d h:i:s'),
                     'updated_at' => date('Y-m-d h:i:s')
@@ -54,14 +62,14 @@ class UserSeeder extends Seeder
                     'updated_at' => date('Y-m-d h:i:s')
                 ),
 
-                array(
+                /*array(
                     'name'       => env('NAME', 'Demo User'),
                     'email'      => env('EMAIL', 'demo123@yahoo.com'),
                     'password'   => bcrypt(env('PASS', 'demo123')),
                     'role'       => 'admin',
                     'created_at' => date('Y-m-d h:i:s'),
                     'updated_at' => date('Y-m-d h:i:s')
-                ),
+                ),*/
             )
         );
     }

@@ -15,8 +15,6 @@
                                 <ul class="sub">
                                     <li class="nav-item"><a href="{{ route('admin_project_show', $project->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
                                     <li class="nav-item"><a href="{{ route('admin_project_information', $project->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
-                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_pricing_history_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add AfterMarket</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('admin_seal_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Seal</a></li>
                                 </ul>
                             </li>
                         </li>
@@ -103,8 +101,10 @@
                                                     <label for="price" class="col-md-4 control-label">Price:</label>
 
                                                     <div class="col-md-6">
-                                                        <input id="price" type="text" class="form-control" name="price" value="{{ old('price') }}" required autofocus>
-
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon">$</div>
+                                                            <input id="price" type="text" class="form-control" name="price" value="{{ old('price') }}" required autofocus>
+                                                        </div>
                                                         @if ($errors->has('price'))
                                                             <span class="help-block">
                                                             <strong>{{ $errors->first('price') }}</strong>
