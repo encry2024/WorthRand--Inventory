@@ -1,29 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
     <div class="col-lg-12">
+        @if(Session::has('message'))
+            <div class="row">
+                <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <b><i class="fa fa-check"></i> {{ Session::get('message') }}</b>
+                </div>
+            </div>
+        @endif
+        @if(($indented_proposal->collection_status != "PENDING") || ($indented_proposal->collection_status != "PENDING"))
+            <div class="alert alert-success" role="alert">
+                <b><i class="fa fa-check"></i> You already accepted this proposal.</b>
+            </div>
+        @endif
         <div class="row">
 
-            <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
-                <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
-                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;" data-toggle="modal" data-target="#indentedProposalFormConfirmation"><i class="fa fa-check"></i>&nbsp; Accept Proposal</a></li>
-                    <li class="nav-item"><a class="nav-link" ><i class="fa fa-close"></i>&nbsp; Decline Proposal</a></li>
-                    <li class="nav-item"><a href="{{ route('admin_export_pending_proposal', $indented_proposal->id) }}" class="nav-link"><i class="fa fa-download"></i>&nbsp; Export to XLSX</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('admin_dashboard') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
-                </ul>
+            <div class="col-md-3">
+                <div class="list-group">
+                    @if(($indented_proposal->collection_status != "ACCEPTED") || ($indented_proposal->collection_status == "PENDING"))
+                    <a style="cursor: pointer;" class="list-group-item" style="font-size: 13px;" data-toggle="modal" data-target="#indentedProposalFormConfirmation">
+                        <i class="fa fa-check"></i>&nbsp;&nbsp;Accept Proposal
+                    </a>
+                    @endif
+                    <a href="{{ route('admin_export_pending_proposal', $indented_proposal->id) }}" class="list-group-item"><i class="fa fa-download"></i>&nbsp; Export to XLSX</a>
+                    <a class="list-group-item" href="{{ route('admin_dashboard') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a>
+                </div>
             </div>
 
-            <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-                @if(Session::has('message'))
-                    <div class="row">
-                        <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="margin-top: -1.05rem; border-radius: 0px 0px 0px 0px; font-size: 15px; margin-bottom: 1rem;">
-                            <div class="container">{{ Session::get('message') }}
-                                <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-                        </div>
-                    </div>
-                @endif
-
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                 <form class="form-horizontal" action="{{ route('admin_accept_indented_proposal', $indented_proposal->id) }}" method="POST" id="AcceptIndentedProposal" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
@@ -53,18 +59,18 @@
                             <div class="form-group">
                                 <label for="main_company" class="col-sm-2 control-label">To: </label>
                                 <div class="col-sm-5">
-                                    <input class="form-control" id="main_company" name="to" placeholder="To" value="{{ $indented_proposal->customer->name }}">
+                                    <input class="form-control" id="main_company" name="to" placeholder="To" value="{{ $indented_proposal->customer->name }}" disabled>
                                     <br>
-                                    <textarea name="to_address" id="" class="form-control" placeholder="Address">{{ $indented_proposal->customer->address }}</textarea>
+                                    <textarea name="to_address" id="" class="form-control" placeholder="Address" disabled>{{ $indented_proposal->customer->address }}</textarea>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="OfficeSold" class="col-sm-2 control-label">Sold To:</label>
                                 <div class="col-sm-5">
-                                    <input name="sold_to" class="form-control" id="OfficeSold" placeholder="Sold To" value="{{ $indented_proposal->customer->name }}">
+                                    <input name="sold_to" class="form-control" id="OfficeSold" placeholder="Sold To" value="{{ $indented_proposal->customer->name }}" disabled>
                                     <br>
-                                    <textarea name="sold_to_address" class="form-control" placeholder="Address">{{ $indented_proposal->customer->address }}</textarea>
+                                    <textarea name="sold_to_address" class="form-control" placeholder="Address" disabled>{{ $indented_proposal->customer->address }}</textarea>
                                 </div>
                             </div>
 
@@ -249,7 +255,6 @@
 
         </div>
     </div>
-</div>
 
 
 

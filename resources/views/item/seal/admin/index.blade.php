@@ -58,7 +58,7 @@
                 @else
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="alert alert-danger" role="alert"><b>You have 0 records for Seals.</b></div>
+                        <div class="alert search-error" role="alert"><b>You have 0 records for Seals.</b></div>
                     </div>
                 </div>
                 @endif

@@ -1,6 +1,5 @@
 <?php
 
-
 Route::get('/', function () {
     if(Auth::guard()->guest()) {
         return redirect()->to('login');

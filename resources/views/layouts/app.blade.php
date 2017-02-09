@@ -34,7 +34,7 @@
             @yield('content')
 
             <div class="footer">
-                <div class="col-lg-12">
+                <div class="col-lg-10 col-lg-offset-1">
                     <hr/>
                     <label class="size-12 app-info-label" for=""><span class=""><kbd>© 2016 WORTHRAND INVENTORY CRM</kbd></span></label>
                     <label class=" size-12 app-info-label" for="" style="float: right;"><kbd>WORTHRAND INVENTORY CRM &mdash; Version: 0.1.0-BETA</kbd></label>
@@ -48,11 +48,5 @@
 
         alertify.set('notifier','position', 'top-right');
         </script>
-
-        <style>
-            body {
-                background-color: white;
-            }
-        </style>
     </body>
 </html>

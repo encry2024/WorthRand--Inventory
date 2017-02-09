@@ -37,13 +37,13 @@
                                 <tbody>
                                 @foreach($aftermarkets as $aftermarket)
                                     <tr>
-                                        <td style="border: none; border-bottom: 1px solid #ddd;">{{ $aftermarket->id }}</td>
-                                        <td style="border: none; border-bottom: 1px solid #ddd;">{{ $aftermarket->name }}</td>
-                                        <td style="border: none; border-bottom: 1px solid #ddd;">{{ $aftermarket->model }}</td>
-                                        <td style="border: none; border-bottom: 1px solid #ddd;">{{ $aftermarket->serial_number }}</td>
-                                        <td style="border: none; border-bottom: 1px solid #ddd;">{{ $aftermarket->tag_number }}</td>
-                                        <td style="border: none; border-bottom: 1px solid #ddd;">{{ $aftermarket->drawing_number }}</td>
-                                        <td style="border: none; border-bottom: 1px solid #ddd;">{{ date('F d, Y', strtotime($aftermarket->created_at)) }}</td>
+                                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $aftermarket->id }}</b></td>
+                                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $aftermarket->name }}</b></td>
+                                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $aftermarket->model }}</b></td>
+                                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $aftermarket->serial_number }}</b></td>
+                                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $aftermarket->tag_number }}</b></td>
+                                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $aftermarket->drawing_number }}</b></td>
+                                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ date('F d, Y', strtotime($aftermarket->created_at)) }}</b></td>
                                         <td style="border: none; border-bottom: 1px solid #ddd;" class="text-right">
                                             <a href="{{ route('admin_after_market_show', $aftermarket->id) }}" class="btn btn-sm btn-success">View Aftermarket</a>
                                         </td>
@@ -65,7 +65,7 @@
                 @else
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="alert alert-danger" role="alert" ><b>You have 0 records for Aftermarkets.</b></div>
+                            <div class="alert search-error" role="alert" ><b>You have 0 records for Aftermarkets.</b></div>
                         </div>
                     </div>
                 @endif
