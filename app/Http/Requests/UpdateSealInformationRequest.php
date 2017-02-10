@@ -36,7 +36,7 @@ class UpdateSealInformationRequest extends Request
             'code' => 'required',
             'model' => 'required',
             'serial_number' => 'required',
-            'tag' => 'required'
+            'tag' => 'required',
         ];
     }
 }

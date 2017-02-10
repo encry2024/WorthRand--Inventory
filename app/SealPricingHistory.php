@@ -11,13 +11,13 @@ class SealPricingHistory extends Model
     {
         $sealPricingHistory = new SealPricingHistory();
         $sealPricingHistory->seal_id = $seal->id;
-        $sealPricingHistory->po_number = $createPricingHistoryForSeal->get('po_number');
-        $sealPricingHistory->pricing_date = $createPricingHistoryForSeal->get('pricing_date');
-        $sealPricingHistory->price = $createPricingHistoryForSeal->get('price');
-        $sealPricingHistory->terms = $createPricingHistoryForSeal->get('terms');
-        $sealPricingHistory->delivery = $createPricingHistoryForSeal->get('delivery');
-        $sealPricingHistory->fpd_reference = $createPricingHistoryForSeal->get('fpd_reference');
-        $sealPricingHistory->wpc_reference = $createPricingHistoryForSeal->get('wpc_reference');
+        $sealPricingHistory->po_number = trim(strtoupper($createPricingHistoryForSeal->get('po_number')));
+        $sealPricingHistory->pricing_date = trim(strtoupper($createPricingHistoryForSeal->get('pricing_date')));
+        $sealPricingHistory->price = str_replace(',', '', trim(strtoupper($createPricingHistoryForSeal->get('price'))));
+        $sealPricingHistory->terms = trim(strtoupper($createPricingHistoryForSeal->get('terms')));
+        $sealPricingHistory->delivery = trim(strtoupper($createPricingHistoryForSeal->get('delivery')));
+        $sealPricingHistory->fpd_reference = trim(strtoupper($createPricingHistoryForSeal->get('fpd_reference')));
+        $sealPricingHistory->wpc_reference = trim(strtoupper($createPricingHistoryForSeal->get('wpc_reference')));
 
         if($sealPricingHistory->save()) {
             $seal->update(['price' => $sealPricingHistory->price]);

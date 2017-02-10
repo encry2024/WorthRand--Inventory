@@ -5,203 +5,183 @@
 @stop
 
 @section('content')
-    <div class="container-fluid">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    @if(Session::has('message'))
+        <div class="row">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <i class="fa fa-check"></i>&nbsp;&nbsp;<b>{{ Session::get('message') }}</b>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+        </div>
+    @endif
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="{{ route('admin_project_show', $project->id) }}" class="list-group-item" style="font-size: 13px;">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Back
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+
             <div class="row">
-                <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
-                    <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
-                        <li>
-                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp; {{ $project->name }}</a>
-                                <ul class="sub">
-                                    <li><a href="{{ route('admin_project_show', $project->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
-                                    <li><a href="{{ route('admin_project_information', $project->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('admin_create_aftermarket_on_project', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add AfterMarket</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('admin_seal_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Seal</a></li>
-                                </ul>
-                            </li>
-                        </li>
-
-                        <li>
-                            <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a>
-                                <ul class="sub">
-                                    <li><a href="{{ route('admin_project_pricing_history_index', $project->id) }}"><i class="fa fa-th-list"></i>&nbsp;Pricing History List</a></li>
-                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_pricing_history_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Pricing History</a></li>
-                                </ul>
-                            </li>
-                        </li>
-
-                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; back</a></li>
-                    </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="border-top: saddlebrown 3px solid;">
+                        <h4><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;&nbsp;EDIT {{ strtoupper($project->name) }}</h4>
+                    </div>
                 </div>
+            </div>
 
-                <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-                    @if(Session::has('message'))
-                        <div class="row">
-                            <div class="alert alert-success alert-dismissible" role="alert" style="margin-top: -1.3rem; margin-bottom:1rem; border-radius: 0px 0px 0px 0px;">
-                                <div class="container"><i class="fa fa-check"></i>&nbsp;&nbsp;{{ Session::get('message') }}
-                                    <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="form-horizontal" id="createProjectForm" action="{{ route('admin_project_information_update', $project->id) }}" method="POST">
+                        {{ csrf_field() }}
+                        {{ method_field('PATCH') }}
+                        <input type="hidden" name="project_id" value="{{ $project->id }}">
+
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <label for="name" class="col-md-4 control-label">Name:</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control" name="name" value="{{ $project->name }}" required autofocus>
+
+                                @if ($errors->has('name'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </span>
+                                @endif
                             </div>
                         </div>
-                    @endif
 
-                    <div class="row">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <i class="fa fa-info-circle"></i> {{ strtoupper($project->name) }} INFORMATION 
+                        <div class="form-group{{ $errors->has('model') ? ' has-error' : '' }}">
+                            <label for="model" class="col-md-4 control-label">Model:</label>
+
+                            <div class="col-md-6">
+                                <input id="model" type="text" class="form-control" name="model" value="{{ $project->model }}" required autofocus>
+
+                                @if ($errors->has('model'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('model') }}</strong>
+                                </span>
+                                @endif
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="btn btn-success" onclick='document.getElementById("createProjectForm").submit();'>Update</button>
-                        </div>
-                    </div>
+                        <div class="form-group{{ $errors->has('ccn_number') ? ' has-error' : '' }}">
+                            <label for="ccn_number" class="col-md-4 control-label">CCN Number:</label>
 
-                    <br>
+                            <div class="col-md-6">
+                                <input id="ccn_number" type="text" class="form-control" name="ccn_number" value="{{ $project->ccn_number }}" required autofocus>
 
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <form class="form-horizontal" id="createProjectForm" action="{{ route('admin_project_information_update', $project->id) }}" method="POST">
-                                        {{ csrf_field() }}
-                                        {{ method_field('PATCH') }}
-                                        <input type="hidden" name="project_id" value="{{ $project->id }}">
-
-                                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                            <label for="name" class="col-md-4 control-label">Name:</label>
-
-                                            <div class="col-md-6">
-                                                <input id="name" type="text" class="form-control" name="name" value="{{ $project->name }}" required autofocus>
-
-                                                @if ($errors->has('name'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('name') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group{{ $errors->has('model') ? ' has-error' : '' }}">
-                                            <label for="model" class="col-md-4 control-label">Model:</label>
-
-                                            <div class="col-md-6">
-                                                <input id="model" type="text" class="form-control" name="model" value="{{ $project->model }}" required autofocus>
-
-                                                @if ($errors->has('model'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('model') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group{{ $errors->has('ccn_number') ? ' has-error' : '' }}">
-                                            <label for="ccn_number" class="col-md-4 control-label">CCN Number:</label>
-
-                                            <div class="col-md-6">
-                                                <input id="ccn_number" type="text" class="form-control" name="ccn_number" value="{{ $project->ccn_number }}" required autofocus>
-
-                                                @if ($errors->has('ccn_number'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('ccn_number') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group{{ $errors->has('part_number') ? ' has-error' : '' }}">
-                                            <label for="part_number" class="col-md-4 control-label">Part Number:</label>
-
-                                            <div class="col-md-6">
-                                                <input id="part_number" type="text" class="form-control" name="part_number" value="{{ $project->part_number }}" required autofocus>
-
-                                                @if ($errors->has('part_number'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('part_number') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group{{ $errors->has('reference_number') ? ' has-error' : '' }}">
-                                            <label for="reference_number" class="col-md-4 control-label">Reference Number:</label>
-
-                                            <div class="col-md-6">
-                                                <input id="reference_number" type="text" class="form-control" name="reference_number" value="{{ $project->reference_number }}" required autofocus>
-
-                                                @if ($errors->has('reference_number'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('reference_number') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group{{ $errors->has('material_number') ? ' has-error' : '' }}">
-                                            <label for="material_number" class="col-md-4 control-label">Material Number:</label>
-
-                                            <div class="col-md-6">
-                                                <input id="material_number" type="text" class="form-control" name="material_number" value="{{ $project->material_number }}" required autofocus>
-
-                                                @if ($errors->has('material_number'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('material_number') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group{{ $errors->has('serial_number') ? ' has-error' : '' }}">
-                                            <label for="serial_number" class="col-md-4 control-label">Serial Number:</label>
-
-                                            <div class="col-md-6">
-                                                <input id="serial_number" type="text" class="form-control" name="serial_number" value="{{ $project->serial_number }}" required autofocus>
-
-                                                @if ($errors->has('serial_number'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('serial_number') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group{{ $errors->has('tag_number') ? ' has-error' : '' }}">
-                                            <label for="tag_number" class="col-md-4 control-label">Tag Number:</label>
-
-                                            <div class="col-md-6">
-                                                <input id="tag_number" type="text" class="form-control" name="tag_number" value="{{ $project->tag_number }}" required autofocus>
-
-                                                @if ($errors->has('tag_number'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('tag_number') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group{{ $errors->has('drawing_number') ? ' has-error' : '' }}">
-                                            <label for="drawing_number" class="col-md-4 control-label">Drawing Number:</label>
-
-                                            <div class="col-md-6">
-                                                <input id="drawing_number" type="text" class="form-control" name="drawing_number" value="{{ $project->drawing_number }}" required autofocus>
-
-                                                @if ($errors->has('drawing_number'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('drawing_number') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                    </form>
-                                </div>
+                                @if ($errors->has('ccn_number'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('ccn_number') }}</strong>
+                                </span>
+                                @endif
                             </div>
                         </div>
-                    </div>
+
+                        <div class="form-group{{ $errors->has('part_number') ? ' has-error' : '' }}">
+                            <label for="part_number" class="col-md-4 control-label">Part Number:</label>
+
+                            <div class="col-md-6">
+                                <input id="part_number" type="text" class="form-control" name="part_number" value="{{ $project->part_number }}" required autofocus>
+
+                                @if ($errors->has('part_number'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('part_number') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('reference_number') ? ' has-error' : '' }}">
+                            <label for="reference_number" class="col-md-4 control-label">Reference Number:</label>
+
+                            <div class="col-md-6">
+                                <input id="reference_number" type="text" class="form-control" name="reference_number" value="{{ $project->reference_number }}" required autofocus>
+
+                                @if ($errors->has('reference_number'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('reference_number') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('material_number') ? ' has-error' : '' }}">
+                            <label for="material_number" class="col-md-4 control-label">Material Number:</label>
+
+                            <div class="col-md-6">
+                                <input id="material_number" type="text" class="form-control" name="material_number" value="{{ $project->material_number }}" required autofocus>
+
+                                @if ($errors->has('material_number'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('material_number') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('serial_number') ? ' has-error' : '' }}">
+                            <label for="serial_number" class="col-md-4 control-label">Serial Number:</label>
+
+                            <div class="col-md-6">
+                                <input id="serial_number" type="text" class="form-control" name="serial_number" value="{{ $project->serial_number }}" required autofocus>
+
+                                @if ($errors->has('serial_number'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('serial_number') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('tag_number') ? ' has-error' : '' }}">
+                            <label for="tag_number" class="col-md-4 control-label">Tag Number:</label>
+
+                            <div class="col-md-6">
+                                <input id="tag_number" type="text" class="form-control" name="tag_number" value="{{ $project->tag_number }}" required autofocus>
+
+                                @if ($errors->has('tag_number'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('tag_number') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('drawing_number') ? ' has-error' : '' }}">
+                            <label for="drawing_number" class="col-md-4 control-label">Drawing Number:</label>
+
+                            <div class="col-md-6">
+                                <input id="drawing_number" type="text" class="form-control" name="drawing_number" value="{{ $project->drawing_number }}" required autofocus>
+
+                                @if ($errors->has('drawing_number'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('drawing_number') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div style="margin-left: 27.5rem;">
+                            <button class="btn btn-success" onclick='document.getElementById("createProjectForm").submit();'><i class="fa fa-edit"></i>&nbsp;Update</button>
+                            <button class="btn btn-danger clear_input"><i class="fa fa-remove"></i> Clear</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        $(".clear_input").click(function(e) {
+            e.preventDefault();
+            $(":input[type='text']").each(function() {
+                this.value = "";
+            })
+        });
+    </script>
 @endsection

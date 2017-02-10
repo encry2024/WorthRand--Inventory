@@ -25,6 +25,7 @@
                             <thead>
                                 <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;"><input type="checkbox" id="select_all" name="selector" value="Select All"></th>
                                 <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">ID</th>
+                                <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Date Added</th>
                                 <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Name</th>
                                 <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">E-mail</th>
                                 <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Role</th>
@@ -37,6 +38,7 @@
                                         <input type="checkbox" class="users" name="users[]" value="{{ $user->name.'/'.$user->id }}">
                                     </td>
                                     <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $user->id }}</b></td>
+                                    <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ date('m/d/Y', strtotime($user->created_at)) }}</b></td>
                                     <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $user->name }}</b></td>
                                     <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $user->email }}</b></td>
                                     <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ ucfirst($user->role) }}</b></td>

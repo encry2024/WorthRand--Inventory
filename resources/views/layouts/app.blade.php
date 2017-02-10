@@ -26,6 +26,7 @@
         <script type='text/javascript' src="{{ URL::to('/') }}/accordion-menu/js/jquery.dcjqaccordion.2.7.min.js"></script>
         <script type='text/javascript' src="{{ URL::to('/') }}/moment.js"></script>
         <script type='text/javascript' src="{{ URL::to('/') }}/alertifyjs/alertify.min.js"></script>
+        <script src="{{ URL::to('/') }}/adamwdraper-numeral-js/src/numeral.js"></script>
         @include('layouts.header')
     </head>
 
@@ -37,7 +38,7 @@
                 <div class="col-lg-10 col-lg-offset-1">
                     <hr/>
                     <label class="size-12 app-info-label" for=""><span class=""><kbd>© 2016 WORTHRAND INVENTORY CRM</kbd></span></label>
-                    <label class=" size-12 app-info-label" for="" style="float: right;"><kbd>WORTHRAND INVENTORY CRM &mdash; Version: 0.1.0-BETA</kbd></label>
+                    <label class=" size-12 app-info-label" for="" style="float: right;"><kbd>WORTHRAND INVENTORY CRM &mdash; Version: 0.2.2-BETA</kbd></label>
                 </div>
             </div>
         </div>

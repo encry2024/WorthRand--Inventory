@@ -25,7 +25,8 @@
                     <div class="table-reponsive">
                         <table class="table table-bordered table-striped">
                             <thead>
-                                <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">#</th>
+                                <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">ID</th>
+                                <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Date Added</th>
                                 <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Name</th>
                                 <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Address</th>
                                 <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">City</th>
@@ -36,6 +37,7 @@
                             @foreach($customers as $customer)
                                 <tr>
                                     <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ ((($customers->currentPage() - 1) * $customers->perPage()) + ($ctr++) + 1) }}</b></td>
+                                    <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ date('m/d/Y', strtotime($customer->created_at)) }}</b></td>
                                     <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $customer->name }}</b></td>
                                     <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $customer->address }}</b></td>
                                     <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $customer->city }}</b></td>
@@ -51,7 +53,7 @@
             @else
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="alert search-error" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;"><b>You have 0 records for Customers.</b></div>
+                        <div class="alert search-error" role="alert"><b>You have 0 records for Customers.</b></div>
                     </div>
                 </div>
             @endif

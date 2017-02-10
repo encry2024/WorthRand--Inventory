@@ -189,7 +189,7 @@
                                             <div class="col-lg-12">
                                                 <div class="input-group">
                                                     <div class="input-group-addon">$</div>
-                                                    <input type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->indented_proposal_item_id }}]" value="{{ $selectedItem->project_price != "" ? number_format($selectedItem->project_price, 2) : number_format($selectedItem->after_market_price, 2) }}">
+                                                    <input type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->indented_proposal_item_id }}]" value="{{ $selectedItem->project_price != '' ? number_format($selectedItem->project_price, 2) : number_format($selectedItem->after_market_price, 2) }}" id="itemPricing">
                                                 </div>
                                                 @if ($errors->has('price.'.$selectedItem->indented_proposal_item_id))
                                                     <span class="help-block">
@@ -300,7 +300,6 @@
     <script>
         $(document).ready(function() {
             var data;
-
             $('#branch_field').autocomplete({
                 serviceUrl: "{{ URL::to('/') }}/{{ Auth::user()->role }}/fetch_customers/",
                 dataType: 'json',
@@ -309,6 +308,14 @@
                     document.getElementById('branch_address').value = suggestions.address;
                     document.getElementById('customer_id').value = suggestions.id;
                 }
+            });
+
+            $(":input[id='price']").on("focusout", function(e) {
+                e.preventDefault();
+                var itemPricing = e.value
+                         string = numeral(itemPricing).format('0,0.00');
+
+                e.value = string;
             });
         });
     </script>

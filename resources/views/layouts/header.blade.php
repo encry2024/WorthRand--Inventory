@@ -23,16 +23,16 @@
                     <p class="navbar-text" style="margin-top: 1.65rem;">Welcome,</p>
                     <li class="dropdown">
                     <button href="#" style="outline: none; text-shadow: none; font-size: 14px;" class="btn btn-default navbar-btn btn-sm dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }} <span class="caret"></span></button>
-                        <ul class="dropdown-menu" style="margin-top: -0.30rem; margin-right: -2.5rem;">
+                        <ul class="dropdown-menu" style="margin-top: 0.25rem; margin-right: -2.5rem;">
                             <li><a href="{{ route(Auth::user()->role . '_user_profile') }}"><i class="fa fa-user"></i>&nbsp;&nbsp;Profile</a></li>
 
                             <li><a href="{{ url('logout') }}"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;Logout</a></li>
                         </ul>
                     </li>
                     <li class="menu-divider"></li>
-                    <button href="#" style="outline: none; text-shadow: none; font-size: 14px;" class="btn btn-default navbar-btn btn-sm"><i class="fa fa-question-circle" aria-hidden="true"></i>&nbsp;&nbsp;Help</button>
-                    <button href="#" style="outline: none; text-shadow: none; font-size: 14px;" class="btn btn-default navbar-btn btn-sm"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;&nbsp;Report an issue</button>
-                    <button href="#" style="outline: none; text-shadow: none; font-size: 14px;" class="btn btn-default navbar-btn btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;&nbsp;Patch Notes</button>
+                    <button href="#" style="outline: none; text-shadow: none; font-size: 14px;" class="btn btn-default navbar-btn btn-sm">Help / Terminologies</button>
+                    <button href="#" style="outline: none; text-shadow: none; font-size: 14px;" class="btn btn-default navbar-btn btn-sm">Report an issue</button>
+                    <button href="#" style="outline: none; text-shadow: none; font-size: 14px;" class="btn btn-default navbar-btn btn-sm">Patch Notes</button>
                 @endif
             </ul>
         </div><!-- /.navbar-collapse -->

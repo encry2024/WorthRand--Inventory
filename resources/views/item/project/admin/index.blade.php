@@ -18,11 +18,12 @@
                 </div>
             </div>
 
+            <a href="{{ route('create_project') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add Project</a>
+            <hr>
+
             @if(count($projects) != 0)
             <div class="row">
                 <div class="col-lg-12">
-                    <a href="{{ route('create_project') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add Project</a>
-                    <hr>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered">
                             <thead>
@@ -45,20 +46,28 @@
                                         <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $project->tag_number }}</b></td>
                                         <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $project->drawing_number }}</b></td>
                                         <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ date('m/d/Y', strtotime($project->created_at)) }}</b></td>
-                                        <td class="text-right">
-                                            <a href="{{ route('admin_project_show', $project->id) }}" class="btn btn-sm btn-success">View Project</a>
+                                        <td class="text-center">
+                                            <a href="{{ route('admin_project_show', $project->id) }}" title="View {{ $project->name }}"><i class="fa fa-search"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        <form class="form-inline">
+                            <div class="form-group left" style=" margin-top: 2.55rem; ">
+                                <label class="" for="">Showing {{ $projects->firstItem() }} to {{ $projects->lastItem() }} out of {{ $projects->total() }} Project(s)</label>
+                            </div>
+                            {{-- <div class="form-group right">
+                                <span class="right">{!! $projects->appends(['filter' => Request::get('filter')])->render() !!}</span>
+                            </div> --}}
+                        </form>
                     </div>
                 </div>
             </div>
             @else
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;"><b>You have 0 records for Projects.</b></div>
+                        <div class="alert search-error" role="alert"><b>You have 0 records for Projects.</b></div>
                     </div>
                 </div>
             @endif

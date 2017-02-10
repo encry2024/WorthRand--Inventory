@@ -48,11 +48,11 @@ class Project extends Model
     {
         $project_pricing_history = new ProjectPricingHistory();
         $project_pricing_history->project_id = $project->id;
-        $project_pricing_history->po_number = $addProjectPricingHistoryRequest->get('po_number');
-        $project_pricing_history->pricing_date = trim($addProjectPricingHistoryRequest->get('pricing_date'));
-        $project_pricing_history->price = trim($addProjectPricingHistoryRequest->get('price'));
-        $project_pricing_history->terms = trim($addProjectPricingHistoryRequest->get('terms'));
-        $project_pricing_history->delivery = trim($addProjectPricingHistoryRequest->get('delivery'));
+        $project_pricing_history->po_number = strtoupper($addProjectPricingHistoryRequest->get('po_number'));
+        $project_pricing_history->pricing_date = trim(strtoupper($addProjectPricingHistoryRequest->get('pricing_date')));
+        $project_pricing_history->price = str_replace(',', '', trim($addProjectPricingHistoryRequest->get('price')));
+        $project_pricing_history->terms = trim(strtoupper($addProjectPricingHistoryRequest->get('terms')));
+        $project_pricing_history->delivery = trim(strtoupper($addProjectPricingHistoryRequest->get('delivery')));
         $project_pricing_history->fpd_reference = trim(strtoupper($addProjectPricingHistoryRequest->get('fpd_reference')));
         $project_pricing_history->wpc_reference = trim(strtoupper($addProjectPricingHistoryRequest->get('wpc_reference')));
 
@@ -63,6 +63,24 @@ class Project extends Model
             return redirect()->back()->with('message', 'Pricing History for Project ['.$project->name.'] was successfully saved');
         }
 
+    }
+
+    public static function adminUpdateProject($request, $updateProjectInformationRequest)
+    {
+        $project = Project::find($request->get('project_id'));
+        $project->update([
+            'name' => strtoupper($updateProjectInformationRequest->get('name')),
+            'part_number' => strtoupper($updateProjectInformationRequest->get('part_number')),
+            'ccn_number' => strtoupper($updateProjectInformationRequest->get('ccn_number')),
+            'model' => strtoupper($updateProjectInformationRequest->get('model')),
+            'reference_number' => strtoupper($updateProjectInformationRequest->get('reference_number')),
+            'drawing_number' => strtoupper($updateProjectInformationRequest->get('drawing_number')),
+            'material_number' => strtoupper($updateProjectInformationRequest->get('material_number')),
+            'serial_number' => strtoupper($updateProjectInformationRequest->get('serial_number')),
+            'tag_number' => strtoupper($updateProjectInformationRequest->get('tag_number')),
+        ]);
+
+        return redirect()->back()->with('message', 'Project ['.$project->name.'] was successfully updated');   
     }
 
     /*

@@ -24,7 +24,7 @@ class AfterMarket extends Model
     public static function postAfterMarket($createAfterMarketRequest)
     {
         $after_market = new AfterMarket();
-        $after_market->name = ucwords($createAfterMarketRequest->get('name'), " ");
+        $after_market->name = strtoupper($createAfterMarketRequest->get('name'));
         $after_market->model = strtoupper($createAfterMarketRequest->get('model'));
         $after_market->part_number = strtoupper($createAfterMarketRequest->get('part_number'));
         $after_market->reference_number = strtoupper($createAfterMarketRequest->get('reference_number'));
@@ -43,10 +43,10 @@ class AfterMarket extends Model
     {
         $aftermarket_pricing_history = new AfterMarketPricingHistory();
         $aftermarket_pricing_history->after_market_id = $afterMarket->id;
-        $aftermarket_pricing_history->po_number = $createAfterMarketPricingHistoryRequest->get('po_number');
+        $aftermarket_pricing_history->po_number = trim($createAfterMarketPricingHistoryRequest->get('po_number'));
         $aftermarket_pricing_history->pricing_date = trim($createAfterMarketPricingHistoryRequest->get('pricing_date'));
-        $aftermarket_pricing_history->price = trim($createAfterMarketPricingHistoryRequest->get('price'));
-        $aftermarket_pricing_history->terms = trim($createAfterMarketPricingHistoryRequest->get('terms'));
+        $aftermarket_pricing_history->price = trim(str_replace(',', '', $createAfterMarketPricingHistoryRequest->get('price')));
+        $aftermarket_pricing_history->terms = trim(strtoupper($createAfterMarketPricingHistoryRequest->get('terms')));
         $aftermarket_pricing_history->delivery = trim($createAfterMarketPricingHistoryRequest->get('delivery'));
         $aftermarket_pricing_history->fpd_reference = trim(strtoupper($createAfterMarketPricingHistoryRequest->get('fpd_reference')));
         $aftermarket_pricing_history->wpc_reference = trim(strtoupper($createAfterMarketPricingHistoryRequest->get('wpc_reference')));

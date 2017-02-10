@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="panel panel-default">
                         <div class="panel-heading" style="border-top: saddlebrown 3px solid;">
-                            <h4><i class="fa fa-certificate" aria-hidden="true"></i>&nbsp;&nbsp;SALES ENGINEER</h4>
+                            <h4><i class="fa fa-certificate" aria-hidden="true"></i>&nbsp;&nbsp;SALES ENGINEERS</h4>
                         </div>
                     </div>
                 </div>
@@ -23,6 +23,7 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">ID</th>
+                                <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Date Added</th>
                                 <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Name</th>
                                 <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">E-mail</th>
                                 <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;" class="text-right">Actions</th>
@@ -31,6 +32,7 @@
                                 @foreach($users as $user)
                                     <tr>
                                         <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $user->id }}</b></td>
+                                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ date('m/d/Y', strtotime($user->created_at)) }}</b></td>
                                         <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $user->name }}</b></td>
                                         <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $user->email }}</b></td>
                                         <td class="text-right">
