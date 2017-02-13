@@ -1,29 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+    @if(Session::has('message'))
+        <div class="row" style="margin-top: -2rem;">
+            <div class="alert alert-success alert-dismissible" role="alert" style="border-radius: 0px; border-radius: 0px; color: #224323; background-color: #cde6cd;border-color: #bcddbc; background-image: none;">
+                <i class="fa fa-check" style="margin-left: 18rem;"></i>&nbsp;&nbsp;<b>{{ Session::get('message') }}</b>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 15rem;"><span aria-hidden="true">&times;</span></button>
+            </div>
+        </div>
+    @endif
     <div class="col-lg-12">
+        @if($indented_proposal->collection_status != "PENDING")
+            <div class="alert alert-success" role="alert">
+                <b><i class="fa fa-check"></i> You already accepted this proposal.</b>
+            </div>
+        @endif
         <div class="row">
 
-            <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
-                <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
-                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;" data-toggle="modal" data-target="#indentedProposalFormConfirmation"><i class="fa fa-check"></i>&nbsp; Accept Proposal</a></li>
-                    <li class="nav-item"><a class="nav-link" ><i class="fa fa-close"></i>&nbsp; Decline Proposal</a></li>
-                    <li class="nav-item"><a href="{{ route('admin_export_pending_proposal', $indented_proposal->id) }}" class="nav-link"><i class="fa fa-download"></i>&nbsp; Export to XLSX</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('admin_dashboard') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
-                </ul>
+            <div class="col-md-3">
+                <div class="list-group">
+                    @if(($indented_proposal->collection_status != "ACCEPTED") || ($indented_proposal->collection_status == "PENDING"))
+                    <a style="cursor: pointer;" class="list-group-item" style="font-size: 13px;" data-toggle="modal" data-target="#indentedProposalFormConfirmation">
+                        <i class="fa fa-check"></i>&nbsp;&nbsp;Accept Proposal
+                    </a>
+                    @endif
+                    <a href="{{ route('admin_export_pending_proposal', $indented_proposal->id) }}" class="list-group-item"><i class="fa fa-download"></i>&nbsp; Export to XLSX</a>
+                    <a class="list-group-item" href="{{ route('admin_dashboard') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a>
+                </div>
             </div>
 
-            <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-                @if(Session::has('message'))
-                    <div class="row">
-                        <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="margin-top: -1.05rem; border-radius: 0px 0px 0px 0px; font-size: 15px; margin-bottom: 1rem;">
-                            <div class="container">{{ Session::get('message') }}
-                                <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-                        </div>
-                    </div>
-                @endif
-
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                 <form class="form-horizontal" action="{{ route('admin_accept_indented_proposal', $indented_proposal->id) }}" method="POST" id="AcceptIndentedProposal" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
@@ -53,18 +59,18 @@
                             <div class="form-group">
                                 <label for="main_company" class="col-sm-2 control-label">To: </label>
                                 <div class="col-sm-5">
-                                    <input class="form-control" id="main_company" name="to" placeholder="To" value="{{ $indented_proposal->customer->name }}">
+                                    <input class="form-control" id="main_company" name="to" placeholder="To" value="{{ $indented_proposal->customer->name }}" disabled>
                                     <br>
-                                    <textarea name="to_address" id="" class="form-control" placeholder="Address">{{ $indented_proposal->customer->address }}</textarea>
+                                    <textarea name="to_address" id="" class="form-control" placeholder="Address" disabled>{{ $indented_proposal->customer->address }}</textarea>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="OfficeSold" class="col-sm-2 control-label">Sold To:</label>
                                 <div class="col-sm-5">
-                                    <input name="sold_to" class="form-control" id="OfficeSold" placeholder="Sold To" value="{{ $indented_proposal->customer->name }}">
+                                    <input name="sold_to" class="form-control" id="OfficeSold" placeholder="Sold To" value="{{ $indented_proposal->customer->name }}" disabled>
                                     <br>
-                                    <textarea name="sold_to_address" class="form-control" placeholder="Address">{{ $indented_proposal->customer->address }}</textarea>
+                                    <textarea name="sold_to_address" class="form-control" placeholder="Address" disabled>{{ $indented_proposal->customer->address }}</textarea>
                                 </div>
                             </div>
 
@@ -108,17 +114,18 @@
                                 @foreach($selectedItems as $selectedItem)
                                     <tr>
                                         <td>{{ ++$ctr }}</td>
-                                        <td style="width: 13%;">{{ $selectedItem->project_mn != "" ? $selectedItem->project_mn : $selectedItem->after_market_mn }}</td>
+                                        <td style="width: 13%;">{{ $selectedItem->project_mn != "" ? $selectedItem->project_mn : ($selectedItem->after_market_mn != '' ? $selectedItem->after_market_mn : $selectedItem->seal_material_number) }}</td>
                                         <td>
-                                            <b>NAME:&nbsp;</b> {{ $selectedItem->project_name != "" ? $selectedItem->project_name : $selectedItem->after_market_name }}
+                                            <b>NAME:&nbsp;</b>
+                                            {{ $selectedItem->project_name != "" ? $selectedItem->project_name : ($selectedItem->after_market_name != '' ? $selectedItem->after_market_name : $selectedItem->seal_name) }}
                                             <br>
-                                            <b>PN:&nbsp;</b> {{ $selectedItem->project_pn != "" ? $selectedItem->project_pn : $selectedItem->after_market_pn }}
+                                            <b>{{ $selectedItem->project_pn != "" ? "PN" : ($selectedItem->after_market_pn != '' ? "PN" : "BOM#") }} :&nbsp;</b> {{ $selectedItem->project_pn != "" ? $selectedItem->project_pn : ($selectedItem->after_market_pn != '' ? $selectedItem->after_market_pn : $selectedItem->seal_bom_number) }}
                                             <br>
-                                            <b>MODEL NO.:&nbsp;</b> {{ $selectedItem->project_md != "" ? $selectedItem->project_md : $selectedItem->after_market_md }}
+                                            <b>MODEL NO.:&nbsp;</b> {{ $selectedItem->project_md != "" ? $selectedItem->project_md : ($selectedItem->after_market_md != '' ? $selectedItem->after_market_md : $selectedItem->seal_model) }}
                                             <br>
-                                            <b>DWG NO.:&nbsp;</b> {{ $selectedItem->project_dn != "" ? $selectedItem->project_dn : $selectedItem->after_market_dn }}
+                                            <b>DWG NO.:&nbsp;</b> {{ $selectedItem->project_dn != "" ? $selectedItem->project_dn : ($selectedItem->after_market_dn != '' ? $selectedItem->after_market_dn : $selectedItem->seal_drawing_number) }}
                                             <br>
-                                            <b>TAG NO.:&nbsp;</b> {{ $selectedItem->project_tn != "" ? $selectedItem->project_tn : $selectedItem->after_market_tn }}
+                                            <b>TAG NO.:&nbsp;</b> {{ $selectedItem->project_tn != "" ? $selectedItem->project_tn : ($selectedItem->after_market_tn != '' ? $selectedItem->after_market_tn : $selectedItem->seal_tag_number) }}
                                         </td>
                                         <td><input type="text" class="form-control" name="quantity-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter item Quantity" value="{{ $selectedItem->quantity != "" ? $selectedItem->quantity : $selectedItem->after_market_price }}"></td>
                                         <td>
@@ -126,7 +133,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-group">
                                                         <div class="input-group-addon">$</div>
-                                                        <input type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->indented_proposal_item_id }}]" value="{{ $selectedItem->project_price != "" ? number_format($selectedItem->project_price, 2) : number_format($selectedItem->after_market_price, 2) }}">
+                                                        <input type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->indented_proposal_item_id }}]" value="{{ $selectedItem->project_price != '' ? number_format($selectedItem->project_price, 2) : ($selectedItem->after_market_price != '' ? number_format($selectedItem->after_market_price, 2) : number_format($selectedItem->seal_price, 2)) }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -249,7 +256,6 @@
 
         </div>
     </div>
-</div>
 
 
 

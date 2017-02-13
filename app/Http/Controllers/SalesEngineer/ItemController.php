@@ -65,7 +65,7 @@ class ItemController extends Controller
 
     public function salesEngineerShowSeal(Seal $seal)
     {
-        # code...
+        return view('item.seal.sales_engineer.show', compact('seal'));
     }
 
     public function getItemBasedOnCategory($category)

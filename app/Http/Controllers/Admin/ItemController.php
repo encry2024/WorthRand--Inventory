@@ -23,6 +23,7 @@ use App\Seal;
 use App\Http\Requests\UpdateSealInformationRequest;
 use App\Http\Requests\CreatePricingHistoryForSealRequest;
 use App\SealPricingHistory;
+use App\Http\Requests\AdminCreateSealRequest;
 
 class ItemController extends Controller
 {
@@ -84,7 +85,8 @@ class ItemController extends Controller
 
     public function indexProject()
     {
-        $projects = Project::all();
+        $projects = Project::paginate(30);
+        $projects->setPath('/projects');
 
         return view('item.project.admin.index', compact('projects'));
     }
@@ -106,10 +108,9 @@ class ItemController extends Controller
 
     public function adminUpdateProjectInformation(Request $request, UpdateProjectInformationRequest $updateProjectInformationRequest)
     {
-        $project = Project::find($request->get('project_id'));
-        $project->update($updateProjectInformationRequest->except(array('_token', '_method')));
+        $adminUpdateProject = Project::adminUpdateProject($request, $updateProjectInformationRequest);
 
-        return redirect()->back()->with('message', 'Project ['.$project->name.'] was successfully updated');
+        return $adminUpdateProject;
     }
 
     public function adminProjectPricingHistoryIndex(Project $project)
@@ -129,7 +130,8 @@ class ItemController extends Controller
 
     public function indexAftermarket()
     {
-        $aftermarkets = AfterMarket::all();
+        $aftermarkets = AfterMarket::paginate(20);
+        $aftermarkets->setPath('/aftermarkets');
 
         return view('item.after_market.admin.index', compact('aftermarkets'));
     }
@@ -186,7 +188,7 @@ class ItemController extends Controller
     public function indexSeal()
     {
         $ctr = 0;
-        $seals = Seal::simplePaginate(30);
+        $seals = Seal::paginate(30);
         $seals->setPath('/seals');
 
         return view('item.seal.admin.index', compact('seals', 'ctr'));
@@ -197,29 +199,6 @@ class ItemController extends Controller
         return view('item.seal.admin.create');
     }
 
-    public function adminPostSealCreate(Request $request, CreateSealRequest $createSealRequest)
-    {
-        $seal = new Seal();
-        $seal->name = trim(ucwords($createSealRequest->get('name'), " "));
-        $seal->drawing_number = trim(strtoupper($createSealRequest->get('drawing_number')));
-        $seal->bom_number = trim(strtoupper($createSealRequest->get('bom_number')));
-        $seal->end_user = trim(ucwords($createSealRequest->get('end_user'), ' '));
-        $seal->seal_type = trim(strtoupper($createSealRequest->get('seal_type')));
-        $seal->size = trim(strtoupper($createSealRequest->get('size')));
-        $seal->material_number = trim(strtoupper($createSealRequest->get('material_number')));
-        $seal->code = trim(strtoupper($createSealRequest->get('code')));
-        $seal->model = trim(strtoupper($createSealRequest->get('model')));
-        $seal->serial_number = trim(strtoupper($createSealRequest->get('serial_number')));
-        $seal->tag = trim(strtoupper($createSealRequest->get('tag')));
-        $seal->price = $request->get('price');
-
-        if($seal->save())
-        {
-            return redirect()->back()->with('message', 'Seal Successfully Added')->with('msg_icon', 'fa-check')->with('alert', 'alert-success');
-        }
-        return redirect()->back()->with('message', 'Seal Not Added')->with('msg_icon', 'fa-check')->with('alert', 'alert-success');
-    }
-
     public function showSeal(Seal $seal)
     {
         return view('item.seal.admin.show', compact('seal'));
@@ -227,16 +206,14 @@ class ItemController extends Controller
 
     public function adminSealInformation(Seal $seal)
     {
-        $projects = Project::all();
-        return view('item.seal.admin.edit', compact('seal','projects'));
+        return view('item.seal.admin.edit', compact('seal'));
     }
 
     public function adminUpdateSealInformation(Request $request, UpdateSealInformationRequest $updateSealInformationRequest)
     {
-        $seal = Seal::find($request->get('seal_id'));
-        $seal->update($updateSealInformationRequest->except(array('_token', '_method')));
+        $adminUpdateSeal = Seal::adminUpdateSeal($request, $updateSealInformationRequest);
 
-        return redirect()->back()->with('message', 'Seal ['.$seal->name.'] was successfully updated');
+        return $adminUpdateSeal;
     }
 
     public function showSealPricingHistory(Seal $seal)
@@ -258,5 +235,36 @@ class ItemController extends Controller
         $sealPricingHistory->setPath('/seals');
 
         return view('item.seal.admin.pricing_history.index', compact('sealPricingHistory', 'seal', 'ctr'));
+    }
+
+    public function adminPostSealCreate(AdminCreateSealRequest $adminCreateSealRequest)
+    {
+        $adminPostSealCreate = Seal::adminPostSealCreate($adminCreateSealRequest);
+
+        return $adminPostSealCreate;
+    }
+
+    public function adminProjectDelete(Project $project)
+    {
+        $deletedProject = Project::find($project->id);
+        $deletedProject->delete();
+
+        return redirect()->route('admin_project_index')->with('message', 'You have successfully deleted Project "' . strtoupper($project->name) . '"');
+    }
+
+    public function adminAftermarketDelete(AfterMarket $afterMarket)
+    {
+        $deletedAftermarket = AfterMarket::find($afterMarket->id);
+        $deletedAftermarket->delete();
+
+        return redirect()->route('after_market_index')->with('message', 'You have successfully deleted Aftermarket "' . strtoupper($afterMarket->name) . '"');
+    }
+
+    public function adminSealDelete(Seal $seal)
+    {
+        $deletedSeal = Seal::find($seal->id);
+        $deletedSeal->delete();
+
+        return redirect()->route('admin_seal_index')->with('message', 'You have successfully deleted Seal "' . strtoupper($seal->name) . '"');
     }
 }

@@ -178,7 +178,7 @@
                                             <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Date Created</th>
                                             <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">P.O Number</th>
                                             <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Year</th>
-                                            <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Price</th>
+                                            <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Price ($)</th>
                                             <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Terms</th>
                                             <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Delivery</th>
                                             <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">FPD Reference</th>
@@ -191,7 +191,7 @@
                                                 <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ date('m/d/Y', strtotime($pricing_history->created_at)) }}</b></td>
                                                 <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $pricing_history->po_number }}</b></td>
                                                 <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $pricing_history->pricing_date }}</b></td>
-                                                <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $pricing_history->price }}</b></td>
+                                                <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ number_format($pricing_history->price, 2) }}</b></td>
                                                 <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $pricing_history->terms }}</b></td>
                                                 <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $pricing_history->delivery }}</b></td>
                                                 <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $pricing_history->fpd_reference }}</b></td>

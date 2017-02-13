@@ -26,7 +26,7 @@ class AddProjectPricingHistoryRequest extends Request
         return [
             'po_number' => 'required|unique:project_pricing_histories',
             'pricing_date' => 'required|digits:4|integer|min:1900|max:'.\Carbon\Carbon::tomorrow()->year,
-            'price' => 'required|numeric',
+            'price' => 'required',
             'terms' => 'required',
             'delivery' => 'required',
             'fpd_reference' => 'required',
