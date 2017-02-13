@@ -3,13 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AfterMarket extends Model
 {
+    use SoftDeletes;
     //
     protected $fillable = [
         'name', 'model', 'ccn_number', 'part_number', 'reference_number', 'drawing_number', 'material_number', 'serial_number', 'tag_number', 'project_id'
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function project()
     {

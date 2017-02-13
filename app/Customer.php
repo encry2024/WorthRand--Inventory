@@ -3,12 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Customer extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'name', 'address', 'city', 'postal_code'
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function branches()
     {
@@ -18,6 +23,16 @@ class Customer extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function indented_proposals()
+    {
+        return $this->hasMany(IndentedProposal::class);
+    }
+
+    public function buy_and_sell_proposals()
+    {
+        return $this->hasMany(BuyAndSellProposal::class);
     }
 
     public static function createCustomer($createCustomerRequest)

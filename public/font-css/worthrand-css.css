@@ -1,3 +1,26 @@
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+    z-index: 2;
+    color: inherit;
+    border-left: #d9534f solid 3px !important;
+    background-image: none;
+    background-color: white;
+    text-shadow: none;
+    border: 1px solid #ddd;
+}
+
+.list-group-item:first-child {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+.list-group-item:last-child {
+    margin-bottom: 0;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
 html {
     position: relative;
     min-height: 100%;
@@ -74,9 +97,15 @@ li.menu-divider {
     border-width: 6px;
     margin-left: -5px;
 }
+
 .dropdown-menu:before {
     border-color: rgba(221, 221, 221, 0);
     border-bottom-color: #ccc;
     border-width: 7px;
     margin-left: -6px;
+}
+
+.modal-header-danger {
+    background-color: #d9534f;
+    color: white;
 }

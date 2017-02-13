@@ -6,10 +6,10 @@
 
 @section('content')
     @if(Session::has('message'))
-        <div class="row">
-            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" >
-                <div class="container"><span class="{{ Session::get('msg_icon') }}"></span>&nbsp;{{ Session::get('message') }}
-                    <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+        <div class="row" style="margin-top: -2rem;">
+            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="border-radius: 0px;">
+                <i style="margin-left: 18rem;" class="{{ Session::get('msg_icon') }}"></i>&nbsp;&nbsp;{{ Session::get('message') }}
+                <button style="margin-right: 14rem;" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
         </div>
     @endif
@@ -370,7 +370,7 @@
                             url = url.replace(':item_id', suggestions.data);
                         url = url.replace(':item_category', item_category);
 
-                        $(wrapper).append('<div class="alert alert-danger" role="alert" style="background-color: #d9534f; color: white; border-color: #b52b27; font-size: 15px;">Pricing History Data Not Found....</div>');
+                        $(wrapper).append('<div class="alert search-error" role="alert" style="font-size: 15px;">Pricing History Data Not Found....</div>');
                     }
                 }
             });

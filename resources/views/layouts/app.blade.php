@@ -31,17 +31,18 @@
     </head>
 
     <body id="app-layout">
-        <div class="container">
+        <div class="container-fluid">
             @yield('content')
 
             <div class="footer">
-                <div class="col-lg-10 col-lg-offset-1">
+                <div class="col-lg-12">
                     <hr/>
                     <label class="size-12 app-info-label" for=""><span class=""><kbd>© 2016 WORTHRAND INVENTORY CRM</kbd></span></label>
                     <label class=" size-12 app-info-label" for="" style="float: right;"><kbd>WORTHRAND INVENTORY CRM &mdash; Version: 0.2.2-BETA</kbd></label>
                 </div>
             </div>
         </div>
+
         <script>
         jQuery(document).ready(function($) {
             jQuery('#accordion').dcAccordion();

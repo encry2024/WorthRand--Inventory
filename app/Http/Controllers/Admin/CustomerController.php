@@ -89,4 +89,12 @@ class CustomerController extends Controller
         return redirect()->back()->with('message', 'Customer Not Assigned');
     }
 
+    public function adminDeleteCustomer(Customer $customer)
+    {
+        $customer = Customer::find($customer->id);
+        $customer->delete();
+
+        return redirect()->route('admin_customer_index')->with('message', 'Your Customer "' . $customer->name . '" was successfully deleted.');
+    }
+
 }

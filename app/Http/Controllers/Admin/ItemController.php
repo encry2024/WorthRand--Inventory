@@ -243,4 +243,28 @@ class ItemController extends Controller
 
         return $adminPostSealCreate;
     }
+
+    public function adminProjectDelete(Project $project)
+    {
+        $deletedProject = Project::find($project->id);
+        $deletedProject->delete();
+
+        return redirect()->route('admin_project_index')->with('message', 'You have successfully deleted Project "' . strtoupper($project->name) . '"');
+    }
+
+    public function adminAftermarketDelete(AfterMarket $afterMarket)
+    {
+        $deletedAftermarket = AfterMarket::find($afterMarket->id);
+        $deletedAftermarket->delete();
+
+        return redirect()->route('after_market_index')->with('message', 'You have successfully deleted Aftermarket "' . strtoupper($afterMarket->name) . '"');
+    }
+
+    public function adminSealDelete(Seal $seal)
+    {
+        $deletedSeal = Seal::find($seal->id);
+        $deletedSeal->delete();
+
+        return redirect()->route('admin_seal_index')->with('message', 'You have successfully deleted Seal "' . strtoupper($seal->name) . '"');
+    }
 }

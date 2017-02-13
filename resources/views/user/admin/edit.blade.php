@@ -6,10 +6,10 @@
 
 @section('content')
     @if(Session::has('message'))
-        <div class="row">
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <i class="fa fa-check"></i>&nbsp;&nbsp;<b>{{ Session::get('message') }}</b>
-                <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="row" style="margin-top: -2rem; margin-left: -15rem; margin-right: -15rem;">
+            <div class="alert alert-success alert-dismissible" role="alert" style="border-radius: 0px; border-radius: 0px; color: #224323; background-color: #cde6cd;border-color: #bcddbc; background-image: none;">
+                <i class="fa fa-check" style="margin-left: 18rem;"></i>&nbsp;&nbsp;<b>{{ Session::get('message') }}</b>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 15rem;"><span aria-hidden="true">&times;</span></button>
             </div>
         </div>
     @endif
@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="panel panel-default">
                     <div class="panel-heading" style="border-top: saddlebrown 3px solid;">
-                        <h4><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;&nbsp;Edit Information</h4>
+                        <h4><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;&nbsp;EDIT INFORMATION</h4>
                     </div>
                 </div>
             </div>

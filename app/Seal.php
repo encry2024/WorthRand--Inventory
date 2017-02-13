@@ -3,12 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Seal extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'name', 'drawing_number', 'bom_number', 'end_user', 'seal_type', 'size', 'material_number', 'code', 'model', 'serial_number','tag', 'price'
     ];
+
+    protected $dates = ["deleted_at"];
 
     public function seal_pricing_history()
     {

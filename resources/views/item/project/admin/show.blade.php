@@ -36,6 +36,7 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="margin-top: 0.55rem; margin-right: -4rem;">
                         <li><a href="{{ route('admin_project_information', $project->id) }}"><i class="fa fa-edit"></i>&nbsp;Edit Information</a></li>
                         <li><a href="{{ route('admin_project_pricing_history_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Pricing History</a></li>
+                        <li><a href="javascript:void(0)" class="delete-link" data-toggle="modal" data-target="#DeleteProjectModal"><i class="fa fa-trash"></i>&nbsp; Delete Project</a></li>
                     </ul>
                 </div>
             </ul>
@@ -95,7 +96,7 @@
                                     <label for="reference_number" class="col-md-4 control-label">Reference Number:</label>
 
                                     <div class="col-md-6">
-                                        <label id="reference_number" lass="control-label">{{ $project->reference_number }}</label>
+                                        <label id="reference_number" class="control-label">{{ $project->reference_number }}</label>
                                     </div>
                                 </div>
 
@@ -180,5 +181,32 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    {{-- DELETE MODAL --}}
+    <div class="modal fade" id="DeleteProjectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <form action="{{ route('admin_project_delete', $project->id) }}" method="POST">
+            {{ csrf_field() }}
+            {{ method_field('DELETE') }}
+
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="border-radius: 0px;">
+                    <div class="modal-header modal-header-danger" style="padding: 10px;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <label class="modal-title" id="myModalLabel" style="font-size: 16px; font-weight: normal;"><i class="fa fa-trash"></i>&nbsp;Delete Project: {{ $project->name }}</label>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-info" role="alert" style="border-radius: 0px; padding: 7px; margin-top: -1.6rem; margin-left: -1.5rem; margin-right: -1.5rem; background-image: none;">
+                            <label style="margin-left: 2.5rem; padding-top: 2px;"><i class="fa fa-info-circle"></i> You may still recover deleted Projects.</label></div>
+                        <label class="control-label" style="font-size: 15px;">Are you sure you want to <code>DELETE</code> {{ strtoupper($project->name) }}?</label>
+                        <br>
+                    </div>
+                    <div class="modal-footer" style="padding: 5px; background-color: #e6e6e6; border-top: #ccc solid 1px;">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;Delete</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 @endsection

@@ -13,6 +13,61 @@ Route::auth();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middlewareGroups' => 'web'], function() {
+    Route::get('export/indented_proposal/{indented_proposal}', function(\App\IndentedProposal $indented_proposal) {
+        $excel = Excel::create('Test Files', function($excel) use($indented_proposal) {
+            $excel->sheet('WorthRand Inventory PO', function($sheet) use ($indented_proposal, $excel) {
+                $ctr = 0;
+
+                $selectedItems = DB::table('indented_proposal_item')
+                    ->select('projects.*',
+                        DB::raw('wr_crm_projects.name as "project_name"'),
+                        DB::raw('wr_crm_projects.model as "project_md"'),
+                        DB::raw('wr_crm_projects.serial_number as "project_sn"'),
+                        DB::raw('wr_crm_projects.part_number as "project_pn"'),
+                        DB::raw('wr_crm_projects.drawing_number as "project_dn"'),
+                        DB::raw('wr_crm_projects.tag_number as "project_tn"'),
+                        DB::raw('wr_crm_projects.material_number as "project_mn"'),
+                        DB::raw('wr_crm_projects.price as "project_price"'),
+                        'after_markets.*',
+                        DB::raw('wr_crm_after_markets.name as "after_market_name"'),
+                        DB::raw('wr_crm_after_markets.model as "after_market_md"'),
+                        DB::raw('wr_crm_after_markets.part_number as "after_market_pn"'),
+                        DB::raw('wr_crm_after_markets.drawing_number as "after_market_dn"'),
+                        DB::raw('wr_crm_after_markets.material_number as "after_market_mn"'),
+                        DB::raw('wr_crm_after_markets.material_number as "after_market_sn"'),
+                        DB::raw('wr_crm_after_markets.tag_number as "after_market_tn"'),
+                        DB::raw('wr_crm_after_markets.price as "after_market_price"'),
+                        'indented_proposal_item.*',
+                        DB::raw('wr_crm_indented_proposal_item.id as "indented_proposal_item_id"'),
+                        DB::raw('wr_crm_indented_proposal_item.quantity as "indented_proposal_item_quantity"'),
+                        DB::raw('wr_crm_indented_proposal_item.delivery as "indented_proposal_item_delivery"'),
+                        DB::raw('wr_crm_indented_proposal_item.price as "indented_proposal_item_price"'),
+                        DB::raw('wr_crm_indented_proposal_item.notify_me_after as "indented_proposal_item_notify_me_after"'))
+                    ->leftJoin('projects', function($join) {
+                        $join->on('indented_proposal_item.item_id', '=', 'projects.id')
+                            ->where('indented_proposal_item.type', '=', 'projects');
+                    })
+                    ->leftJoin('after_markets', function($join) {
+                        $join->on('indented_proposal_item.item_id', '=', 'after_markets.id')
+                            ->where('indented_proposal_item.type', '=', 'after_markets');
+                    })
+                    ->where('indented_proposal_item.indented_proposal_id', '=', $indented_proposal->id)->get();
+                $total_count = 14 + count($selectedItems);
+                $sheet->cell('A14:E'. $total_count, function($cells) {
+
+                    $cells->setValignment(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    // Set vertical alignment to middle
+                    $cells->setAlignment(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                });
+
+                $sheet->loadView('proposal.admin.indented_proposal.proposal_to_xls', array('indented_proposal' => $indented_proposal, 'selectedItems' => $selectedItems, 'ctr' => $ctr));
+            });
+            $lastrow= $excel->getActiveSheet()->getHighestRow();
+            $excel->getActiveSheet()->getStyle('A1:J'.$lastrow)->getAlignment()->setWrapText(true);
+        })->export('xlsx');
+    })->name('admin_export_pending_proposal');
+
     // SUPER ADMIN ACCOUNT
     Route::group(['middleware' => 'check_if_user_is_super_admin'], function() {
         Route::group(['prefix' => 'super_admin'], function() {
@@ -79,6 +134,7 @@ Route::group(['middlewareGroups' => 'web'], function() {
                 Route::get('/after_markets/{afterMarket}/pricing_history/create', 'Admin\ItemController@adminAfterMarketPricingHistoryCreate')->name('admin_after_market_pricing_history_create');
                 Route::patch('/aftermarket/{afterMarket}/update', 'Admin\ItemController@adminUpdateAfterMarketInformation')->name('admin_after_market_information_update');
                 Route::post('/aftermarket/{afterMarket}/pricing_history/create', 'Admin\ItemController@adminAddAfterMarketPricingHistory')->name('admin_add_after_market_pricing_history');
+                Route::delete('/aftermarket/{afterMarket}/delete', 'Admin\ItemController@adminAftermarketDelete')->name('admin_aftermarket_delete');
 
                 # PROJECT
                 Route::get('/create/project', 'Admin\ItemController@createProject')->name('create_project');
@@ -93,6 +149,7 @@ Route::group(['middlewareGroups' => 'web'], function() {
                 Route::post('/create/project', 'Admin\ItemController@postProject')->name('post_project');
                 Route::get('/project/dashboard', 'Admin\ItemController@adminProjectDashboard')->name('admin_project_dashboard');
                 Route::get('/project/{project}/aftermarket/create', 'Admin\ItemController@adminCreateAfterMarketOnProject')->name('admin_create_aftermarket_on_project');
+                Route::delete('/project/{project}/delete', 'Admin\ItemController@adminProjectDelete')->name('admin_project_delete');
 
                 # SEAL
                 Route::get('/seal/create', 'Admin\ItemController@adminSealCreate')->name('admin_seal_create');
@@ -104,6 +161,7 @@ Route::group(['middlewareGroups' => 'web'], function() {
                 Route::get('/seal/{seal}/pricing_history', 'Admin\ItemController@adminShowSealPricingHistory')->name('admin_seal_pricing_history_index');
                 Route::get('/seal/{seal}/pricing_history/create', 'Admin\ItemController@showSealPricingHistory')->name('admin_seal_pricing_history_create');
                 Route::post('/seal/{seal}/pricing_history/create', 'Admin\ItemController@postSealPricingHistory')->name('admin_add_seal_pricing_history');
+                Route::delete('/seal/{seal}/delete', 'Admin\ItemController@adminSealDelete')->name('admin_seal_delete');
 
                 # PRICING HISTORY
                 Route::get('/pricing_history', 'Admin\ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');
@@ -126,6 +184,7 @@ Route::group(['middlewareGroups' => 'web'], function() {
                 Route::patch('/customer/{customer}/edit', 'Admin\CustomerController@adminPostEditCustomerInformation')->name('admin_post_edit_customer_information');
                 Route::get('fetch_customers', 'Admin\CustomerController@adminFetchCustomers');
                 Route::post('save_customer', 'Admin\CustomerController@adminSaveCustomer')->name('admin_save_customer');
+                Route::delete('/customer/{customer}/delete', 'Admin\CustomerController@adminDeleteCustomer')->name('admin_delete_customer');
 
                 # BRANCHES
                 Route::get('/branches', 'Admin\BranchController@adminBranchIndex')->name('admin_branch_index');
@@ -135,61 +194,6 @@ Route::group(['middlewareGroups' => 'web'], function() {
                 # PROPOSALS
                 Route::get('/indented_proposal', 'Admin\ProposalController@adminIndentedProposalIndex')->name('admin_indented_proposal_index');
                 Route::get('/indented_proposal/{indented_proposal}', 'Admin\ProposalController@adminShowPendingIndentedProposal')->name('admin_show_pending_proposal');
-                Route::get('export/indented_proposal/{indented_proposal}', function(\App\IndentedProposal $indented_proposal) {
-                    $excel = Excel::create('Test Files', function($excel) use($indented_proposal) {
-                        $excel->sheet('WorthRand Inventory PO', function($sheet) use ($indented_proposal, $excel) {
-                            $ctr = 0;
-
-                            $selectedItems = DB::table('indented_proposal_item')
-                                ->select('projects.*',
-                                    DB::raw('wr_crm_projects.name as "project_name"'),
-                                    DB::raw('wr_crm_projects.model as "project_md"'),
-                                    DB::raw('wr_crm_projects.serial_number as "project_sn"'),
-                                    DB::raw('wr_crm_projects.part_number as "project_pn"'),
-                                    DB::raw('wr_crm_projects.drawing_number as "project_dn"'),
-                                    DB::raw('wr_crm_projects.tag_number as "project_tn"'),
-                                    DB::raw('wr_crm_projects.material_number as "project_mn"'),
-                                    DB::raw('wr_crm_projects.price as "project_price"'),
-                                    'after_markets.*',
-                                    DB::raw('wr_crm_after_markets.name as "after_market_name"'),
-                                    DB::raw('wr_crm_after_markets.model as "after_market_md"'),
-                                    DB::raw('wr_crm_after_markets.part_number as "after_market_pn"'),
-                                    DB::raw('wr_crm_after_markets.drawing_number as "after_market_dn"'),
-                                    DB::raw('wr_crm_after_markets.material_number as "after_market_mn"'),
-                                    DB::raw('wr_crm_after_markets.material_number as "after_market_sn"'),
-                                    DB::raw('wr_crm_after_markets.tag_number as "after_market_tn"'),
-                                    DB::raw('wr_crm_after_markets.price as "after_market_price"'),
-                                    'indented_proposal_item.*',
-                                    DB::raw('wr_crm_indented_proposal_item.id as "indented_proposal_item_id"'),
-                                    DB::raw('wr_crm_indented_proposal_item.quantity as "indented_proposal_item_quantity"'),
-                                    DB::raw('wr_crm_indented_proposal_item.delivery as "indented_proposal_item_delivery"'),
-                                    DB::raw('wr_crm_indented_proposal_item.price as "indented_proposal_item_price"'),
-                                    DB::raw('wr_crm_indented_proposal_item.notify_me_after as "indented_proposal_item_notify_me_after"'))
-                                ->leftJoin('projects', function($join) {
-                                    $join->on('indented_proposal_item.item_id', '=', 'projects.id')
-                                        ->where('indented_proposal_item.type', '=', 'projects');
-                                })
-                                ->leftJoin('after_markets', function($join) {
-                                    $join->on('indented_proposal_item.item_id', '=', 'after_markets.id')
-                                        ->where('indented_proposal_item.type', '=', 'after_markets');
-                                })
-                                ->where('indented_proposal_item.indented_proposal_id', '=', $indented_proposal->id)->get();
-                            $total_count = 14 + count($selectedItems);
-                            $sheet->cell('A14:E'. $total_count, function($cells) {
-
-                                $cells->setValignment(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                                // Set vertical alignment to middle
-                                $cells->setAlignment(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
-
-                            });
-
-                            $sheet->loadView('proposal.admin.indented_proposal.proposal_to_xls', array('indented_proposal' => $indented_proposal, 'selectedItems' => $selectedItems, 'ctr' => $ctr));
-                        });
-                        $lastrow= $excel->getActiveSheet()->getHighestRow();
-                        $excel->getActiveSheet()->getStyle('A1:J'.$lastrow)->getAlignment()->setWrapText(true);
-                    })->export('xlsx');
-                })->name('admin_export_pending_proposal');
-
 
                 # BUY AND RESALE PROPOSAL TO XLS
                 Route::get('export/buy_and_resale_proposal/{buyAndSellProposal}', function(\App\BuyAndSellProposal $buyAndSellProposal) {
