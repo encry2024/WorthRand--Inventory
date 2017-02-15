@@ -578,6 +578,7 @@ class IndentedProposal extends Model
                 DB::raw('wr_crm_indented_proposal_item.quantity as "indented_proposal_item_quantity"'),
                 DB::raw('wr_crm_indented_proposal_item.delivery as "indented_proposal_item_delivery"'),
                 DB::raw('wr_crm_indented_proposal_item.price as "indented_proposal_item_price"'),
+
                 DB::raw('wr_crm_indented_proposal_item.notify_me_after as "indented_proposal_item_notify_me_after"'))
             ->leftJoin('projects', function($join) {
                 $join->on('indented_proposal_item.item_id', '=', 'projects.id')

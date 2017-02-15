@@ -4,7 +4,7 @@
     @if(Session::has('message'))
         <div class="row" style="margin-top: -2rem;">
             <div class="alert alert-success alert-dismissible" role="alert" style="border-radius: 0px; border-radius: 0px; color: #224323; background-color: #cde6cd;border-color: #bcddbc; background-image: none;">
-                <b><i class="fa fa-check" style="margin-left: 18rem;"></i>&nbsp;&nbsp;<b>{{ Session::get('message') }}</b></b>
+                b<i class="fa fa-check" style="margin-left: 18rem;"></i>&nbsp;&nbsp;<b>{{ Session::get('message') }}</b>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 15rem;"><span aria-hidden="true">&times;</span></button>
             </div>
         </div>
@@ -19,7 +19,7 @@
 
             <div class="col-md-3">
                 <div class="list-group">
-                    <a href="{{ route('admin_export_pending_proposal', $indented_proposal->id) }}" class="list-group-item"><i class="fa fa-download"></i>&nbsp; Export to XLSX</a>
+                    <a href="{{ route('se_export_order_entry', $indented_proposal->id) }}" class="list-group-item"><i class="fa fa-download"></i>&nbsp; Export to XLSX</a>
                     <a class="list-group-item" href="{{ route('se_dashboard') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a>
                 </div>
             </div>
