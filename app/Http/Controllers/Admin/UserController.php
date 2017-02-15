@@ -56,14 +56,14 @@ class UserController extends Controller
     public function showSalesEngineer(User $sales_engineer)
     {
         $targetRevenue = TargetRevenue::whereUserId($sales_engineer->id)->first();
-        $targetRevenueHistory = DB::table('target_revenue_histories')
-            ->select('target_revenue_histories.*', DB::raw('SUM(collected) as total_sales'))
-            ->whereYear('date', '=', date('Y'))
-            ->where('target_revenue_id', '=', $targetRevenue->id)
-            ->groupBy(DB::raw("YEAR('date')"))
-            ->first();
-
-        // dd($targetRevenueHistory);
+        if(count($targetRevenue) != 0) {
+            $targetRevenueHistory = DB::table('target_revenue_histories')
+                ->select('target_revenue_histories.*', DB::raw('SUM(collected) as total_sales'))
+                ->whereYear('date', '=', date('Y'))
+                ->where('target_revenue_id', '=', $targetRevenue->id)
+                ->groupBy(DB::raw("YEAR('date')"))
+                ->first();
+        }
 
         return view('sales_engineer.admin.show', compact('sales_engineer', 'targetRevenueHistory'));
     }

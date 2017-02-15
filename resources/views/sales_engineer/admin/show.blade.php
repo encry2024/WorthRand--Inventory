@@ -125,7 +125,7 @@
                                 <label for="targetSale">Current Sale</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">PHP</div>
-                                    <input type="text" class="form-control" name="target_sale" id="targetSale" value="{{ count($targetRevenueHistory->total_sales) == "" ? '0.00' : number_format($targetRevenueHistory->total_sales, 2) }}" disabled>
+                                    <input type="text" class="form-control" name="target_sale" id="targetSale" value="{{ count($sales_engineer->target_revenue) == 0 ? '0.00' : (count($targetRevenueHistory) == 0 ? "0.00" : number_format($targetRevenueHistory->total_sales, 2)) }}" disabled>
                                 </div>
                             </div>
                         </div>
