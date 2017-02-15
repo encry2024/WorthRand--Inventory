@@ -5,6 +5,15 @@
 @stop
 
 @section('content')
+    @if(Session::has('message'))
+        <div class="row" style="margin-top: -2rem;">
+            <div class="alert alert-success alert-dismissible" role="alert" style="border-radius: 0px; border-radius: 0px; color: #224323; background-color: #cde6cd;border-color: #bcddbc; background-image: none;">
+                <i class="fa fa-check" style="margin-left: 18rem;"></i>&nbsp;&nbsp;<b>{{ Session::get('message') }}</b>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 15rem;"><span aria-hidden="true">&times;</span></button>
+            </div>
+        </div>
+    @endif
+
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="col-md-3">
             <div class="list-group">
@@ -15,14 +24,6 @@
         </div>
 
         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 ">
-            @if(Session::has('message'))
-                <div class="row">
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        <div class="container"><i class="fa fa-check"></i>&nbsp;&nbsp;{{ Session::get('message') }}
-                            <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-                    </div>
-                </div>
-            @endif
             <div class="row">
                 <div class="panel panel-default">
                     <div class="panel-heading" style="border-top: saddlebrown 3px solid;">
@@ -35,6 +36,16 @@
                 <li role="presentation" class="active" style="margin-left: 3rem;"><a href="#information" aria-controls="information" role="tab" data-toggle="tab">Information</a></li>
                 <li role="presentation"><a href="#engineer_customer" aria-controls="engineer_customer" role="tab" data-toggle="tab">Customers</a></li>
                 <li role="presentation"><a href="#target_revenue" aria-controls="target_revenue" role="tab" data-toggle="tab">Target Revenue</a></li>
+                <div class="dropdown pull-right">
+                    <button class="btn btn-default dropdown-toggle" style="text-shadow: none !important;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Actions
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="margin-top: 0.55rem; margin-right: -4rem;">
+                        <li><a href="javascript:void(0)" data-toggle="modal" data-target="#SetTargetSaleModal"><i class="fa fa-edit"></i>&nbsp;Set Target Sale</a></li>
+                        <li><a href="javascript:void(0)" data-toggle="modal" data-target="#assignCustomerToSalesEngineerModal"><i class="fa fa-user-plus"></i>&nbsp;Assign Customer</a></li>
+                    </ul>
+                </div>
             </ul>
 
             <div class="tab-content">
@@ -107,21 +118,20 @@
                                 <label for="targetSale">Target Sale</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">PHP</div>
-                                    <input type="text" class="form-control" name="target_sale" id="targetSale" value="{{ count($sales_engineer->target_revenue) == 0 ? '0.00' : $sales_engineer->target_revenue->target_sale }}" disabled>
+                                    <input type="text" class="form-control" name="target_sale" id="targetSale" value="{{ count($sales_engineer->target_revenue) == 0 ? '0.00' : number_format($sales_engineer->target_revenue->target_sale, 2) }}" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="targetSale">Current Sale</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">PHP</div>
-                                    <input type="text" class="form-control" name="target_sale" id="targetSale" value="{{ count($sales_engineer->target_revenue) == "" ? '0.00' : $sales_engineer->target_revenue->current_sale }}" disabled>
+                                    <input type="text" class="form-control" name="target_sale" id="targetSale" value="{{ count($targetRevenueHistory->total_sales) == "" ? '0.00' : number_format($targetRevenueHistory->total_sales, 2) }}" disabled>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -155,6 +165,40 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" OnClick='document.getElementById("assignCustomerToUser").submit();'>Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="SetTargetSaleModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Target Sale Revenue</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="SetTargetRevenueToUser" method="POST" action="{{ route('admin_set_se_target_revenue', $sales_engineer->id) }}" >
+                        {{ csrf_field() }}
+                        <div class="form-group{{ $errors->has('target_sale') ? ' has-error' : '' }}">
+                            <label for="customer_dropdown" class="col-md-4 control-label">Target Sale Revenue</label>
+                            <div class="col-md-6">
+                                <input id="target_sale" type="text" class="form-control" name="target_sale" value="{{ count($sales_engineer->target_revenue) == 0 ? '0.00' : $sales_engineer->target_revenue->target_sale }}" autofocus>
+                                <input type="hidden" name="user_id" value="{{ $sales_engineer->id }} ">
+
+                                @if ($errors->has('target_sale'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('target_sale') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" OnClick='document.getElementById("SetTargetRevenueToUser").submit();'>Save changes</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

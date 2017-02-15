@@ -23,7 +23,7 @@
                         <div class="col-lg-12">
                             <div class="col-lg-12">
                                 <div class="table-responsive">
-                                    <table class="table">
+                                    <table class="table table-striped table-bordered">
                                         <thead>
                                         <th>ID</th>
                                         <th>Purchase Order</th>

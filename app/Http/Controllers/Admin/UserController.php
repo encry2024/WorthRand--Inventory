@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\TargetRevenue;
+use App\TargetRevenueHistory;
 use Doctrine\Common\Annotations\Annotation\Target;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserInformationRequest;
 use App\Http\Requests\UpdateUserProfile;
+use DB;
 
 class UserController extends Controller
 {
@@ -53,7 +55,17 @@ class UserController extends Controller
 
     public function showSalesEngineer(User $sales_engineer)
     {
-        return view('sales_engineer.admin.show', compact('sales_engineer'));
+        $targetRevenue = TargetRevenue::whereUserId($sales_engineer->id)->first();
+        $targetRevenueHistory = DB::table('target_revenue_histories')
+            ->select('target_revenue_histories.*', DB::raw('SUM(collected) as total_sales'))
+            ->whereYear('date', '=', date('Y'))
+            ->where('target_revenue_id', '=', $targetRevenue->id)
+            ->groupBy(DB::raw("YEAR('date')"))
+            ->first();
+
+        // dd($targetRevenueHistory);
+
+        return view('sales_engineer.admin.show', compact('sales_engineer', 'targetRevenueHistory'));
     }
 
     public function adminEditSalesEngineer(User $sales_engineer)
@@ -133,5 +145,12 @@ class UserController extends Controller
         $user->update(['password' => bcrypt('worthrand123')]);
 
         return redirect()->back()->with('message', 'Reset Password was successful');
+    }
+
+    public function adminSetTargetRevenue(Request $request, User $salesEngineer)
+    {
+        $setTargetRevenue = TargetRevenue::setTargetRevenue($request, $salesEngineer);
+
+        return $setTargetRevenue;
     }
 }

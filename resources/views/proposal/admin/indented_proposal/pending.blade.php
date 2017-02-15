@@ -11,7 +11,7 @@
     @endif
     <div class="col-lg-12">
         @if($indented_proposal->collection_status != "PENDING")
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-success" role="alert" style="border-radius: 0px; border-radius: 0px; color: #224323; background-color: #cde6cd;border-color: #bcddbc; background-image: none;">
                 <b><i class="fa fa-check"></i> You already accepted this proposal.</b>
             </div>
         @endif
@@ -24,7 +24,6 @@
                         <i class="fa fa-check"></i>&nbsp;&nbsp;Accept Proposal
                     </a>
                     @endif
-                    <a href="{{ route('admin_export_pending_proposal', $indented_proposal->id) }}" class="list-group-item"><i class="fa fa-download"></i>&nbsp; Export to XLSX</a>
                     <a class="list-group-item" href="{{ route('admin_dashboard') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a>
                 </div>
             </div>
@@ -100,7 +99,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <table class="table">
+                            <table class="table table-striped">
                                 <thead>
                                 <th>ITEM NO#</th>
                                 <th>MATERIAL CODE</th>

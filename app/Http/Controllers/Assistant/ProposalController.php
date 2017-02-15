@@ -91,4 +91,15 @@ class ProposalController extends Controller
             ->with('msg_icon', 'glyphicon-ok')
             ->with('message', 'Item process status was changed to Delayed');
     }
+
+    public function acceptBuyAndSellProposal(Request $request, BuyAndSellProposal $buyAndSellProposal, BuyAndSellProposalItem $buyAndSellProposalItem)
+    {
+        $buyAndSellProposal->update(['collection_status' => 'FOR-COLLECTION', 'purchase_order' => $request->get('purchase_order')]);
+        foreach($buyAndSellProposal->buy_and_sell_proposal_items as $buy_and_sell_proposal_item) {
+            $buy_and_sell_proposal_item->update(['status' => 'DELIVERED']);
+        }
+
+        return redirect()->back()->with('message', 'Buy & Resale Proposal [ Purchase Order Number: #' . $buyAndSellProposalItem->purchase_order . ' ] is now ready for collection')
+            ->with('alert', 'alert-success');
+    }
 }

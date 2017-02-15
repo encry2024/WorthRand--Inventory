@@ -1,6 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(Session::has('message'))
+        <div class="row" style="margin-top: -2rem;">
+            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="border-radius: 0px;">
+                <i style="margin-left: 18rem;" class="fa fa-check"></i>&nbsp;&nbsp;{{ Session::get('message') }}
+                <button style="margin-right: 14rem;" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+        </div>
+    @endif
+
+    @if (count($errors) > 0)
+        <div class="row" style="margin-top: -2rem;">
+            <div style="border-radius: 0px;" class="alert search-error alert-dismissible">
+                <i class="close icon"></i>
+                <div class="header">
+                    <b>Indented Proposal</b> was not able to save because of the following reason(s)
+                </div>
+                <ul class="list">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
+
     <div class="col-lg-12">
 
         <div class="col-md-3">
@@ -8,7 +33,7 @@
                 <a class="list-group-item" href="#send_proposal" onclick='document.getElementById("SubmitIndentedProposal").submit();' style="font-size: 13px;">
                     <i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Send Proposal
                 </a>
-                <a class="list-group-item" href="{{ route('se_dashboard') }}" onclick='document.getElementById("SubmitIndentedProposal").submit();' style="font-size: 13px;">
+                <a class="list-group-item" href="{{ route('search') }}" style="font-size: 13px;">
                     <i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back
                 </a>
             </div>
@@ -147,19 +172,21 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <table class="table">
+                        <table class="table table-striped">
                             <thead>
-                            <th>ITEM NO#</th>
-                            <th>DESCRIPTION</th>
-                            <th>QUANTITY</th>
-                            <th>PRICE</th>
-                            <th>DELIVERY</th>
+                                <th>ITEM NO#</th>
+                                <th>Material NO#</th>
+                                <th>DESCRIPTION</th>
+                                <th>QUANTITY</th>
+                                <th>PRICE</th>
+                                <th>DELIVERY</th>
                             </thead>
 
                             <tbody>
                             @foreach($selectedItems as $selectedItem)
                                 <tr>
                                     <td>{{ ++$ctr }}</td>
+                                    <td style="width: 13%;">{{ $selectedItem->project_mn != "" ? $selectedItem->project_mn : ($selectedItem->after_market_mn != '' ? $selectedItem->after_market_mn : $selectedItem->seal_material_number) }}</td>
                                     <td>
                                         <b>NAME:&nbsp;</b>
                                         {{ $selectedItem->project_name != "" ? $selectedItem->project_name : ($selectedItem->after_market_name != '' ? $selectedItem->after_market_name : $selectedItem->seal_name) }}
@@ -193,8 +220,8 @@
                                                 </div>
                                                 @if ($errors->has('price.'.$selectedItem->indented_proposal_item_id))
                                                     <span class="help-block">
-                                                    <strong>{{ $errors->first('price.'.$selectedItem->indented_proposal_item_id) }}</strong>
-                                                </span>
+                                                        <strong>{{ $errors->first('price.'.$selectedItem->indented_proposal_item_id) }}</strong>
+                                                    </span>
                                                 @endif
                                             </div>
                                         </div>

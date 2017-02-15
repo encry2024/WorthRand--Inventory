@@ -24,7 +24,7 @@ class UpdateApprovedBuyAndSellProposalBySecretary extends Request
     public function rules()
     {
         return [
-            "qrc_reference" => 'required|unique:buy_and_sell_proposals,qrc_ref',
+            "qrc_reference" => 'required|unique:buy_and_sell_proposals,qrc_ref,'.$this->request->get('buy_and_sell_proposal_id'),
             "validity" => 'required',
             "payment_terms" => 'required'
         ];

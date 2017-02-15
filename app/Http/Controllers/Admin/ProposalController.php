@@ -75,8 +75,15 @@ class ProposalController extends Controller
 
     public function adminAcceptBuyAndSellProposal(BuyAndSellProposal $buyAndSellProposal)
     {
-        $buyAndSellProposal->update(['collection_status' => 'FOR-FILL']);
+        $buyAndSellProposal->update(['collection_status' => 'ACCEPTED']);
 
         return redirect()->back()->with('message', 'Buy and Resale Proposal [ WPC Number/Reference: #' . $buyAndSellProposal->wpc_reference . ' ] Accepted')->with('alert', "alert-success");
+    }
+
+    public function adminCompletedIndentedProposal(IndentedProposal $indentedProposal)
+    {
+        $viewCompletedIndentedProposal = IndentedProposal::adminViewCompletedIndentedProposal($indentedProposal);
+
+        return $viewCompletedIndentedProposal;
     }
 }

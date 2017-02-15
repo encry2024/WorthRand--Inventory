@@ -1,59 +1,77 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(Session::has('message'))
-        <div class="row" style="margin-top: -2rem;">
-            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="border-radius: 0px;">
-                <i style="margin-left: 18rem;" class="fa fa-check"></i>&nbsp;&nbsp;{{ Session::get('message') }}
-                <button style="margin-right: 14rem;" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
+    <div class="row" style="margin-top: -2rem;">
+        <div class="alert alert-success alert-dismissible" role="alert" style="border-radius: 0px; border-radius: 0px; color: #224323; background-color: #cde6cd;border-color: #bcddbc; background-image: none;">
+            <b><i style="margin-left: 18rem;" class="fa fa-flag"></i>&nbsp;&nbsp;This proposal is already completed.</b>
         </div>
-    @endif
+    </div>
 
-    @if (count($errors) > 0)
-        <div class="row" style="margin-top: -2rem;">
-            <div style="border-radius: 0px;" class="alert search-error alert-dismissible">
-                <i class="close icon"></i>
-                <div class="header">
-                    <b>Indented Proposal</b> was not able to save because of the following reason(s)
-                </div>
-                <ul class="list">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-    @endif
 
     <div class="col-lg-12">
         <div class="row">
 
             <div class="col-md-3">
                 <div class="list-group">
-                    <a href="{{ route('customer_index') }}" class="list-group-item" style="font-size: 13px;" data-toggle="modal" data-target="#indentedProposalFormConfirmation"><i class="fa fa-check"></i>&nbsp;&nbsp;Accept Proposal</a>
-                    <a href="{{ route('assistant_dashboard') }}" class="list-group-item" style="font-size: 13px;"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
+                    <a href="{{ route('admin_export_pending_proposal', $indented_proposal->id) }}" class="list-group-item"><i class="fa fa-download"></i>&nbsp; Export to XLSX</a>
+                    <a href="{{ route('admin_dashboard') }}" class="list-group-item" style="font-size: 13px;"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
                 </div>
             </div>
 
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                <form class="form-horizontal" action="{{ route('assistant_update_accepted_proposal', $indentedProposal->id) }}" method="POST" id="AcceptIndentedProposal" enctype="multipart/form-data">
+                <form class="form-horizontal">
                     {{ csrf_field() }}
-                    {{ method_field('PATCH') }}
 
-                    <input type="hidden" name="indent_proposal_id" value="{{ $indentedProposal->id }}">
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="border-top: saddlebrown 3px solid;">
+                                <h4><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;CHEQUE DETAILS</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="company_name" class="col-sm-2 control-label">Company Name: </label>
+                                <div class="col-sm-5">
+                                    <input disabled class="form-control" id="company_name" name="company_name" placeholder="Company Name"
+                                           value="{{ $cheque->company_name }}" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="amount" class="col-sm-2 control-label">Amount: </label>
+                                <div class="col-sm-5 ">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">$</div>
+                                        <input disabled class="form-control" id="amount" name="amount" placeholder="Amount (USD) " value="{{ number_format($cheque->amount, 2) }}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row">
+                    <hr>
+                </div>
+
+                <form class="form-horizontal">
+                    {{ csrf_field() }}
 
                     <div class="form-group">
                         <label for="OrderEntryNumber" class="col-sm-2 control-label">Order Entry Number: </label>
-                        <div class="col-sm-5">
-                            <input disabled class="form-control" id="OrderEntryNumber" name="order_entry_no" placeholder="Order Entry Number"
-                                   value="{{ $indentedProposal->order_entry_no != '' ? $indentedProposal->order_entry_no : '' }}">
+                        <div class="col-sm-5 ">
+                            <input disabled class="form-control" id="OrderEntryNumber" name="order_entry_no" placeholder="Order Entry Number" value="{{ $indentedProposal->order_entry_no }}" required>
                         </div>
                     </div>
 
                     <div class="row">
                         <hr>
                     </div>
+
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -102,14 +120,11 @@
                         <div class="col-lg-12">
                             <table class="table table-striped">
                                 <thead>
-                                    <th>ITEM NO#</th>
-                                    <th>MATERIAL CODE</th>
-                                    <th>DESCRIPTION</th>
-                                    <th>QUANTITY</th>
-                                    <th>PRICE</th>
-                                    <th>DELIVERY</th>
-                                    <th>Notify me Aftr</th>
-                                    <th>ACTIONS</th>
+                                <th>ITEM NO#</th>
+                                <th>DESCRIPTION</th>
+                                <th>QUANTITY</th>
+                                <th>PRICE</th>
+                                <th>DELIVERY</th>
                                 </thead>
 
                                 <tbody>
@@ -154,35 +169,6 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <div class="col-lg-12">
-                                                    <div class="input-group">
-                                                        <input disabled type="text" class="form-control" name="delivery[{{ $selectedItem->indented_proposal_item_id }}]" value="{{ $selectedItem->delivery != "" ? $selectedItem->notify_me_after / 7 : $selectedItem->notify_me_after / 7 }}">
-                                                        <div class="input-group-addon">Weeks</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        @if($selectedItem->status != "DELIVERED")
-                                            <td style="width: 15%;">
-                                                <div class="dropdown">
-                                                    <button class="btn {{ $selectedItem->status == "DELAYED" ? "btn-danger" : "btn-default" }} dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                        {{ $selectedItem->status }}
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="margin-top: 0.6rem;">
-                                                        <li><a href="#delivered" data-toggle="modal" data-target="#changeItemDeliveryStatus" onclick="getDeliveredItem({{ $selectedItem->indented_proposal_item_id }});"><span class="glyphicon glyphicon-ok"></span> Delivered</a></li>
-                                                        <li><a href="#update_notification" data-toggle="modal" data-target="#updateNotifyMeForm" onclick="getNotifyMe({{ $selectedItem->indented_proposal_item_id }});"><span class="glyphicon glyphicon-pushpin"></span> Notify Me</a></li>
-                                                        <li><a class="delete-link" href="#delayed" data-toggle="modal" data-target="#updateDeliveryStatusForm" onclick="getDeliveryStatus({{ $selectedItem->indented_proposal_item_id }});"><span class="glyphicon glyphicon-warning-sign"></span> Delayed</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        @elseif($selectedItem->status == "DELIVERED")
-                                            <td>
-                                                <label style="font-size: 14px;" class="label label-success">DELIVERED</label>
-                                            </td>
-                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -212,6 +198,13 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="InputAmount" class="col-sm-2 control-label">AMOUNT:</label>
+                                <div class="col-sm-5">
+                                    <input class="form-control" disabled id="InputAmount" name="amount" placeholder="Amount" value="{{ $indentedProposal->amount != '' ? $indentedProposal->amount : '' }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="InputPacking" class="col-sm-2 control-label">PACKING:</label>
                                 <div class="col-sm-5">
                                     <textarea disabled name="packing" id="InputPacking" class="form-control" placeholder="Packing" >{{ $indentedProposal->packing != '' ? $indentedProposal->packing : '' }}</textarea>
@@ -229,6 +222,15 @@
                                 <label for="InputInsurance" class="col-sm-2 control-label">INSURANCE:</label>
                                 <div class="col-sm-5">
                                     <input class="form-control" disabled id="InputInsurance" name="insurance" placeholder="Insurance"  value="{{ $indentedProposal->insurance != '' ? $indentedProposal->insurance : '' }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="InputTermsOfPayment" class="col-sm-2 control-label">TERMS OF PAYMENT: </label>
+                                <div class="col-sm-5">
+                                    <input class="form-control" disabled id="InputTermsOfPayment" name="terms_of_payment_1" placeholder="Note"  value="{{ $indentedProposal->terms_of_payment_1 != '' ? $indentedProposal->terms_of_payment_1 : '' }}">
+                                    <br>
+                                    <textarea disabled name="terms_of_payment_address" id="InputTermsOfPayment2" class="form-control" placeholder="Address">{{ $indentedProposal->terms_of_payment_address != '' ? $indentedProposal->terms_of_payment_address : '' }}</textarea>
                                 </div>
                             </div>
 
@@ -267,128 +269,4 @@
 
         </div>
     </div>
-
-    <form class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="indentedProposalFormConfirmation">
-        {{ method_field('PATCH') }}
-        {{ csrf_field() }}
-        <input type="hidden" name="indented_proposal_id" id="ipi_id">
-
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">WPC Number/Reference: {{ $indentedProposal->wpc_reference }}</h4>
-                </div>
-                <div class="modal-body">
-                    <label for="">Are you sure you want to accept this Proposal <b>[ WPC Number/Reference: {{ $indentedProposal->wpc_reference }} ]</b> ?</label>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick='document.getElementById("AcceptIndentedProposal").submit();'>Accept</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </form>
-
-    <form class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="changeItemDeliveryStatus" method="POST">
-        {{ method_field('PATCH') }}
-        {{ csrf_field() }}
-        <input type="hidden" name="indented_proposal_id" id="ipi_id">
-
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">WPC Number/Reference: {{ $indentedProposal->wpc_reference }}</h4>
-                </div>
-                <div class="modal-body">
-                    <label for="">You are about to change the delivery status of the selected item.</label>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Accept</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </form>
-
-    <form class="modal fade form-horizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="updateNotifyMeForm" method="POST">
-        {{ method_field('PATCH') }}
-        {{ csrf_field() }}
-        <input type="hidden" name="indented_proposal_item_id" id="indentedProposalItemId">
-
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title" id="myModalLabel">Updating Notify Me Scheduled Date</h3>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Notification Date:</label>
-                        <div class="col-lg-8">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="notify_me_after">
-                                <div class="input-group-addon">Weeks</div>
-                            </div>
-                        </div>
-                    </div>
-                    {{--You are about to changed the <label class="label label-info" style="color: black;">Notify Me After</label> of this item. The System will notify you about the delivery status of this item based on the number of weeks you set on the <label class="label label-info" style="color: black;">Notify Me After</label> column.--}}
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Change Notification Date</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </form>
-
-    <form class="modal fade form-horizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="updateDeliveryStatusForm" method="POST">
-        {{ method_field('PATCH') }}
-        {{ csrf_field() }}
-        <input type="hidden" name="indented_proposal_item_id" id="indentedProposalItemId">
-
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title" id="myModalLabel">Change Delivery Status</h3>
-                </div>
-                <div class="modal-body">
-                    <p>You are about to change the delivery status of this item to </p>
-                    {{--You are about to changed the <label class="label label-info" style="color: black;">Notify Me After</label> of this item. The System will notify you about the delivery status of this item based on the number of weeks you set on the <label class="label label-info" style="color: black;">Notify Me After</label> column.--}}
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Change Delivery Status</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </form>
-
-    <script>
-        function getDeliveredItem(indented_proposal_item_id)
-        {
-            var deliverFormAction = "{{ route('change_indented_item_delivery_status', ':indented_proposal_item_id') }}";
-                deliverFormAction = deliverFormAction.replace(':indented_proposal_item_id', indented_proposal_item_id);
-            document.getElementById("ipi_id").value = indented_proposal_item_id;
-            document.getElementById("changeItemDeliveryStatus").action = deliverFormAction;
-        }
-
-        function getNotifyMe(indented_proposal_item_id)
-        {
-            var deliverFormAction = "{{ route('change_indented_proposal_notify_me_date', ':indented_proposal_item_id') }}";
-                deliverFormAction = deliverFormAction.replace(':indented_proposal_item_id', indented_proposal_item_id);
-            document.getElementById("indentedProposalItemId").value = indented_proposal_item_id;
-            document.getElementById("updateNotifyMeForm").action = deliverFormAction;
-        }
-
-        function getDeliveryStatus(indented_proposal_item_id)
-        {
-            var deliverFormAction = "{{ route('change_indented_proposal_delivery_status_to_delayed', ':indented_proposal_item_id') }}";
-            deliverFormAction = deliverFormAction.replace(':indented_proposal_item_id', indented_proposal_item_id);
-            document.getElementById("indentedProposalItemId").value = indented_proposal_item_id;
-            document.getElementById("updateDeliveryStatusForm").action = deliverFormAction;
-        }
-    </script>
 @stop

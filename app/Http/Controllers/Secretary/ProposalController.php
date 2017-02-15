@@ -26,38 +26,38 @@ class ProposalController extends Controller
     {
         $indentedProposal->update([
             'purchase_order' => $updateApprovedIndentedProposalBySecretary->get('purchase_order'),
-            'invoice_to' => $updateApprovedIndentedProposalBySecretary->get('invoice'),
-            'invoice_to_address' => ucwords($updateApprovedIndentedProposalBySecretary->get('invoice_address'), ' '),
-            'ship_to' => ucwords($updateApprovedIndentedProposalBySecretary->get('ship_to'), ' '),
-            'ship_to_address' => ucwords($updateApprovedIndentedProposalBySecretary->get('ship_to_address'), ' '),
-            'special_instructions' => $request->get('special_instruction'),
-            'ship_via' => $updateApprovedIndentedProposalBySecretary->get('ship_via'),
-            'packing' => $updateApprovedIndentedProposalBySecretary->get('packing'),
-            'documents' => ucfirst($updateApprovedIndentedProposalBySecretary->get('documents')),
-            'insurance' => $updateApprovedIndentedProposalBySecretary->get('insurance'),
-            'bank_detail_name' => ucwords($updateApprovedIndentedProposalBySecretary->get('bank_detail_owner'), ' '),
-            'bank_detail_address' => ucwords($updateApprovedIndentedProposalBySecretary->get('bank_detail_address'), ' '),
-            'bank_detail_account_no' => $updateApprovedIndentedProposalBySecretary->get('bank_detail_account_number'),
-            'bank_detail_swift_code' => $updateApprovedIndentedProposalBySecretary->get('bank_detail_swift_code'),
-            'bank_detail_account_name' => ucwords($updateApprovedIndentedProposalBySecretary->get('bank_detail_account_name'), ' '),
-            'commission_note' => $updateApprovedIndentedProposalBySecretary->get('commission_note'),
-            'commission_address' => ucwords($updateApprovedIndentedProposalBySecretary->get('commission_address'), ' '),
-            'commission_account_number' => $updateApprovedIndentedProposalBySecretary->get('commission_account_number'),
-            'commission_swift_code' => $updateApprovedIndentedProposalBySecretary->get('commission_swift_code'),
+            'invoice_to' => strtoupper($updateApprovedIndentedProposalBySecretary->get('invoice_to')),
+            'invoice_to_address' => strtoupper($updateApprovedIndentedProposalBySecretary->get('invoice_to_address')),
+            /*'ship_to' => strtoupper($updateApprovedIndentedProposalBySecretary->get('ship_to')),
+            'ship_to_address' => strtoupper($updateApprovedIndentedProposalBySecretary->get('ship_to_address')),*/
+            'special_instructions' => strtoupper($request->get('special_instruction')),
+            /*'ship_via' => strtoupper($updateApprovedIndentedProposalBySecretary->get('ship_via')),
+            'packing' => strtoupper($updateApprovedIndentedProposalBySecretary->get('packing')),
+            'documents' => strtoupper($updateApprovedIndentedProposalBySecretary->get('documents')),
+            'insurance' => strtoupper($updateApprovedIndentedProposalBySecretary->get('insurance')),
+            'bank_detail_name' => strtoupper($updateApprovedIndentedProposalBySecretary->get('bank_detail_owner')),
+            'bank_detail_address' => strtoupper($updateApprovedIndentedProposalBySecretary->get('bank_detail_address')),*/
+            'bank_detail_account_no' => strtoupper($updateApprovedIndentedProposalBySecretary->get('bank_detail_account_number')),
+            /*'bank_detail_swift_code' => strtoupper($updateApprovedIndentedProposalBySecretary->get('bank_detail_swift_code')),
+            'bank_detail_account_name' => strtoupper($updateApprovedIndentedProposalBySecretary->get('bank_detail_account_name')),
+            'commission_note' => strtoupper($updateApprovedIndentedProposalBySecretary->get('commission_note')),
+            'commission_address' => strtoupper($updateApprovedIndentedProposalBySecretary->get('commission_address')),
+            'commission_account_number' => strtoupper($updateApprovedIndentedProposalBySecretary->get('commission_account_number')),
+            'commission_swift_code' => strtoupper($updateApprovedIndentedProposalBySecretary->get('commission_swift_code')),*/
             'collection_status' => 'DELIVERY'
         ]);
 
         if(!$indentedProposal->update()) {
             return redirect()->back()
-                ->with('msg_icon', 'glyphicon glyphicon-warning-sign')
+                ->with('msg_icon', 'fa fa-exclamation-triangle')
                 ->with('alert' , 'alert-danger')
                 ->with('message', 'Please validate the input first before submitting again.');
         }
 
         return redirect()->back()
-            ->with('msg_icon', 'glyphicon glyphicon-ok')
+            ->with('msg_icon', 'fa fa-check')
             ->with('alert' , 'alert-success')
-            ->with('message', 'WPC Reference #' . $indentedProposal->wpc_reference . ' is now ready to proceed to the next process');
+            ->with('message', 'WPC Reference #' . strtoupper($indentedProposal->wpc_reference) . ' is now ready to proceed to DELIVERY process');
     }
 
     public function viewAcceptedBuyAndSellProposal(BuyAndSellProposal $buyAndSellProposal)
