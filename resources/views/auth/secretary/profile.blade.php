@@ -3,9 +3,9 @@
 @section('content')
     @if(Session::has('message'))
         <div class="row" style="margin-top: -2rem;">
-            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="border-radius: 0px;">
-                <i style="margin-left: 18rem;" class="{{ Session::get('msg_icon') }}"></i>&nbsp;&nbsp;{{ Session::get('message') }}
-                <button style="margin-right: 14rem;" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="alert alert-success alert-dismissible" role="alert" style="border-radius: 0px; border-radius: 0px; color: #224323; background-color: #cde6cd;border-color: #bcddbc; background-image: none;">
+                <i class="fa fa-check" style="margin-left: 18rem;"></i>&nbsp;&nbsp;<b>{{ Session::get('message') }}</b>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 15rem;"><span aria-hidden="true">&times;</span></button>
             </div>
         </div>
     @endif
@@ -13,13 +13,15 @@
     <div class="col-lg-12">
         <div class="row">
 
-            <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
-                <ul id="accordion" class="nav nav-pills nav-stacked  sidebar-menu">
-                    <li class="nav-item {{ Request::route()->getName() == 'secretary_dashboard' ? 'active' : '' }}"><a class="nav-link" href="{{ route('secretary_dashboard') }}" class="nav-link"><i class="fa fa-tachometer"></i>&nbsp; Dashboard</a></li>
-                </ul>
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="{{ route('secretary_dashboard') }}" class="list-group-item" style="font-size: 13px;">
+                        <i class="fa fa-th-large" aria-hidden="true"></i>&nbsp;&nbsp;Dashboard
+                    </a>
+                </div>
             </div>
 
-            <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 
                 <div class="row">
                     <div class="panel panel-default">
@@ -28,7 +30,7 @@
                 </div>
 
                 <div class="row">
-                    <form action="{{ route('user_update_profile') }}" class="form-horizontal" method="POST">
+                    <form action="{{ route('secretary_update_profile') }}" class="form-horizontal" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('PATCH') }}
 
@@ -60,9 +62,8 @@
                             </div>
                         </div>
 
-                        <br><br>
                         <div class="form-group">
-                            <div class="col-lg-8">
+                            <div class="col-lg-8 col-lg-offset-2">
                                 <button class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Update Profile</button>
                             </div>
                         </div>

@@ -5,17 +5,18 @@
 @stop
 
 @section('content')
+    @if(Session::has('message'))
+        <div class="row" style="margin-top: -2rem;">
+            <div class="alert alert-success alert-dismissible" role="alert" style="border-radius: 0px; border-radius: 0px; color: #224323; background-color: #cde6cd;border-color: #bcddbc; background-image: none;">
+                <i class="fa fa-check" style="margin-left: 18rem;"></i>&nbsp;&nbsp;<b>{{ Session::get('message') }}</b>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 15rem;"><span aria-hidden="true">&times;</span></button>
+            </div>
+        </div>
+    @endif
+
     <div class="col-lg-12">
         @include('layouts.admin-sidebar')
         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 ">
-            @if(Session::has('message'))
-                <div class="row">
-                    <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" >
-                        <div class="container"><span class="{{ Session::get('msg_icon') }}"></span>&nbsp;{{ Session::get('message') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-                    </div>
-                </div>
-            @endif
 
             <div class="row">
                 <div class="panel panel-default">

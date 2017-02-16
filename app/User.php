@@ -224,4 +224,70 @@ class User extends Authenticatable
         return view('auth.sales_engineer.dashboard', compact('chartForMostSoldProjects', 'chartForMostSoldAftermarket',
             'indented_proposals', 'buy_and_sell_proposals', 'ctr', 'ctr2', 'aftermarket_tally', 'project_tally'));
     }
+
+    public static function adminUpdateProfile($updateUserProfile)
+    {
+        if($updateUserProfile->has('password')) {
+            $user = User::find(Auth::user()->id);
+            $user->name = ucwords($updateUserProfile->get('name'), ' ');
+            $user->email = $updateUserProfile->get('email');
+            $user->password = bcrypt($updateUserProfile->get('password'));
+
+            if($user->save()) {
+                return redirect()->back()->with('message', 'You have successfully update your information');
+            }
+        }
+
+        $user = User::find(Auth::user()->id);
+        $user->name = ucwords($updateUserProfile->get('name'), ' ');
+        $user->email = $updateUserProfile->get('email');
+
+        if($user->save()) {
+            return redirect()->back()->with('message', 'You have successfully update your information');
+        }
+    }
+
+    public static function seUpdateProfile($updateUserProfile)
+    {
+        if($updateUserProfile->has('password')) {
+            $user = User::find(Auth::user()->id);
+            $user->name = ucwords($updateUserProfile->get('name'), ' ');
+            $user->email = $updateUserProfile->get('email');
+            $user->password = bcrypt($updateUserProfile->get('password'));
+
+            if($user->save()) {
+                return redirect()->back()->with('message', 'You have successfully update your information');
+            }
+        }
+
+        $user = User::find(Auth::user()->id);
+        $user->name = ucwords($updateUserProfile->get('name'), ' ');
+        $user->email = $updateUserProfile->get('email');
+
+        if($user->save()) {
+            return redirect()->back()->with('message', 'You have successfully update your information');
+        }
+    }
+
+    public static function collectionUpdateProfile($updateUserProfile)
+    {
+        if($updateUserProfile->has('password')) {
+            $user = User::find(Auth::user()->id);
+            $user->name = ucwords($updateUserProfile->get('name'), ' ');
+            $user->email = $updateUserProfile->get('email');
+            $user->password = bcrypt($updateUserProfile->get('password'));
+
+            if($user->save()) {
+                return redirect()->back()->with('message', 'You have successfully update your information');
+            }
+        }
+
+        $user = User::find(Auth::user()->id);
+        $user->name = ucwords($updateUserProfile->get('name'), ' ');
+        $user->email = $updateUserProfile->get('email');
+
+        if($user->save()) {
+            return redirect()->back()->with('message', 'You have successfully update your information');
+        }
+    }
 }

@@ -16,7 +16,7 @@
 
             <div class="col-md-3">
                 <div class="list-group">
-                    <a href="{{ route('se_dashboard') }}" class="list-group-item" style="font-size: 13px;">
+                    <a href="{{ route('collection_dashboard') }}" class="list-group-item" style="font-size: 13px;">
                         <i class="fa fa-th-large" aria-hidden="true"></i>&nbsp;&nbsp;Dashboard
                     </a>
                 </div>

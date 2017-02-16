@@ -22,6 +22,7 @@
                 </div>
             </div>
 
+
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 
                 <div class="row">
@@ -33,7 +34,7 @@
                 </div>
 
                 <div class="row">
-                    <form action="{{ route(Auth::user()->role . '_update_profile') }}" class="form-horizontal" method="POST">
+                    <form action="{{ route('se_update_profile') }}" class="form-horizontal" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('PATCH') }}
 
@@ -70,7 +71,6 @@
                                 <button class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Update Profile</button>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>

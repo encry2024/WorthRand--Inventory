@@ -235,7 +235,8 @@ Route::group(['middlewareGroups' => 'web'], function() {
 
         # DASHBOARD
             Route::get('/dashboard', 'Collection\UserController@collectionDashboard')->name('collection_dashboard');
-            Route::get('/profile', 'Collection\UserController@collectionDashboard')->name('collection_user_profile');
+            Route::get('/profile', 'Collection\UserController@collectionProfile')->name('collection_user_profile');
+            Route::patch('/profile/update', 'Collection\UserController@updateProfile')->name('collection_update_profile');
 
         # PROPOSALS
             Route::get('/indented_proposals', 'Collection\ProposalController@indexIndentedProposal')->name('index_indented_proposal');
@@ -256,6 +257,7 @@ Route::group(['middlewareGroups' => 'web'], function() {
                 Route::get('/dashboard', 'Admin\UserController@adminDashboard')->name('admin_dashboard');
                 Route::get('/profile', 'Admin\UserController@profile')->name('admin_user_profile');
                 Route::patch('/profile/update', 'Admin\UserController@updateProfile')->name('admin_update_profile');
+
 
                 # USERS
                 Route::get('/users', 'Admin\UserController@adminUserIndex')->name('admin_user_index');
@@ -433,7 +435,7 @@ Route::group(['middlewareGroups' => 'web'], function() {
             # DASHBOARD
                 Route::get('/dashboard', 'SalesEngineer\UserController@dashboard')->name('se_dashboard');
                 Route::get('/profile', 'SalesEngineer\UserController@profile')->name('sales_engineer_user_profile');
-                Route::patch('/profile/update', 'SalesEngineer\UserController@updateProfile')->name('sales_engineer_update_profile');
+                Route::patch('/profile/update', 'SalesEngineer\UserController@updateProfile')->name('se_update_profile');
 
             # AFTERMARKETS
                 Route::get('/after_markets', 'SalesEngineer\ItemController@indexAftermarket')->name('aftermarket_index');
