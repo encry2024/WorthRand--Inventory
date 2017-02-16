@@ -79,4 +79,11 @@ class ProposalController extends Controller
 
         return $showDraftBuyAndResaleProposal;
     }
+
+    public function showSentBuyAndResaleProposal(BuyAndSellProposal $buyAndSellProposal)
+    {
+        $view_sent_buy_and_sell = BuyAndSellProposal::viewSentBuyAndSellProposal($buyAndSellProposal);
+
+        return $view_sent_buy_and_sell;
+    }
 }

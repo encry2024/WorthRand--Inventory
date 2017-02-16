@@ -50,7 +50,7 @@
             @else
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;">There are no Customers assigned to you yet.</div>
+                        <div class="alert search-error" role="alert">There are no Customers assigned to you yet.</div>
                     </div>
                 </div>
             @endif

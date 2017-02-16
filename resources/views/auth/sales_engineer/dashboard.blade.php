@@ -42,7 +42,7 @@
 
                                     <tbody>
                                     @foreach($indented_proposals as $indented_proposal)
-                                        <tr>
+                                        <tr style="font-weight: bold;">
                                             <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ date('m/d/Y', strtotime($indented_proposal->created_at)) }}</b></td>
                                             <td style="border: none; border-bottom: 1px solid #ddd;">@if($indented_proposal->purchase_order == '')
                                                     <span class='label label-danger'>Draft Proposal</span>
@@ -112,7 +112,7 @@
 
                                     <tbody>
                                     @foreach($buy_and_sell_proposals as $buy_and_sell_proposal)
-                                        <tr>
+                                        <tr style="font-weight: bold;">
                                             <td style="border: none; border-bottom: 1px solid #ddd;">
                                                 <b>{{ date('m/d/Y', strtotime($buy_and_sell_proposal->created_at)) }}</b>
                                             </td>
@@ -143,7 +143,11 @@
                                             </td>
 
                                             <td class="text-right">
-                                                <a href="{{ route('se_show_draft_buy_and_sell_proposal', $buy_and_sell_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
+                                                @if($buy_and_sell_proposal->status == "SENT")
+                                                    <a href="{{ route('se_sent_buy_and_sell_proposal', $buy_and_sell_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
+                                                @else
+                                                    <a href="{{ route('se_show_draft_buy_and_sell_proposal', $buy_and_sell_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

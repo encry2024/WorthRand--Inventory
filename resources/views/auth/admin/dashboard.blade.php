@@ -81,6 +81,8 @@
                                             <td style="border: none; border-bottom: 1px solid #ddd;" class="text-right">
                                             @if($indented_proposal->collection_status == "ON-CREATE")
                                                 <span style="font-size: 12px;" class="label label-danger">View Unavailable</span>
+                                            @elseif($indented_proposal->collection_status == "COMPLETED")
+                                                <a href="{{ route('admin_completed_indented_proposal', $indented_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
                                             @else
                                                 <a href="{{ route('admin_show_pending_proposal', $indented_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
                                             @endif
@@ -108,7 +110,7 @@
                         <div class="col-lg-12">
                             @if(count($buy_and_sell_proposals) != 0)
                             <div class="table-responsive">
-                                <table class="table table-striped">
+                                <table class="table table-striped table-bordered">
                                     <thead>
                                         <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Date Received</th>
                                         <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Purchase Order</th>
@@ -120,7 +122,7 @@
 
                                     <tbody>
                                     @foreach($buy_and_sell_proposals as $buy_and_sell_proposal)
-                                        <tr>
+                                        <tr style="font-weight: bold;">
                                             <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ date('m/d/Y', strtotime($buy_and_sell_proposal->created_at)) }}</b></td>
                                             <td style="border: none; border-bottom: 1px solid #ddd;">@if($buy_and_sell_proposal->purchase_order == '')
                                                     <span class='label label-danger'>Draft Proposal</span>

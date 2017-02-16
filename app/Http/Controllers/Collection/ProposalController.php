@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Collection;
 
+use App\BuyAndSellProposal;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -45,6 +46,15 @@ class ProposalController extends Controller
                 DB::raw('wr_crm_after_markets.material_number as "after_market_sn"'),
                 DB::raw('wr_crm_after_markets.tag_number as "after_market_tn"'),
                 DB::raw('wr_crm_after_markets.price as "after_market_price"'),
+                'seals.*',
+                DB::raw('wr_crm_seals.name as "seal_name"'),
+                DB::raw('wr_crm_seals.model as "seal_model"'),
+                DB::raw('wr_crm_seals.drawing_number as "seal_drawing_number"'),
+                DB::raw('wr_crm_seals.material_number as "seal_material_number"'),
+                DB::raw('wr_crm_seals.serial_number as "seal_serial_number"'),
+                DB::raw('wr_crm_seals.tag as "seal_tag_number"'),
+                DB::raw('wr_crm_seals.price as "seal_price"'),
+                DB::raw('wr_crm_seals.bom_number as "seal_bom_number"'),
                 'indented_proposal_item.*',
                 DB::raw('wr_crm_indented_proposal_item.id as "indented_proposal_item_id"'),
                 DB::raw('wr_crm_indented_proposal_item.quantity as "indented_proposal_item_quantity"'),
@@ -59,6 +69,10 @@ class ProposalController extends Controller
                 $join->on('indented_proposal_item.item_id', '=', 'after_markets.id')
                     ->where('indented_proposal_item.type', '=', 'after_markets');
             })
+            ->leftJoin('seals', function($join) {
+                $join->on('indented_proposal_item.item_id', '=', 'seals.id')
+                    ->where('indented_proposal_item.type', '=', 'seals');
+            })
             ->where('indented_proposal_item.indented_proposal_id', '=', $indentedProposal->id)->get();
 
         return view('proposal.collection.indented_proposal.collect', compact('indentedProposal', 'selectedItems', 'ctr'));
@@ -69,5 +83,26 @@ class ProposalController extends Controller
         $collect_proposal = IndentedProposal::collectIndentedProposal($request, $indentedProposal);
 
         return $collect_proposal;
+    }
+
+    public function collectionViewCompletedIndentedProposal(IndentedProposal $indentedProposal)
+    {
+        $viewCompletedIndentedProposal = IndentedProposal::collectionViewCompletedIndentedProposal($indentedProposal);
+
+        return $viewCompletedIndentedProposal;
+    }
+
+    public function showForCollectionBuyAndSellProposal(BuyAndSellProposal $buyAndSellProposal)
+    {
+        $collectionPendingBuyAndSellProposal = BuyAndSellProposal::collectionViewPendingBuyAndSellProposal($buyAndSellProposal);
+
+        return $collectionPendingBuyAndSellProposal;
+    }
+
+    public function collectBuyAndSellProposal(Request $request, BuyAndSellProposal $buyAndSellProposal)
+    {
+        $collectionBuyAndSellProposal = BuyAndSellProposal::collectBuyAndSellProposal($request, $buyAndSellProposal);
+
+        return $collectionBuyAndSellProposal;
     }
 }

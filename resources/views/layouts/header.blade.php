@@ -32,7 +32,7 @@
                     <li class="menu-divider"></li>
                     <button href="#" style="outline: none; text-shadow: none; font-size: 14px;" class="btn btn-default navbar-btn btn-sm">Help / Terminologies</button>
                     <button href="#" style="outline: none; text-shadow: none; font-size: 14px;" class="btn btn-default navbar-btn btn-sm">Report an issue</button>
-                    <button href="#" style="outline: none; text-shadow: none; font-size: 14px;" class="btn btn-default navbar-btn btn-sm">Patch Notes</button>
+                    <a href="{{ route('patch_notes') }}" style="outline: none; text-shadow: none; font-size: 14px;" class="btn btn-default navbar-btn btn-sm">Patch Notes</a>
                 @endif
             </ul>
         </div><!-- /.navbar-collapse -->

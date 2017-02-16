@@ -10,21 +10,21 @@
         </div>
     @endif
     <div class="col-lg-12">
-        @if(($buyAndSellProposal->collection_status == "DELIVERY") || ($buyAndSellProposal->collection_status == "FOR-COLLECTION"))
+        @if($buyAndSellProposal->collection_status == "COMPLETED")
             <div class="alert alert-success" role="alert" style="border-radius: 0px; border-radius: 0px; color: #224323; background-color: #cde6cd;border-color: #bcddbc; background-image: none;">
-                <i class="fa fa-check" style="margin-left: 18rem;"></i>&nbsp;&nbsp;<b>This Indented Proposal is in {{ $buyAndSellProposal->collection_status }} process...</b>
+                <i class="fa fa-check" style="margin-left: 18rem;"></i>&nbsp;&nbsp;<b>This proposal is already completed...</b>
             </div>
         @endif
         <div class="row">
 
             <div class="col-md-3">
                 <div class="list-group">
-                    @if(($buyAndSellProposal->collection_status == "DELIVERY"))
+                    @if(($buyAndSellProposal->collection_status == "FOR-COLLECTION"))
                         <a data-toggle="modal" data-target="#BuyAndResaleProposalFormConfirmation" class="list-group-item" style="font-size: 13px;">
                             <i class="fa fa-paper-plane"></i>&nbsp; Accept Proposal
                         </a>
                     @endif
-                    <a  href="{{ route('assistant_dashboard') }}" class="list-group-item" style="font-size: 13px;">
+                    <a  href="{{ route('collection_dashboard') }}" class="list-group-item" style="font-size: 13px;">
                         <i class="fa fa-arrow-left"></i>&nbsp; Back
                     </a>
                 </div>
@@ -32,9 +32,50 @@
 
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 ">
 
-                <form class="form-horizontal" action="{{ route('assistant_accept_buy_and_sell_proposal', $buyAndSellProposal->id) }}" method="POST" id="AcceptBuyAndSellProposal" enctype="multipart/form-data">
+                <form class="form-horizontal" action="{{ route('collect_buy_and_sell_proposal', $buyAndSellProposal->id) }}" method="POST" id="AcceptBuyAndSellProposal" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
+
+                    <input type="hidden" name="buy_and_sell_proposal_id" value="{{ $buyAndSellProposal->id }}">
+
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="border-top: saddlebrown 3px solid;">
+                                <h4><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;CHEQUE DETAILS</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="company_name" class="col-sm-2 control-label">Company Name: </label>
+                                <div class="col-sm-5">
+                                    <input class="form-control" id="company_name" name="company_name" placeholder="Company Name"
+                                           value="{{ old('company_name') }}" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="amount" class="col-sm-2 control-label">Amount: </label>
+                                <div class="col-sm-5 ">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">$</div>
+                                        <input class="form-control" id="amount" name="amount" placeholder="Amount (USD) " value="{{ old('amount') }}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row">
+                    <hr>
+                </div>
+
+                <form class="form-horizontal">
+
 
                     <input type="hidden" name="buyAndSellProposal_id" value="{{ $buyAndSellProposal->id }}">
 
@@ -107,14 +148,12 @@
                         <div class="col-lg-12">
                             <table class="table table-striped">
                                 <thead>
-                                    <th>ITEM NO#</th>
-                                    <th>MATERIAL CODE</th>
-                                    <th>DESCRIPTION</th>
-                                    <th>QUANTITY</th>
-                                    <th>PRICE</th>
-                                    <th>DELIVERY</th>
-                                    <th>Notify me After</th>
-                                    <th></th>
+                                <th>ITEM NO#</th>
+                                <th>MATERIAL CODE</th>
+                                <th>DESCRIPTION</th>
+                                <th>QUANTITY</th>
+                                <th>PRICE</th>
+                                <th>DELIVERY</th>
                                 </thead>
 
                                 <tbody>
@@ -155,35 +194,6 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <div class="col-lg-12">
-                                                    <div class="input-group">
-                                                        <input disabled type="text" class="form-control" name="delivery[{{ $selectedItem->buy_and_sell_proposal_item_id }}]" value="{{ $selectedItem->delivery != "" ? $selectedItem->notify_me_after / 7 : $selectedItem->notify_me_after / 7 }}">
-                                                        <div class="input-group-addon">Weeks</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        @if($selectedItem->status != "DELIVERED")
-                                            <td style="width: 15%;">
-                                                <div class="dropdown">
-                                                    <button class="btn {{ $selectedItem->status == "DELAYED" ? "btn-danger" : "btn-default" }} dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                        {{ $selectedItem->status }}
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                        <li><a href="#delivered" data-toggle="modal" data-target="#deliverForm" onclick="getDeliveredItem({{ $selectedItem->buy_and_sell_proposal_item_id }});"><span class="glyphicon glyphicon-ok"></span> Delivered</a></li>
-                                                        <li><a href="#update_notification" data-toggle="modal" data-target="#updateNotifyMeForm" onclick="getNotifyMe({{ $selectedItem->buy_and_sell_proposal_item_id }});"><span class="glyphicon glyphicon-pushpin"></span> Notify Me</a></li>
-                                                        <li><a href="#delayed" data-toggle="modal" data-target="#updateDeliveryStatusForm" onclick="getDeliveryStatus({{ $selectedItem->buy_and_sell_proposal_item_id }});"><span class="glyphicon glyphicon-warning-sign"></span> Delayed</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        @elseif($selectedItem->status == "DELIVERED")
-                                            <td>
-                                                <label style="font-size: 14px;" class="label label-success">DELIVERED</label>
-                                            </td>
-                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -219,59 +229,6 @@
         </div>
     </div>
 
-    <form class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="deliverForm" method="POST">
-        {{ method_field('PATCH') }}
-        {{ csrf_field() }}
-        <input type="hidden" name="buy_and_sell_proposal_id" id="basp_id">
-
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title" id="myModalLabel">Updating Item Delivery Status</h3>
-                </div>
-                <div class="modal-body" style="line-height: 2.5rem;font-size: 15px;">
-                    <label for="">You are about to change the item's status to delivered...</label>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Change to Delivered</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </form>
-
-    <form class="modal fade form-horizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="updateNotifyMeForm" method="POST">
-        {{ method_field('PATCH') }}
-        {{ csrf_field() }}
-        <input type="hidden" name="buy_and_sell_proposal_item_id" id="basp_id">
-
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title" id="myModalLabel">Updating Notify Me Scheduled Date</h3>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Notification Date:</label>
-                        <div class="col-lg-8">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="notify_me_after">
-                                <div class="input-group-addon">Weeks</div>
-                            </div>
-                        </div>
-                    </div>
-                    {{--You are about to changed the <label class="label label-info" style="color: black;">Notify Me After</label> of this item. The System will notify you about the delivery status of this item based on the number of weeks you set on the <label class="label label-info" style="color: black;">Notify Me After</label> column.--}}
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Change Notification Date</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </form>
-
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="BuyAndResaleProposalFormConfirmation">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -289,84 +246,4 @@
             </div>
         </div>
     </div>
-
-    <form class="modal fade form-horizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="updateDeliveryStatusForm" method="POST">
-        {{ method_field('PATCH') }}
-        {{ csrf_field() }}
-        <input type="hidden" name="buy_and_sell_proposal_item_id" id="basp_id">
-
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title" id="myModalLabel">Change Delivery Statys</h3>
-                </div>
-                <div class="modal-body">
-                    <p>You are about to change the delivery status of this item to </p>
-                    {{--You are about to changed the <label class="label label-info" style="color: black;">Notify Me After</label> of this item. The System will notify you about the delivery status of this item based on the number of weeks you set on the <label class="label label-info" style="color: black;">Notify Me After</label> column.--}}
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Change Delivery Status</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </form>
-
-    <form class="modal fade form-horizontal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="updateNotifyMeForm" method="POST">
-        {{ method_field('PATCH') }}
-        {{ csrf_field() }}
-        <input type="hidden" name="buy_and_sell_proposal_item_id" id="basp_id">
-
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title" id="myModalLabel">Updating Notify Me Scheduled Date</h3>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Notification Date:</label>
-                        <div class="col-lg-8">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="notify_me_after">
-                                <div class="input-group-addon">Weeks</div>
-                            </div>
-                        </div>
-                    </div>
-                    {{--You are about to changed the <label class="label label-info" style="color: black;">Notify Me After</label> of this item. The System will notify you about the delivery status of this item based on the number of weeks you set on the <label class="label label-info" style="color: black;">Notify Me After</label> column.--}}
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Change Notification Date</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </form>
-
-    <script>
-        function getDeliveredItem(buy_and_sell_proposal_id)
-        {
-            var deliverFormAction = "{{ route('change_buy_and_sell_item_delivery_status', ':buy_and_sell_proposal_id') }}";
-                deliverFormAction = deliverFormAction.replace(':buy_and_sell_proposal_id', buy_and_sell_proposal_id);
-            document.getElementById("basp_id").value = buy_and_sell_proposal_id;
-            document.getElementById("deliverForm").action = deliverFormAction;
-        }
-
-        function getNotifyMe(buy_and_sell_proposal_item_id)
-        {
-            var deliverFormAction = "{{ route('change_item_notify_me_date', ':buy_and_sell_proposal_item_id') }}";
-            deliverFormAction = deliverFormAction.replace(':buy_and_sell_proposal_item_id', buy_and_sell_proposal_item_id);
-            document.getElementById("basp_id").value = buy_and_sell_proposal_item_id;
-            document.getElementById("updateNotifyMeForm").action = deliverFormAction;
-        }
-
-        function getDeliveryStatus(buy_and_sell_proposal_item_id)
-        {
-            var deliverFormAction = "{{ route('change_buy_and_sell_proposal_delivery_status_to_delayed', ':buy_and_sell_proposal_item_id') }}";
-            deliverFormAction = deliverFormAction.replace(':buy_and_sell_proposal_item_id', buy_and_sell_proposal_item_id);
-            document.getElementById("basp_id").value = buy_and_sell_proposal_item_id;
-            document.getElementById("updateDeliveryStatusForm").action = deliverFormAction;
-        }
-    </script>
 @stop
