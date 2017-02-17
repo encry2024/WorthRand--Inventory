@@ -8,13 +8,41 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="col-md-3">
             <div class="list-group">
-                <a href="{{ route('admin_dashboard') }}" class="list-group-item" style="font-size: 13px;">
-                    <i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back
-                </a>
+                @if(Auth::user()->role == "admin")
+                    <a href="{{ route('admin_dashboard') }}" class="list-group-item" style="font-size: 13px;">
+                        <i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back
+                    </a>
+                @elseif(Auth::user()->role == "secretary")
+                    <a href="{{ route('secretary_dashboard') }}" class="list-group-item" style="font-size: 13px;">
+                        <i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back
+                    </a>
+                @elseif(Auth::user()->role == "assistant")
+                    <a href="{{ route('assistant_dashboard') }}" class="list-group-item" style="font-size: 13px;">
+                        <i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back
+                    </a>
+                @elseif(Auth::user()->role == "collection")
+                    <a href="{{ route('collection_dashboard') }}" class="list-group-item" style="font-size: 13px;">
+                        <i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back
+                    </a>
+                @elseif(Auth::user()->role == "sales_engineer")
+                    <a href="{{ route('se_dashboard') }}" class="list-group-item" style="font-size: 13px;">
+                        <i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back
+                    </a>
+                @endif
             </div>
         </div>
 
         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-header">
+                        <h1><small>Patch</small> - 0.4.1 - RELEASE</h1>
+                    </div>
+                    <label style="font-size: 16px !important; font-weight: 400;"><li>Fixed edit user profile.</li></label><br>
+                    <label style="font-size: 16px !important; font-weight: 400;"><li>Fixed back to dashboard link when you are in patch notes page.</li></label><br>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="page-header">

@@ -38,7 +38,7 @@
                 <div class="col-lg-12">
                     <hr/>
                     <label class="size-12 app-info-label" for=""><span class=""><kbd>© 2016 WORTHRAND INVENTORY CRM</kbd></span></label>
-                    <label class=" size-12 app-info-label" for="" style="float: right;"><kbd>WORTHRAND INVENTORY CRM &mdash; Version: 0.2.2-BETA</kbd></label>
+                    <label class=" size-12 app-info-label" for="" style="float: right;"><kbd>WORTHRAND INVENTORY CRM &mdash; Version: 0.4.1</kbd></label>
                 </div>
             </div>
         </div>
