@@ -61,6 +61,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $projects->links() }}
                         <form class="form-inline">
                             <div class="form-group left" style=" margin-top: 2.55rem; ">
                                 <label class="" for="">Showing {{ $projects->firstItem() }} to {{ $projects->lastItem() }} out of {{ $projects->total() }} Project(s)</label>
