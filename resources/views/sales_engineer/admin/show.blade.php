@@ -206,7 +206,7 @@
 
     <script>
         $('#customer_dropdown').autocomplete({
-            serviceUrl: "{{ URL::to('/') }}/{{ Auth::user()->role }}/fetch_customers/",
+            serviceUrl: "{{ route('admin_fetch_customers') }}",
             dataType: 'json',
             type: 'get',
             onSelect: function (suggestions) {

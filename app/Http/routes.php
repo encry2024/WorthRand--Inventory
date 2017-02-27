@@ -339,7 +339,7 @@ Route::group(['middlewareGroups' => 'web'], function() {
                 Route::get('/customer/{customer}/edit', 'Admin\CustomerController@adminEditCustomerInformation')->name('admin_edit_customer_information');
                 Route::get('/customer/{customer}/branches', 'Admin\CustomerController@adminCustomerBranchList')->name('admin_customer_branch_list');
                 Route::patch('/customer/{customer}/edit', 'Admin\CustomerController@adminPostEditCustomerInformation')->name('admin_post_edit_customer_information');
-                Route::get('fetch_customers', 'Admin\CustomerController@adminFetchCustomers');
+                Route::get('fetch_customers', 'Admin\CustomerController@adminFetchCustomers')->name('admin_fetch_customers');
                 Route::post('save_customer', 'Admin\CustomerController@adminSaveCustomer')->name('admin_save_customer');
                 Route::delete('/customer/{customer}/delete', 'Admin\CustomerController@adminDeleteCustomer')->name('admin_delete_customer');
 
