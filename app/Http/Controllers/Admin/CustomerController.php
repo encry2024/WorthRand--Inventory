@@ -67,7 +67,7 @@ class CustomerController extends Controller
     public function adminFetchCustomers()
     {
         $array_customer = [];
-        $customers = Customer::all();
+        $customers = Customer::where('user_id', 0)->get();
 
         foreach($customers as $customer) {
             $array_customer['suggestions'][] = [
