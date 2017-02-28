@@ -12,6 +12,7 @@ use App\Http\Requests;
 use App\Http\Requests\UpdateCustomerInformationRequest;
 use App\CustomerUser;
 use App\Http\Controllers\Controller;
+use App\User;
 
 class CustomerController extends Controller
 {
@@ -95,6 +96,16 @@ class CustomerController extends Controller
         $customer->delete();
 
         return redirect()->route('admin_customer_index')->with('message', 'Your Customer "' . $customer->name . '" was successfully deleted.');
+    }
+
+    public function adminDisassociateCustomerToSalesEngineer(Request $request)
+    {
+        $salesEngineer = User::find($request->get('userId'));
+        $getCustomer = Customer::find($request->get('customerId'))->whereUserId($request->get('userId'))->first();
+        $getCustomer->update(['user_id' => 0]);
+
+        return redirect()->back()
+            ->with('message', 'You have successfully disassociated Customer "' . $getCustomer->name . '" to Sales Engineer ' . $salesEngineer->name);
     }
 
 }

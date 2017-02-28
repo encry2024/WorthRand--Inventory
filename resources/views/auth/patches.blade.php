@@ -36,6 +36,16 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="page-header">
+                        <h1><small>Patch</small> - 0.5.0 - RELEASE</h1>
+                    </div>
+                    <label style="font-size: 16px !important; font-weight: 400;"><li>ADMIN: Added function Disassociate Customer to Sales Engineer.</li></label><br>
+                    <label style="font-size: 16px !important; font-weight: 400;"><li>Fixed URL that is fetching customers when admin is assigning customers to Sales Engineer.</li></label><br>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-header">
                         <h1><small>Patch</small> - 0.4.1 - RELEASE</h1>
                     </div>
                     <label style="font-size: 16px !important; font-weight: 400;"><li>Fixed edit user profile.</li></label><br>

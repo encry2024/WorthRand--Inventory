@@ -49,6 +49,7 @@
                             @endforeach
                             </tbody>
                         </table>
+                        {{ $seals->links() }}
                         <form class="form-inline">
                             <div class="form-group left" style=" margin-top: 2.55rem; ">
                                 <label class="" for="">Showing {{ $seals->firstItem() }} to {{ $seals->lastItem() }} out of {{ $seals->total() }} Seal(s)</label>

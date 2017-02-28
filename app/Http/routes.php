@@ -342,6 +342,7 @@ Route::group(['middlewareGroups' => 'web'], function() {
                 Route::get('fetch_customers', 'Admin\CustomerController@adminFetchCustomers')->name('admin_fetch_customers');
                 Route::post('save_customer', 'Admin\CustomerController@adminSaveCustomer')->name('admin_save_customer');
                 Route::delete('/customer/{customer}/delete', 'Admin\CustomerController@adminDeleteCustomer')->name('admin_delete_customer');
+                Route::patch('customer/disassociate', 'Admin\CustomerController@adminDisassociateCustomerToSalesEngineer')->name('admin_deassign_customer_to_se');
 
                 # BRANCHES
                 Route::get('/branches', 'Admin\BranchController@adminBranchIndex')->name('admin_branch_index');

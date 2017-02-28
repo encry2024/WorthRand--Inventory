@@ -42,6 +42,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{ $users->links() }}
                             <form class="form-inline">
                                 <div class="form-group left" style=" margin-top: 2.55rem; ">
                                     <label class="" for="">Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} out of {{ $users->total() }} Sales Engineer(s)</label>

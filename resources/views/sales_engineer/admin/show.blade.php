@@ -101,7 +101,7 @@
                                         <tr>
                                             <td>{{ $customer->id }}</td>
                                             <td>{{ $customer->name }}</td>
-                                            <td></td>
+                                            <td class="text-right"><a href="javascript:void(0)" class="btn btn-danger" onclick='disassociate({{ $customer->id }}, "{{ $customer->name }}");' data-toggle="modal" data-target="#deassignCustomerToSalesEngineer"><i class="fa fa-remove"></i></a></td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -170,6 +170,34 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="deassignCustomerToSalesEngineer">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Disassociate Customer</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="deassignFormCustomerToSalesEngineer" method="POST" action="{{ route('admin_deassign_customer_to_se') }}" >
+                        {{ csrf_field() }}
+                        {{ method_field('PATCH') }}
+                        <input type="hidden" id="customerId" name="customerId">
+                        <input type="hidden" name="userId" value="{{ $sales_engineer->id }}">
+
+                        <p>Are you sure you want to <code>DISASSOCIATE</code> Customer <kbd id="customerName"></kbd> to Sales Engineer <kbd>{{ $sales_engineer->name }}</kbd></p>
+                    </form>
+                    <br>
+                    <label style="font-size: 12px;" class="label label-warning text-center"><i><i class="fa fa-info-circle"></i> Warning. Please make sure this customer doesn't belong to any proposal to avoid any error.</i></label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" onclick='document.getElementById("deassignFormCustomerToSalesEngineer").submit();'>Disassociate</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <div class="modal fade" tabindex="-1" role="dialog" id="SetTargetSaleModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -213,5 +241,10 @@
                 document.getElementById('customer_id').value = suggestions.data;
             }
         });
+
+        function disassociate(customer_id, customer_name) {
+            document.getElementById("customerId").value = customer_id;
+            document.getElementById("customerName").innerHTML = customer_name;
+        }
     </script>
 @endsection

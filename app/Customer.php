@@ -10,7 +10,7 @@ class Customer extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name', 'address', 'city', 'postal_code'
+        'name', 'address', 'city', 'postal_code', 'user_id'
     ];
 
     protected $dates = ['deleted_at'];
