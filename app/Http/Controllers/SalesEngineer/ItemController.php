@@ -23,7 +23,8 @@ class ItemController extends Controller
 
     public function salesEngineerProjectIndex()
     {
-        $projects = Project::all();
+        $projects = Project::paginate(30);
+        $projects->setPath('/projects');
 
         return view('item.project.sales_engineer.index', compact('projects'));
     }
@@ -40,7 +41,8 @@ class ItemController extends Controller
 
     public function indexAftermarket()
     {
-        $aftermarkets = AfterMarket::all();
+        $aftermarkets = AfterMarket::paginate(30);
+        $aftermarkets->setPath('/aftermarkets');
 
         return view('item.after_market.sales_engineer.index', compact('aftermarkets'));
     }
@@ -57,7 +59,7 @@ class ItemController extends Controller
 
     public function salesEngineerSealIndex()
     {
-        $seals = Seal::paginate(20);
+        $seals = Seal::paginate(30);
         $seals->setPath('/seals');
 
         return view('item.seal.sales_engineer.index', compact('seals'));

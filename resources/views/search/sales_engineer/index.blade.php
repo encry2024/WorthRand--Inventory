@@ -252,11 +252,11 @@
     <script>
 
         $("#BuyAndSellBtn").on('click', function() {
-            $("#createProposal").attr('action', '/sales_engineer/buy_and_resale_proposal/create').submit();
+            $("#createProposal").attr('action', "{{ URL::to('/') }}/sales_engineer/buy_and_resale_proposal/create").submit();
         });
 
         $("#IndentedProposalBtn").on('click', function() {
-            $("#createProposal").attr('action', '/sales_engineer/indented_proposal/create').submit();
+            $("#createProposal").attr('action', "{{ URL::to('/') }}/sales_engineer/indented_proposal/create").submit();
         });
 
         var items = [];
