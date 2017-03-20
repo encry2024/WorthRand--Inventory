@@ -328,7 +328,7 @@
         $(document).ready(function() {
             var data;
             $('#branch_field').autocomplete({
-                serviceUrl: "{{ URL::to('/') }}/{{ Auth::user()->role }}/fetch_customers/",
+                serviceUrl: "{{ route('se_fetch_customers') }}",
                 dataType: 'json',
                 type: 'get',
                 onSelect: function (suggestions) {
