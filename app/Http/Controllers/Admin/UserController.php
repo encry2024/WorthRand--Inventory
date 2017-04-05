@@ -2,134 +2,157 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\TargetRevenue;
-use App\TargetRevenueHistory;
 use Doctrine\Common\Annotations\Annotation\Target;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use App\User;
-
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserInformationRequest;
 use App\Http\Requests\UpdateUserProfile;
 use DB;
 
+use App\TargetRevenue;
+use App\TargetRevenueHistory;
+use App\User;
+use App\Customer;
+
 class UserController extends Controller
 {
-    //
-    public function adminDashboard()
-    {
-        $adminDashboard = User::adminDashboard();
+   //
+   public function adminDashboard()
+   {
+      $adminDashboard = User::adminDashboard();
 
-        return $adminDashboard;
-    }
+      return $adminDashboard;
+   }
 
-    public function adminUserIndex()
-    {
-        $users = User::where('role', '!=', 'super_admin')->where('role', '!=', 'admin')->get();
+   public function adminUserIndex()
+   {
+      $users = User::where('role', '!=', 'super_admin')->where('role', '!=', 'admin')->get();
 
-        return view('user.admin.index', compact('users'));
-    }
+      return view('user.admin.index', compact('users'));
+   }
 
-    public function adminCreateUser()
-    {
-        return view('user.admin.create');
-    }
+   public function adminCreateUser()
+   {
+      return view('user.admin.create');
+   }
 
-    public function adminPostUser(CreateUserRequest $createUserRequest)
-    {
-        $create_user = User::createUser($createUserRequest);
+   public function adminPostUser(CreateUserRequest $createUserRequest)
+   {
+      $create_user = User::createUser($createUserRequest);
 
-        return $create_user;
-    }
+      return $create_user;
+   }
 
-    public function showSalesEngineers()
-    {
-        $users = User::whereRole('sales_engineer')->paginate(20);
-        $users->setPath('/sales_engineer');
+   public function showSalesEngineers()
+   {
+      $users = User::whereRole('sales_engineer')->paginate(20);
+      $users->setPath('/sales_engineer');
 
-        return view('sales_engineer.admin.index', compact('users'));
-    }
+      return view('sales_engineer.admin.index', compact('users'));
+   }
 
-    public function showSalesEngineer(User $sales_engineer)
-    {
-        $targetRevenue = TargetRevenue::whereUserId($sales_engineer->id)->first();
-        if(count($targetRevenue) != 0) {
-            $targetRevenueHistory = DB::table('target_revenue_histories')
-                ->select('target_revenue_histories.*', DB::raw('SUM(collected) as total_sales'))
-                ->whereYear('date', '=', date('Y'))
-                ->where('target_revenue_id', '=', $targetRevenue->id)
-                ->groupBy(DB::raw("YEAR('date')"))
-                ->first();
-        }
+   public function showSalesEngineer(User $sales_engineer)
+   {
+      $targetRevenue = TargetRevenue::whereUserId($sales_engineer->id)->first();
+      $customers = Customer::where('user_id', 0)->get();
 
-        return view('sales_engineer.admin.show', compact('sales_engineer', 'targetRevenueHistory'));
-    }
+      if(count($targetRevenue) != 0) {
+         $targetRevenueHistory = DB::table('target_revenue_histories')
+         ->select('target_revenue_histories.*', DB::raw('SUM(collected) as total_sales'))
+         ->whereYear('date', '=', date('Y'))
+         ->where('target_revenue_id', '=', $targetRevenue->id)
+         ->groupBy(DB::raw("YEAR('date')"))
+         ->first();
+      }
 
-    public function adminEditSalesEngineer(User $sales_engineer)
-    {
-        return view('sales_engineer.admin.edit', compact('sales_engineer'));
-    }
+      return view('sales_engineer.admin.show', compact('sales_engineer', 'targetRevenueHistory', 'customers'));
+   }
 
-    public function adminUpdateSalesEngineer(Request $request, UpdateUserInformationRequest $updateUserInformationRequest)
-    {
-        $user = User::find($request->get('user_id'));
-        $user->update([
-            'name' => ucwords($updateUserInformationRequest->get('name'), " "),
-            'email' => $updateUserInformationRequest->get('email')
-        ]);
+   public function adminEditSalesEngineer(User $sales_engineer)
+   {
+      return view('sales_engineer.admin.edit', compact('sales_engineer'));
+   }
 
-        $target_revenue = new TargetRevenue();
-        $target_revenue->user_id = $request->get('user_id');
-        $target_revenue->target_sale = $request->get('target_sale');
+   public function adminUpdateSalesEngineer(Request $request, UpdateUserInformationRequest $updateUserInformationRequest)
+   {
+      $user = User::find($request->get('user_id'));
+      $user->update([
+         'name' => ucwords($updateUserInformationRequest->get('name'), " "),
+         'email' => $updateUserInformationRequest->get('email')
+      ]);
 
-        if($target_revenue->save()) {
-            return redirect()->back()->with('message', 'You have successfully updates [ User :: ' . $user->name . ' ] Information');
-        }
-    }
+      $target_revenue = new TargetRevenue();
+      $target_revenue->user_id = $request->get('user_id');
+      $target_revenue->target_sale = $request->get('target_sale');
 
-    public function profile()
-    {
-        return view('auth.admin.profile');
-    }
+      if($target_revenue->save()) {
+         return redirect()->back()->with('message', 'You have successfully updates [ User :: ' . $user->name . ' ] Information');
+      }
+   }
 
-    public function updateProfile(UpdateUserProfile $updateUserProfile)
-    {
-        $adminUpdateProfile = User::adminUpdateProfile($updateUserProfile);
+   public function profile()
+   {
+      return view('auth.admin.profile');
+   }
 
-        return $adminUpdateProfile;
-    }
+   public function updateProfile(UpdateUserProfile $updateUserProfile)
+   {
+      $adminUpdateProfile = User::adminUpdateProfile($updateUserProfile);
 
-    public function showUserProfile(User $user)
-    {
-        return view('user.admin.show', compact('user'));
-    }
+      return $adminUpdateProfile;
+   }
 
-    public function adminEditUser(User $user)
-    {
-        return view('user.admin.edit', compact('user'));
-    }
+   public function showUserProfile(User $user)
+   {
+      return view('user.admin.show', compact('user'));
+   }
 
-    public function updateUserProfile(Request $request, User $user)
-    {
-        $user->update(['name' => $request->get('name'), 'email' => $request->get('email')]);
+   public function adminEditUser(User $user)
+   {
+      return view('user.admin.edit', compact('user'));
+   }
 
-        return redirect()->back()->with('message', 'User ' . $user->name . '\'s information was successfully updated');
-    }
+   public function updateUserProfile(Request $request, User $user)
+   {
+      $user->update(['name' => $request->get('name'), 'email' => $request->get('email')]);
 
-    public function adminResetPasswordUser(User $user)
-    {
-        $user->update(['password' => bcrypt('worthrand123')]);
+      return redirect()->back()->with('message', 'User ' . $user->name . '\'s information was successfully updated');
+   }
 
-        return redirect()->back()->with('message', 'Reset Password was successful');
-    }
+   public function adminResetPasswordUser(User $user)
+   {
+      $user->update(['password' => bcrypt('worthrand123')]);
 
-    public function adminSetTargetRevenue(Request $request, User $salesEngineer)
-    {
-        $setTargetRevenue = TargetRevenue::setTargetRevenue($request, $salesEngineer);
+      return redirect()->back()->with('message', 'Reset Password was successful');
+   }
 
-        return $setTargetRevenue;
-    }
+   public function adminSetTargetRevenue(Request $request, User $salesEngineer)
+   {
+      $setTargetRevenue = TargetRevenue::setTargetRevenue($request, $salesEngineer);
+
+      return $setTargetRevenue;
+   }
+
+   public function deleteSalesEngineer(User $salesEngineer)
+   {
+      $salesEngineer->delete();
+
+      return redirect()->back()->with('message', 'You have successfully delete Sales Engineer "' . $salesEngineer->name . '"');
+   }
+
+   public function deactivateSalesEngineer(User $salesEngineer)
+   {
+      $salesEngineer->update(['is_active' => 0]);
+
+      return redirect()->back()->with('message', '' . $salesEngineer->name . '\'s account was successfully deactivated.');
+   }
+
+   public function activateSalesEngineer(User $salesEngineer)
+   {
+      $salesEngineer->update(['is_active' => 1]);
+
+      return redirect()->back()->with('message', '' . $salesEngineer->name . '\'s account was successfully activated.');
+   }
 }

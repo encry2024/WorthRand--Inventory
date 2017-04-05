@@ -23,6 +23,10 @@ class CreateCustomerRequest extends Request
             'address' => 'required',
             'city' => 'required',
             'postal_code' => 'required',
+            'plant_site_address' => 'required',
+            'contact_person' => 'required',
+            'position_of_contact_person' => 'required',
+            'contact_number' => 'required'
         ];
     }
 

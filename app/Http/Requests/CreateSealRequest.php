@@ -34,7 +34,8 @@ class CreateSealRequest extends Request
             'code' => 'required',
             'model' => 'required',
             'serial_number' => 'required',
-            'tag' => 'required'
+            'tag' => 'required',
+            'scanned_file' => 'mimes:pdf'
         ];
     }
 }

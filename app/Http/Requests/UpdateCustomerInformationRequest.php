@@ -28,6 +28,10 @@ class UpdateCustomerInformationRequest extends Request
             'address' => 'required',
             'city' => 'required',
             'postal_code' => 'required',
+            'contact_person' => 'required',
+            'contact_number' => 'required',
+            'position_of_contact_person' => 'required',
+            'plant_site_address' => 'required'
         ];
     }
 }

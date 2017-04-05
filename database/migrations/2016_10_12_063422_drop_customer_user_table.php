@@ -5,23 +5,23 @@ use Illuminate\Database\Migrations\Migration;
 
 class DropCustomerUserTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::drop('customer_user');
-    }
+   /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+   public function up()
+   {
+      Schema::dropIfExists('customer_user');
+   }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
+   /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+   public function down()
+   {
 
-    }
+   }
 }

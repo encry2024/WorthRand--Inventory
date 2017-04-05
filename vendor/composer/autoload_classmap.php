@@ -583,6 +583,7 @@ return array(
     'PHP_Token_XOR_EQUAL' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD_FROM' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
+    'RedropCustomerUserTable' => $baseDir . '/database/migrations/2017_03_27_144139_redrop_customer_user_table.php',
     'RemoveBranchIdOnIndentedAndBuyAndSellProposalsTable' => $baseDir . '/database/migrations/2016_11_07_004545_remove_branch_id_on_indented_and_buy_and_sell_proposals_table.php',
     'RemoveColumnsOnBuyAndSellProposal' => $baseDir . '/database/migrations/2016_10_04_195803_remove_columns_on_buy_and_sell_proposal.php',
     'RemoveColumnsOnBuyAndSellProposalsTable' => $baseDir . '/database/migrations/2016_10_20_041956_remove_columns_on_buy_and_sell_proposals_table.php',

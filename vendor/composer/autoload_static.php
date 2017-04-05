@@ -891,6 +891,7 @@ class ComposerStaticInit011164d78866555b94f07a18a36aad7c
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'RedropCustomerUserTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_27_144139_redrop_customer_user_table.php',
         'RemoveBranchIdOnIndentedAndBuyAndSellProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_07_004545_remove_branch_id_on_indented_and_buy_and_sell_proposals_table.php',
         'RemoveColumnsOnBuyAndSellProposal' => __DIR__ . '/../..' . '/database/migrations/2016_10_04_195803_remove_columns_on_buy_and_sell_proposal.php',
         'RemoveColumnsOnBuyAndSellProposalsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_20_041956_remove_columns_on_buy_and_sell_proposals_table.php',

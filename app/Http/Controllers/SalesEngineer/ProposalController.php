@@ -16,74 +16,74 @@ use App\Http\Requests\CreateBuyAndSellProposalRequest;
 
 class ProposalController extends Controller
 {
-    //
-    public function salesEngineerPostCreateIndentedProposal(Request $request)
-    {
-        $create_indented_proposal = IndentedProposal::salesEngineerPostCreateIndentedProposal($request);
+   //
+   public function salesEngineerPostCreateIndentedProposal(Request $request)
+   {
+      $create_indented_proposal = IndentedProposal::salesEngineerPostCreateIndentedProposal($request);
 
-        return $create_indented_proposal;
-    }
+      return $create_indented_proposal;
+   }
 
-    public function salesEngineerSubmitIndentedProposal(CreateIndentedProposalRequest $createIndentedProposalRequest)
-    {
-       $saveIndentedProposal = IndentedProposal::saveIndentedProposal($createIndentedProposalRequest);
+   public function salesEngineerSubmitIndentedProposal(CreateIndentedProposalRequest $createIndentedProposalRequest)
+   {
+      $saveIndentedProposal = IndentedProposal::saveIndentedProposal($createIndentedProposalRequest);
 
-       return $saveIndentedProposal;
-    }
+      return $saveIndentedProposal;
+   }
 
-    public function salesEngineerIndentProposalView(IndentedProposal $indentedProposal)
-    {
-        $view_selected_items = IndentedProposal::showCreateIndentedProposal($indentedProposal);
+   public function salesEngineerIndentProposalView(IndentedProposal $indentedProposal)
+   {
+      $view_selected_items = IndentedProposal::showCreateIndentedProposal($indentedProposal);
 
-        return $view_selected_items;
-    }
+      return $view_selected_items;
+   }
 
-    public function salesEngineerPostCreateBuyAndSellProposal(Request $request)
-    {
-        $create_buy_and_sell_proposal = BuyAndSellProposal::salesEngineerPostCreateBuyAndSellProposal($request);
+   public function salesEngineerPostCreateBuyAndSellProposal(Request $request)
+   {
+      $create_buy_and_sell_proposal = BuyAndSellProposal::salesEngineerPostCreateBuyAndSellProposal($request);
 
-        return $create_buy_and_sell_proposal;
-    }
+      return $create_buy_and_sell_proposal;
+   }
 
-    public function salesEngineerBuyAndSellProposalView(BuyAndSellProposal $buyAndSellProposal)
-    {
-        $view_selected_items = BuyAndSellProposal::viewBuyAndSellProposal($buyAndSellProposal);
+   public function salesEngineerBuyAndSellProposalView(BuyAndSellProposal $buyAndSellProposal)
+   {
+      $view_selected_items = BuyAndSellProposal::viewBuyAndSellProposal($buyAndSellProposal);
 
-        return $view_selected_items;
-    }
+      return $view_selected_items;
+   }
 
-    public function salesEngineerSubmitBuyAndSellProposal(CreateBuyAndSellProposalRequest $createBuyAndSellProposalRequest)
-    {
-        $saveBuyAndSellProposal = BuyAndSellProposal::saveBuyAndSellProposal($createBuyAndSellProposalRequest);
+   public function salesEngineerSubmitBuyAndSellProposal(CreateBuyAndSellProposalRequest $createBuyAndSellProposalRequest)
+   {
+      $saveBuyAndSellProposal = BuyAndSellProposal::saveBuyAndSellProposal($createBuyAndSellProposalRequest);
 
-        return $saveBuyAndSellProposal;
-    }
+      return $saveBuyAndSellProposal;
+   }
 
-    public function showSentIndentedProposal(IndentedProposal $indentedProposal)
-    {
-        $view_sent_indented_proposal = IndentedProposal::viewSentIndentedProposal($indentedProposal);
+   public function showSentIndentedProposal(IndentedProposal $indentedProposal)
+   {
+      $view_sent_indented_proposal = IndentedProposal::viewSentIndentedProposal($indentedProposal);
 
-        return $view_sent_indented_proposal;
-    }
+      return $view_sent_indented_proposal;
+   }
 
-    public function showDraftIndentedProposal(IndentedProposal $indentedProposal)
-    {
-        $showDraftIndentedProposal = IndentedProposal::showDraftIndentedProposal($indentedProposal);
+   public function showDraftIndentedProposal(IndentedProposal $indentedProposal)
+   {
+      $showDraftIndentedProposal = IndentedProposal::showDraftIndentedProposal($indentedProposal);
 
-        return $showDraftIndentedProposal;
-    }
+      return $showDraftIndentedProposal;
+   }
 
-    public function showDraftBuyAndResaleProposal(BuyAndSellProposal $buyAndSellProposal)
-    {
-        $showDraftBuyAndResaleProposal = BuyAndSellProposal::draftBuyAndResaleProposal($buyAndSellProposal);
+   public function showDraftBuyAndResaleProposal(BuyAndSellProposal $buyAndSellProposal)
+   {
+      $showDraftBuyAndResaleProposal = BuyAndSellProposal::draftBuyAndResaleProposal($buyAndSellProposal);
 
-        return $showDraftBuyAndResaleProposal;
-    }
+      return $showDraftBuyAndResaleProposal;
+   }
 
-    public function showSentBuyAndResaleProposal(BuyAndSellProposal $buyAndSellProposal)
-    {
-        $view_sent_buy_and_sell = BuyAndSellProposal::viewSentBuyAndSellProposal($buyAndSellProposal);
+   public function showSentBuyAndResaleProposal(BuyAndSellProposal $buyAndSellProposal)
+   {
+      $view_sent_buy_and_sell = BuyAndSellProposal::viewSentBuyAndSellProposal($buyAndSellProposal);
 
-        return $view_sent_buy_and_sell;
-    }
+      return $view_sent_buy_and_sell;
+   }
 }

@@ -97,7 +97,7 @@
                             @else
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="alert alert-danger" role="alert"><b>You Have 0 Records For Indented Proposals.</b></div>
+                                        <div class="alert error" role="alert"><b>You have 0 records for Indented Proposals.</b></div>
                                     </div>
                                 </div>
                             @endif
@@ -167,7 +167,7 @@
                             @else
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="alert alert-danger" role="alert"><b>You Have 0 Records For Buy & Sell Proposals.</b></div>
+                                        <div class="alert error" role="alert"><b>You have 0 records for Buy & Resale Proposal.</b></div>
                                     </div>
                                 </div>
                             @endif

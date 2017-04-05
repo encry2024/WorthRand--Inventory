@@ -14,92 +14,92 @@ use App\BuyAndSellProposalItem;
 
 class ProposalController extends Controller
 {
-    //
-    public function showAcceptedIndentedProposal(IndentedProposal $indentedProposal)
-    {
-        $show_accepted_proposal = IndentedProposal::showAcceptedIndentedProposal($indentedProposal);
+   //
+   public function showAcceptedIndentedProposal(IndentedProposal $indentedProposal)
+   {
+      $show_accepted_proposal = IndentedProposal::showAcceptedIndentedProposal($indentedProposal);
 
-        return $show_accepted_proposal;
-    }
+      return $show_accepted_proposal;
+   }
 
-    public function updateIndentedProposal(IndentedProposal $indentedProposal)
-    {
-        $update_accepted_proposal = IndentedProposal::find($indentedProposal->id);
-        $update_accepted_proposal->update(['collection_status' => 'FOR-COLLECTION']);
+   public function updateIndentedProposal(IndentedProposal $indentedProposal)
+   {
+      $update_accepted_proposal = IndentedProposal::find($indentedProposal->id);
+      $update_accepted_proposal->update(['collection_status' => 'FOR-COLLECTION']);
 
-        return redirect()->back()->with('message', 'Indented Proposal [ Purchase Order Number: #' . $indentedProposal->purchase_order . ' ] is now ready for collection')
-            ->with('alert', 'alert-success');
-    }
+      return redirect()->back()->with('message', 'Indented Proposal [ Purchase Order Number: #' . $indentedProposal->purchase_order . ' ] is now ready for collection')
+      ->with('alert', 'alert-success');
+   }
 
-    public function assistantShowPendingBuyAndSellProposal(BuyAndSellProposal $buyAndSellProposal)
-    {
-        $admin_show_pending_proposal = BuyAndSellProposal::showAssistantPendingBuyAndSellProposal($buyAndSellProposal);
+   public function assistantShowPendingBuyAndSellProposal(BuyAndSellProposal $buyAndSellProposal)
+   {
+      $admin_show_pending_proposal = BuyAndSellProposal::showAssistantPendingBuyAndSellProposal($buyAndSellProposal);
 
-        return $admin_show_pending_proposal;
-    }
+      return $admin_show_pending_proposal;
+   }
 
-    public function changeItemDeliveryStatus(IndentedProposalItem $indentedProposalItem)
-    {
-        $indentedProposalItem->update(['status' => 'DELIVERED']);
+   public function changeItemDeliveryStatus(IndentedProposalItem $indentedProposalItem)
+   {
+      $indentedProposalItem->update(['status' => 'DELIVERED']);
 
-        return redirect()->back()
-            ->with('alert', 'alert-success')
-            ->with('msg_icon', 'glyphicon-ok')
-            ->with('message', 'Item process status was changed to Delivered');
-    }
+      return redirect()->back()
+      ->with('alert', 'alert-success')
+      ->with('msg_icon', 'glyphicon-ok')
+      ->with('message', 'Item process status was changed to Delivered');
+   }
 
-    public function buyAndSellProposalChangeItemStatus(BuyAndSellProposalItem $buyAndSellProposalItem)
-    {
-        $buyAndSellProposalItem->update(['status' => 'DELIVERED']);
+   public function buyAndSellProposalChangeItemStatus(BuyAndSellProposalItem $buyAndSellProposalItem)
+   {
+      $buyAndSellProposalItem->update(['status' => 'DELIVERED']);
 
-        return redirect()->back()
-            ->with('alert', 'alert-success')
-            ->with('msg_icon', 'glyphicon-ok')
-            ->with('message', 'Item process status was changed to Delivered');
-    }
+      return redirect()->back()
+      ->with('alert', 'alert-success')
+      ->with('msg_icon', 'glyphicon-ok')
+      ->with('message', 'Item process status was changed to Delivered');
+   }
 
-    public function buyAndSellProposalChangeItemNotifyMeDate(Request $request, BuyAndSellProposalItem $buyAndSellProposalItem)
-    {
-        $buyAndSellProposalChangeNotificationDate = BuyAndSellProposalItem::buyAndSellProposalChangeItemNotifyMeDate($request, $buyAndSellProposalItem);
+   public function buyAndSellProposalChangeItemNotifyMeDate(Request $request, BuyAndSellProposalItem $buyAndSellProposalItem)
+   {
+      $buyAndSellProposalChangeNotificationDate = BuyAndSellProposalItem::buyAndSellProposalChangeItemNotifyMeDate($request, $buyAndSellProposalItem);
 
-        return $buyAndSellProposalChangeNotificationDate;
-    }
+      return $buyAndSellProposalChangeNotificationDate;
+   }
 
-    public function indentedProposalChangeItemNotifyMeDate(Request $request, IndentedProposalItem $indentedProposalItem)
-    {
-        $indentedProposalChangeNotificationDate = IndentedProposalItem::indentedProposalChangeItemNotifyMeDate($request, $indentedProposalItem);
+   public function indentedProposalChangeItemNotifyMeDate(Request $request, IndentedProposalItem $indentedProposalItem)
+   {
+      $indentedProposalChangeNotificationDate = IndentedProposalItem::indentedProposalChangeItemNotifyMeDate($request, $indentedProposalItem);
 
-        return $indentedProposalChangeNotificationDate;
-    }
+      return $indentedProposalChangeNotificationDate;
+   }
 
-    public function indentedProposalChangeDeliveryStatusToDelayed(IndentedProposalItem $indentedProposalItem)
-    {
-        $indentedProposalItem->update(['status' => 'DELAYED']);
+   public function indentedProposalChangeDeliveryStatusToDelayed(IndentedProposalItem $indentedProposalItem)
+   {
+      $indentedProposalItem->update(['status' => 'DELAYED']);
 
-        return redirect()->back()
-            ->with('alert', 'alert-success')
-            ->with('msg_icon', 'glyphicon-ok')
-            ->with('message', 'Item process status was changed to Delayed');
-    }
+      return redirect()->back()
+      ->with('alert', 'alert-success')
+      ->with('msg_icon', 'glyphicon-ok')
+      ->with('message', 'Item process status was changed to Delayed');
+   }
 
-    public function buyAndSellProposalChangeDeliveryStatusToDelayed(BuyAndSellProposalItem $buyAndSellProposalItem)
-    {
-        $buyAndSellProposalItem->update(['status' => 'DELAYED']);
+   public function buyAndSellProposalChangeDeliveryStatusToDelayed(BuyAndSellProposalItem $buyAndSellProposalItem)
+   {
+      $buyAndSellProposalItem->update(['status' => 'DELAYED']);
 
-        return redirect()->back()
-            ->with('alert', 'alert-success')
-            ->with('msg_icon', 'glyphicon-ok')
-            ->with('message', 'Item process status was changed to Delayed');
-    }
+      return redirect()->back()
+      ->with('alert', 'alert-success')
+      ->with('msg_icon', 'glyphicon-ok')
+      ->with('message', 'Item process status was changed to Delayed');
+   }
 
-    public function acceptBuyAndSellProposal(Request $request, BuyAndSellProposal $buyAndSellProposal, BuyAndSellProposalItem $buyAndSellProposalItem)
-    {
-        $buyAndSellProposal->update(['collection_status' => 'FOR-COLLECTION', 'purchase_order' => $request->get('purchase_order')]);
-        foreach($buyAndSellProposal->buy_and_sell_proposal_items as $buy_and_sell_proposal_item) {
-            $buy_and_sell_proposal_item->update(['status' => 'DELIVERED']);
-        }
+   public function acceptBuyAndSellProposal(Request $request, BuyAndSellProposal $buyAndSellProposal, BuyAndSellProposalItem $buyAndSellProposalItem)
+   {
+      $buyAndSellProposal->update(['collection_status' => 'FOR-COLLECTION', 'purchase_order' => $request->get('purchase_order')]);
+      foreach($buyAndSellProposal->buy_and_sell_proposal_items as $buy_and_sell_proposal_item) {
+         $buy_and_sell_proposal_item->update(['status' => 'DELIVERED']);
+      }
 
-        return redirect()->back()->with('message', 'Buy & Resale Proposal [ Purchase Order Number: #' . $buyAndSellProposalItem->purchase_order . ' ] is now ready for collection')
-            ->with('alert', 'alert-success');
-    }
+      return redirect()->back()->with('message', 'Buy & Resale Proposal [ Purchase Order Number: #' . $buyAndSellProposalItem->purchase_order . ' ] is now ready for collection')
+      ->with('alert', 'alert-success');
+   }
 }
