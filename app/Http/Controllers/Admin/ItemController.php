@@ -59,9 +59,9 @@ class ItemController extends Controller
       return view('item.after_market.admin.create');
    }
 
-   public function postAfterMarket(CreateAfterMarketRequest $createAfterMarketRequest)
+   public function postAfterMarket(Request $request, CreateAfterMarketRequest $createAfterMarketRequest)
    {
-      $post_after_market = AfterMarket::postAfterMarket($createAfterMarketRequest);
+      $post_after_market = AfterMarket::postAfterMarket($request, $createAfterMarketRequest);
 
       return $post_after_market;
    }

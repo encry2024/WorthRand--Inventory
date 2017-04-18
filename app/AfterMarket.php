@@ -26,7 +26,7 @@ class AfterMarket extends Model
       return $this->hasMany(AfterMarketPricingHistory::class);
    }
 
-   public static function postAfterMarket($createAfterMarketRequest)
+   public static function postAfterMarket($request, $createAfterMarketRequest)
    {
       $path = storage_path() . '/uploads/projects/';
       if(! $request->hasFile('scanned_file') ) {
