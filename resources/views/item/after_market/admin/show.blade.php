@@ -119,6 +119,14 @@
                            <label id="drawing_number" class="control-label">{{ $afterMarket->drawing_number }}</label>
                         </div>
                      </div>
+
+                     <div class="form-group{{ $errors->has('scanned_file') ? ' has-error' : '' }}">
+                        <label for="drawing_number" class="col-md-4 control-label">Scanned Aftermarket:</label>
+
+                        <div class="col-md-6">
+                           <label id="drawing_number" class="control-label">{{ $afterMarket->scanned_file }}</label>
+                        </div>
+                     </div>
                   </form>
                </div>
             </div>

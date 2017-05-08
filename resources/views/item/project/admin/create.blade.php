@@ -250,8 +250,10 @@
                   <label for="implementation_date" class="col-md-4 control-label">Implementation Date:</label>
 
                   <div class="col-md-6">
-                     <input id="implementation_date" type="text" class="form-control" name="implementation_date" value="{{ old('implementation_date') }}" required autofocus>
-
+                     <div class="input-group date">
+                       <input id="implementation_date" type="text" class="form-control" name="implementation_date" value="{{ old('implementation_date') }}" required autofocus>
+                       <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                     </div>
                      @if ($errors->has('implementation_date'))
                      <span class="help-block">
                         <strong>{{ $errors->first('implementation_date') }}</strong>

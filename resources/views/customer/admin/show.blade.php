@@ -66,19 +66,11 @@
                         </div>
                      </div>
 
-                     <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
-                        <label for="city" class="col-md-4 control-label">City:</label>
+                     <div class="form-group{{ $errors->has('plant_site_address') ? ' has-error' : '' }}">
+                        <label for="plant_site_address" class="col-md-4 control-label">Plant Site Address</label>
 
                         <div class="col-md-6">
-                           <label id="city" class="control-label">{{ $customer->city }}</label>
-                        </div>
-                     </div>
-
-                     <div class="form-group{{ $errors->has('postal_code') ? ' has-error' : '' }}">
-                        <label for="postal_code" class="col-md-4 control-label">ZIP/Postal Code:</label>
-
-                        <div class="col-md-6">
-                           <label id="postal_code" class="control-label">{{ $customer->postal_code }}</label>
+                           <label id="plant_site_address" class="control-label">{{ $customer->plant_site_address }}</label>
                         </div>
                      </div>
 
@@ -90,14 +82,6 @@
                         </div>
                      </div>
 
-                     <div class="form-group{{ $errors->has('contact_number') ? ' has-error' : '' }}">
-                        <label for="contact_number" class="col-md-4 control-label">Contact Number</label>
-
-                        <div class="col-md-6">
-                           <label id="contact_number" class="control-label">{{ $customer->contact_number }}</label>
-                        </div>
-                     </div>
-
                      <div class="form-group{{ $errors->has('position_of_contact_person') ? ' has-error' : '' }}">
                         <label for="position_of_contact_person" class="col-md-4 control-label">Position of Contact Person</label>
 
@@ -106,11 +90,27 @@
                         </div>
                      </div>
 
-                     <div class="form-group{{ $errors->has('plant_site_address') ? ' has-error' : '' }}">
-                        <label for="plant_site_address" class="col-md-4 control-label">Plant Site Address</label>
+                     <div class="form-group{{ $errors->has('contact_number') ? ' has-error' : '' }}">
+                        <label for="contact_number" class="col-md-4 control-label">Contact Number</label>
 
                         <div class="col-md-6">
-                           <label id="plant_site_address" class="control-label">{{ $customer->plant_site_address }}</label>
+                           <label id="contact_number" class="control-label">{{ $customer->contact_number }}</label>
+                        </div>
+                     </div>
+
+                     <div class="form-group{{ $errors->has('postal_code') ? ' has-error' : '' }}">
+                        <label for="postal_code" class="col-md-4 control-label">ZIP/Postal Code:</label>
+
+                        <div class="col-md-6">
+                           <label id="postal_code" class="control-label">{{ $customer->postal_code }}</label>
+                        </div>
+                     </div>
+
+                     <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
+                        <label for="city" class="col-md-4 control-label">City:</label>
+
+                        <div class="col-md-6">
+                           <label id="city" class="control-label">{{ $customer->city }}</label>
                         </div>
                      </div>
 

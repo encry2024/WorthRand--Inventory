@@ -253,6 +253,8 @@ Route::group(['middlewareGroups' => ['web']], function() {
    // ADMIN ACCOUNT
    Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
       Route::group(['prefix' => 'admin'], function() {
+         Route::any('/open/project/{project}', 'Admin\ItemController@openProjectPDF')->name('project_open_pdf');
+
          # DASHBOARD
          Route::get('/dashboard', 'Admin\UserController@adminDashboard')->name('admin_dashboard');
          Route::get('/profile', 'Admin\UserController@profile')->name('admin_user_profile');

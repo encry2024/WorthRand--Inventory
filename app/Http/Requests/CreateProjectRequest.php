@@ -39,7 +39,7 @@ class CreateProjectRequest extends Request
          'epc' => 'required',
          'vendors' => 'required',
          'epc_award' => 'required',
-         'implementation_date' => 'required',
+         'implementation_date' => 'required|date:Y-m-d',
          'bu' => 'required',
          'status' => 'required',
          'final_result' => 'required',

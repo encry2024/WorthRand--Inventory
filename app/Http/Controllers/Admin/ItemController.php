@@ -267,4 +267,18 @@ class ItemController extends Controller
 
       return redirect()->route('admin_seal_index')->with('message', 'You have successfully deleted Seal "' . strtoupper($seal->name) . '"');
    }
+
+   public function openProjectPDF(Project $project)
+   {
+      $file = $project->scanned_file;
+      $filename = basename($project->scanned_file);
+
+      header('Content-type: application/pdf');
+      header('Content-Disposition: inline; filename="' . $filename . '"');
+      header('Content-Transfer-Encoding: binary');
+      header('Content-Length: ' . filesize($file));
+      header('Accept-Ranges: bytes');
+
+      @readfile($file);
+   }
 }

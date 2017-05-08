@@ -11,7 +11,7 @@ class Project extends Model
    use SoftDeletes;
 
    protected $fillable = [
-      'name', 'model', 'ccn_number', 'part_number', 'reference_number', 'drawing_number', 'material_number', 'serial_number', 
+      'name', 'model', 'ccn_number', 'part_number', 'reference_number', 'drawing_number', 'material_number', 'serial_number',
       'tag_number', 'price', 'address', 'contact_person', 'consultant', 'epc', 'vendors', 'epc_award', 'implementation_date', 'bu',
       'status', 'final_result', 'value', 'scanned_file'
    ];
@@ -97,6 +97,15 @@ class Project extends Model
 
    public static function adminUpdateProject($request, $updateProjectInformationRequest)
    {
+      $path = storage_path() . '/uploads/projects/';
+      if(! $updateProjectInformationRequest->hasFile('scanned_file') ) {
+         $scannedProject = "<N/A>";
+      } else {
+         $file = $updateProjectInformationRequest->file('scanned_file');
+         $file->move($path, $file->getClientOriginalName());
+         $scannedProject = $path . $file->getClientOriginalName();
+      }
+
       $project = Project::find($request->get('project_id'));
       $project->update([
          'name' => strtoupper($updateProjectInformationRequest->get('name')),
@@ -113,11 +122,12 @@ class Project extends Model
          'epc' => trim(strtoupper($updateProjectInformationRequest->get('epc'))),
          'vendors' => trim(strtoupper($updateProjectInformationRequest->get('vendors'))),
          'epc_award' => trim(strtoupper($updateProjectInformationRequest->get('epc_award'))),
-         'implementation_date' => date('Y-m-d', strtodate(trim($updateProjectInformationRequest->get('implementation_date')))),
+         'implementation_date' => date('Y-m-d', strtotime(trim($updateProjectInformationRequest->get('implementation_date')))),
          'bu' => trim(strtoupper($updateProjectInformationRequest->get('bu'))),
          'status' => trim(strtoupper($updateProjectInformationRequest->get('status'))),
          'final_result' => trim(strtoupper($updateProjectInformationRequest->get('final_result'))),
-         'value' => trim(strtoupper($updateProjectInformationRequest->get('value')))
+         'value' => trim(strtoupper($updateProjectInformationRequest->get('value'))),
+         'scanned_file' => $scannedProject
       ]);
 
       return redirect()->back()->with('message', 'Project ['.$project->name.'] was successfully updated');

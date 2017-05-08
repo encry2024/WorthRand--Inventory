@@ -34,16 +34,18 @@ class UpdateProjectInformationRequest extends Request
          'serial_number' => 'required',
          'tag_number' => 'required',
          'drawing_number' => 'required|unique:projects,drawing_number,'.Input::get('project_id'),
+         'address' => 'required',
          'contact_person' => 'required',
          'consultant' => 'required',
          'epc' => 'required',
          'vendors' => 'required',
          'epc_award' => 'required',
-         'implementation_date' => 'required',
+         'implementation_date' => 'required|date:Y-m-d',
          'bu' => 'required',
          'status' => 'required',
          'final_result' => 'required',
-         'value' => 'required'
+         'value' => 'required',
+         'scanned_file' => 'mimes:pdf'
       ];
    }
 }

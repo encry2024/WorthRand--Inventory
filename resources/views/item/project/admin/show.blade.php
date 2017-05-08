@@ -132,13 +132,102 @@
                         </div>
                      </div>
 
+                     <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                        <label for="drawing_number" class="col-md-4 control-label">Address:</label>
+
+                        <div class="col-md-6">
+                           <label id="drawing_number" class="control-label">{{ $project->address }}</label>
+                        </div>
+                     </div>
+
+                     <div class="form-group{{ $errors->has('contact_person') ? ' has-error' : '' }}">
+                        <label for="drawing_number" class="col-md-4 control-label">Contact Person:</label>
+
+                        <div class="col-md-6">
+                           <label id="drawing_number" class="control-label">{{ $project->contact_person }}</label>
+                        </div>
+                     </div>
+
+                     <div class="form-group{{ $errors->has('consultant') ? ' has-error' : '' }}">
+                        <label for="drawing_number" class="col-md-4 control-label">Consultant:</label>
+
+                        <div class="col-md-6">
+                           <label id="drawing_number" class="control-label">{{ $project->consultant }}</label>
+                        </div>
+                     </div>
+
+                     <div class="form-group{{ $errors->has('epc') ? ' has-error' : '' }}">
+                        <label for="drawing_number" class="col-md-4 control-label">EPC:</label>
+
+                        <div class="col-md-6">
+                           <label id="drawing_number" class="control-label">{{ $project->epc }}</label>
+                        </div>
+                     </div>
+
+                     <div class="form-group{{ $errors->has('epc_award') ? ' has-error' : '' }}">
+                        <label for="epc_award" class="col-md-4 control-label">EPC Award:</label>
+
+                        <div class="col-md-6">
+                           <label id="epc_award" class="control-label">{{ $project->epc_award }}</label>
+                        </div>
+                     </div>
+
+                     <div class="form-group{{ $errors->has('vendors') ? ' has-error' : '' }}">
+                        <label for="drawing_number" class="col-md-4 control-label">Vendors:</label>
+
+                        <div class="col-md-6">
+                           <label id="drawing_number" class="control-label">{{ $project->vendors }}</label>
+                        </div>
+                     </div>
+
+                     <div class="form-group{{ $errors->has('implementation_date') ? ' has-error' : '' }}">
+                        <label for="implementation_date" class="col-md-4 control-label">Implementation Date:</label>
+
+                        <div class="col-md-6">
+                           <label id="implementation_date" class="control-label">{{ $project->implementation_date }}</label>
+                        </div>
+                     </div>
+
+                     <div class="form-group{{ $errors->has('bu') ? ' has-error' : '' }}">
+                        <label for="bu" class="col-md-4 control-label">BU:</label>
+
+                        <div class="col-md-6">
+                           <label id="bu" class="control-label">{{ $project->bu }}</label>
+                        </div>
+                     </div>
+
+                     <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                        <label for="status" class="col-md-4 control-label">Status:</label>
+
+                        <div class="col-md-6">
+                           <label id="status" class="control-label">{{ $project->status }}</label>
+                        </div>
+                     </div>
+
+                     <div class="form-group{{ $errors->has('final_result') ? ' has-error' : '' }}">
+                        <label for="final_result" class="col-md-4 control-label">Final Result:</label>
+
+                        <div class="col-md-6">
+                           <label id="final_result" class="control-label">{{ $project->final_result }}</label>
+                        </div>
+                     </div>
+
+                     <div class="form-group{{ $errors->has('value') ? ' has-error' : '' }}">
+                        <label for="value" class="col-md-4 control-label">Value:</label>
+
+                        <div class="col-md-6">
+                           <label id="value" class="control-label">{{ $project->value }}</label>
+                        </div>
+                     </div>
+
                      <div class="form-group{{ $errors->has('drawing_number') ? ' has-error' : '' }}">
                         <label for="drawing_number" class="col-md-4 control-label">Scanned Project:</label>
 
                         <div class="col-md-4">
-                           <label id="drawing_number" class="control-label">{{ $project->scanned_file }}</label>
+                           <a id="drawing_number" href="{{ route('project_open_pdf', $project->id) }}" target="_blank" class="btn btn-primary">Click here to view {{ basename($project->scanned_file) }}</a>
                         </div>
                      </div>
+
                   </form>
                </div>
             </div>
