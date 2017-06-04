@@ -26,32 +26,36 @@
 
       <div class="row">
          <div class="col-lg-12">
-            <a href="{{ route('admin_create_user') }}" class="btn btn-success"><i class="fa fa-user-plus"></i> Add Users</a>
-            <hr>
+
+            <div class="pull-right mb-10 hidden-sm hidden-xs">
+               <a href="{{ route('admin_create_user') }}" class="btn btn-sm btn-success">Create User</a>
+            </div>
+            <div class="clearfix"></div>
+
             <div class="table-responsive">
-               <table class="table table-bordered table-striped">
+               <table class="table table-hover">
                   <thead>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;"><input type="checkbox" id="select_all" name="selector" value="Select All"></th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">ID</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Date Added</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Name</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">E-mail</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Role</th>
-                     <th class="text-right" style="background-color: #428bca; color: white;" >Actions</th>
+                     <th>ID</th>
+                     <th>Name</th>
+                     <th>E-mail</th>
+                     <th>Role</th>
+                     <th>Date Added</th>
+                     <th>Last Updated</th>
+                     <th>Actions</th>
                   </thead>
                   <tbody>
                      @foreach($users as $user)
                      <tr>
-                        <td id="checkboxColumn" style="border: none; border-bottom: 1px solid #ddd;">
-                           <input type="checkbox" class="users" name="users[]" value="{{ $user->name.'/'.$user->id }}">
-                        </td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $user->id }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ date('m/d/Y', strtotime($user->created_at)) }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $user->name }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $user->email }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ ucfirst($user->role) }}</b></td>
-                        <td class="text-right">
-                           <a href="{{ route('show_user_profile', $user->id) }}" class="btn btn-sm btn-primary">View Profile</a>
+                        <td><b>{{ $user->id }}</b></td>
+                        <td><b>{{ $user->name }}</b></td>
+                        <td><b>{{ $user->email }}</b></td>
+                        <td><b>{{ ucfirst($user->role) }}</b></td>
+                        <td><b>{{ date('m/d/Y', strtotime($user->created_at)) }}</b></td>
+                        <td><b>{{ date('m/d/Y', strtotime($user->updated_at)) }}</b></td>
+                        <td>
+                           <a href="{{ route('show_user_profile', $user->id) }}" class="btn btn-xs btn-primary" title="View User"><i class="fa fa-search"></i></a>
+                           <a href="{{ route('show_user_profile', $user->id) }}" class="btn btn-xs btn-info" title="Edit User"><i class="fa fa-pencil"></i></a>
+                           <a href="{{ route('show_user_profile', $user->id) }}" class="btn btn-xs btn-danger" title="Delete User"><i class="fa fa-trash"></i></a>
                         </td>
                      </tr>
                      @endforeach

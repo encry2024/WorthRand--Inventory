@@ -115,3 +115,7 @@ li.menu-divider {
    background-color: #d9534f;
    color: white;
 }
+
+.alert {
+   padding: 10px;
+}

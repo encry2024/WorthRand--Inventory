@@ -11,6 +11,7 @@ use App\Http\Requests\CreateAfterMarketRequest;
 use App\Http\Requests\CreateProjectRequest;
 use App\Project;
 use App\AfterMarket;
+use App\Customer;
 use App\Http\Requests\UpdateProjectInformationRequest;
 use DB;
 use App\Http\Requests\AddProjectPricingHistoryRequest;
@@ -66,11 +67,15 @@ class ItemController extends Controller
       return $post_after_market;
    }
 
-   public function createProject() {
-      return view('item.project.admin.create');
+   public function createProject()
+   {
+      $customers = Customer::all();
+
+      return view('item.project.admin.create', compact('customers'));
    }
 
-   public function postProject(CreateProjectRequest $createProjectRequest)  {
+   public function postProject(CreateProjectRequest $createProjectRequest)
+   {
       $create_project = Project::createProject($createProjectRequest);
 
       return $create_project;
@@ -86,7 +91,7 @@ class ItemController extends Controller
    public function indexProject()
    {
       $projects = Project::paginate(30);
-      $projects->setPath('/projects');
+      $projects->setPath('/');
 
       return view('item.project.admin.index', compact('projects'));
    }

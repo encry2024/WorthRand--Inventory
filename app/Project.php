@@ -11,26 +11,23 @@ class Project extends Model
    use SoftDeletes;
 
    protected $fillable = [
-      'name', 'model', 'ccn_number', 'part_number', 'reference_number', 'drawing_number', 'material_number', 'serial_number',
-      'tag_number', 'price', 'address', 'contact_person', 'consultant', 'epc', 'vendors', 'epc_award', 'implementation_date', 'bu',
-      'status', 'final_result', 'value', 'scanned_file'
+      'customer_id', 'name', 'project_terms', 'source', 'address_1', 'contact_person_1', 'contact_number_1', 'email_1',
+      'consultant', 'address_2', 'contact_person_2', 'contact_number_2', 'email_2', 'shorted_list_epc', 'address_3',
+      'contact_person_3', 'contact_number_3', 'email_3', 'approved_vendors_list', 'requirement', 'epc_award',
+      'award_date', 'implementation_date', 'execution_date', 'bu', 'bu_reference', 'wpc_reference', 'affinity_reference',
+      'reference_number', 'drawing_number', 'material_number', 'serial_number', 'tag_number', 'value', 'vendors', 'epc', 'final_result', 'scanned_file'
    ];
 
    protected $dates = ['deleted_at'];
 
-   public function after_markets()
+   public function customer()
    {
-      return $this->hasMany(AfterMarket::class);
+      return $this->belongsTo(Customer::class);
    }
 
    public function project_pricing_history()
    {
       return $this->hasMany(ProjectPricingHistory::class)->latest();
-   }
-
-   public function seals()
-   {
-      return $this->hasMany(Seal::class);
    }
 
    public static function createProject($createProjectRequest)
@@ -44,27 +41,48 @@ class Project extends Model
          $scannedProject = $path . $file->getClientOriginalName();
       }
 
+      //dd($createProjectRequest->all());
+
       $project = new Project();
+      $project->customer_id = $createProjectRequest->get('customer_id');
       $project->name = trim(ucwords($createProjectRequest->get('name'), " "));
-      $project->model = trim(strtoupper($createProjectRequest->get('model')));
-      $project->ccn_number = trim(strtoupper($createProjectRequest->get('ccn_number')));
-      $project->part_number = trim(strtoupper($createProjectRequest->get('part_number')));
+      $project->project_terms = trim(strtoupper($createProjectRequest->get('project_terms')));
+      $project->source = trim(strtoupper($createProjectRequest->get('source')));
+      $project->address_1 = trim(strtoupper($createProjectRequest->get('address_1')));
+      $project->contact_person_1 = trim(strtoupper($createProjectRequest->get('contact_person_1')));
+      $project->contact_number_1 = trim(strtoupper($createProjectRequest->get('contact_number_1')));
+      $project->email_1 = trim(strtoupper($createProjectRequest->get('email_1')));
+      $project->consultant = trim(strtoupper($createProjectRequest->get('consultant')));
+      $project->address_2 = trim(strtoupper($createProjectRequest->get('address_2')));
+      $project->contact_person_2 = trim(strtoupper($createProjectRequest->get('contact_person_2')));
+      $project->contact_number_2 = trim(($createProjectRequest->get('contact_number_2')));
+      $project->email_2 = trim(strtoupper($createProjectRequest->get('email_2')));
+      $project->shorted_list_epc = trim(strtoupper($createProjectRequest->get('shorted_list_epc')));
+      $project->address_3 = trim(strtoupper($createProjectRequest->get('address_3')));
+      $project->contact_person_3 = trim(strtoupper($createProjectRequest->get('contact_person_3')));
+      $project->contact_number_3 = trim(($createProjectRequest->get('contact_number_3')));
+      $project->email_3 = trim(strtoupper($createProjectRequest->get('email_3')));
+      $project->approved_vendors_list = trim(strtoupper($createProjectRequest->get('approved_vendors_list')));
+      $project->requirement = trim(strtoupper($createProjectRequest->get('requirement')));
+      $project->epc_award = trim(strtoupper($createProjectRequest->get('epc_award')));
+      $project->award_date = date('Y-m-d', strtotime(trim($createProjectRequest->get('award_date'))));
+      $project->implementation_date = date('Y-m-d', strtotime(trim($createProjectRequest->get('implementation_date'))));
+      $project->execution_date = date('Y-m-d', strtotime(trim($createProjectRequest->get('execution_date'))));
+      $project->bu = trim(strtoupper($createProjectRequest->get('bu')));
+      $project->bu_reference = trim(strtoupper($createProjectRequest->get('bu_reference')));
+      $project->wpc_reference = trim(strtoupper($createProjectRequest->get('wpc_reference')));
+      $project->affinity_reference = trim(strtoupper($createProjectRequest->get('affinity_reference')));
+      $project->value = trim(strtoupper($createProjectRequest->get('value')));
+      $project->status = trim(strtoupper($createProjectRequest->get('status')));
       $project->reference_number = trim(strtoupper($createProjectRequest->get('reference_number')));
       $project->drawing_number = trim(strtoupper($createProjectRequest->get('drawing_number')));
       $project->material_number = trim(strtoupper($createProjectRequest->get('material_number')));
       $project->serial_number = trim(strtoupper($createProjectRequest->get('serial_number')));
       $project->tag_number = trim(strtoupper($createProjectRequest->get('tag_number')));
-      $project->contact_person = trim(strtoupper($createProjectRequest->get('contact_person')));
-      $project->address = trim(strtoupper($createProjectRequest->get('address')));
-      $project->consultant = trim(strtoupper($createProjectRequest->get('consultant')));
+      $project->value = trim(strtoupper($createProjectRequest->get('value')));
       $project->epc = trim(strtoupper($createProjectRequest->get('epc')));
       $project->vendors = trim(strtoupper($createProjectRequest->get('vendors')));
-      $project->epc_award = trim(strtoupper($createProjectRequest->get('epc_award')));
-      $project->implementation_date = date('Y-m-d', strtotime(trim($createProjectRequest->get('implementation_date'))));
-      $project->bu = trim(strtoupper($createProjectRequest->get('bu')));
-      $project->status = trim(strtoupper($createProjectRequest->get('status')));
       $project->final_result = trim(strtoupper($createProjectRequest->get('final_result')));
-      $project->value = trim(strtoupper($createProjectRequest->get('value')));
       $project->scanned_file = $scannedProject;
 
       if ($project->save()) {
@@ -76,23 +94,24 @@ class Project extends Model
 
    public static function addProjectPricingHistory($addProjectPricingHistoryRequest, $project)
    {
-      $project_pricing_history = new ProjectPricingHistory();
-      $project_pricing_history->project_id = $project->id;
-      $project_pricing_history->po_number = strtoupper($addProjectPricingHistoryRequest->get('po_number'));
-      $project_pricing_history->pricing_date = trim(strtoupper($addProjectPricingHistoryRequest->get('pricing_date')));
-      $project_pricing_history->price = str_replace(',', '', trim($addProjectPricingHistoryRequest->get('price')));
-      $project_pricing_history->terms = trim(strtoupper($addProjectPricingHistoryRequest->get('terms')));
-      $project_pricing_history->delivery = trim(strtoupper($addProjectPricingHistoryRequest->get('delivery')));
-      $project_pricing_history->fpd_reference = trim(strtoupper($addProjectPricingHistoryRequest->get('fpd_reference')));
-      $project_pricing_history->wpc_reference = trim(strtoupper($addProjectPricingHistoryRequest->get('wpc_reference')));
+      DB::transaction(function() {
+         $project_pricing_history = new ProjectPricingHistory();
+         $project_pricing_history->project_id = $project->id;
+         $project_pricing_history->po_number = strtoupper($addProjectPricingHistoryRequest->get('po_number'));
+         $project_pricing_history->pricing_date = trim(strtoupper($addProjectPricingHistoryRequest->get('pricing_date')));
+         $project_pricing_history->price = str_replace(',', '', trim($addProjectPricingHistoryRequest->get('price')));
+         $project_pricing_history->terms = trim(strtoupper($addProjectPricingHistoryRequest->get('terms')));
+         $project_pricing_history->delivery = trim(strtoupper($addProjectPricingHistoryRequest->get('delivery')));
+         $project_pricing_history->fpd_reference = trim(strtoupper($addProjectPricingHistoryRequest->get('fpd_reference')));
+         $project_pricing_history->wpc_reference = trim(strtoupper($addProjectPricingHistoryRequest->get('wpc_reference')));
 
-      if($project_pricing_history->save()) {
-         $project = Project::find($project_pricing_history->project_id);
-         $project->update(['price' => $project_pricing_history->price]);
+         if($project_pricing_history->save()) {
+            $project = Project::find($project_pricing_history->project_id);
+            $project->update(['price' => $project_pricing_history->price]);
 
-         return redirect()->back()->with('message', 'Pricing History for Project ['.$project->name.'] was successfully saved');
-      }
-
+            return redirect()->back()->with('message', 'Pricing History for Project ['.$project->name.'] was successfully saved');
+         }
+      });
    }
 
    public static function adminUpdateProject($request, $updateProjectInformationRequest)
@@ -108,29 +127,46 @@ class Project extends Model
 
       $project = Project::find($request->get('project_id'));
       $project->update([
-         'name' => strtoupper($updateProjectInformationRequest->get('name')),
-         'part_number' => strtoupper($updateProjectInformationRequest->get('part_number')),
-         'ccn_number' => strtoupper($updateProjectInformationRequest->get('ccn_number')),
-         'model' => strtoupper($updateProjectInformationRequest->get('model')),
-         'reference_number' => strtoupper($updateProjectInformationRequest->get('reference_number')),
-         'drawing_number' => strtoupper($updateProjectInformationRequest->get('drawing_number')),
-         'material_number' => strtoupper($updateProjectInformationRequest->get('material_number')),
-         'serial_number' => strtoupper($updateProjectInformationRequest->get('serial_number')),
-         'tag_number' => strtoupper($updateProjectInformationRequest->get('tag_number')),
-         'contact_person' => trim(strtoupper($updateProjectInformationRequest->get('contact_person'))),
-         'consultant' => trim(strtoupper($updateProjectInformationRequest->get('consultant'))),
-         'epc' => trim(strtoupper($updateProjectInformationRequest->get('epc'))),
-         'vendors' => trim(strtoupper($updateProjectInformationRequest->get('vendors'))),
-         'epc_award' => trim(strtoupper($updateProjectInformationRequest->get('epc_award'))),
-         'implementation_date' => date('Y-m-d', strtotime(trim($updateProjectInformationRequest->get('implementation_date')))),
-         'bu' => trim(strtoupper($updateProjectInformationRequest->get('bu'))),
-         'status' => trim(strtoupper($updateProjectInformationRequest->get('status'))),
-         'final_result' => trim(strtoupper($updateProjectInformationRequest->get('final_result'))),
-         'value' => trim(strtoupper($updateProjectInformationRequest->get('value'))),
+         'customer_id' => trim($createProjectRequest->get('customer_id')),
+         'name' => trim(ucwords($createProjectRequest->get('name'), " ")),
+         'project_terms' => trim(strtoupper($createProjectRequest->get('project_terms'))),
+         'source' => trim(strtoupper($createProjectRequest->get('source'))),
+         'address_1' => trim(strtoupper($createProjectRequest->get('address_1'))),
+         'contact_person_1' => trim(strtoupper($createProjectRequest->get('contact_person_1'))),
+         'contact_number_1' => trim(strtoupper($createProjectRequest->get('contact_number_1'))),
+         'email_1' => trim(strtoupper($createProjectRequest->get('email_1'))),
+         'consultant' => trim(strtoupper($createProjectRequest->get('consultant'))),
+         'address_2' => trim(strtoupper($createProjectRequest->get('address_2'))),
+         'contact_person_2' => trim(strtoupper($createProjectRequest->get('contact_person_2'))),
+         'contact_number_2' => trim(($createProjectRequest->get('contact_number_2'))),
+         'email_2' => trim(strtoupper($createProjectRequest->get('email_2'))),
+         'shorted_list_epc' => trim(strtoupper($createProjectRequest->get('shorted_list_epc'))),
+         'address_3' => trim(strtoupper($createProjectRequest->get('address_3'))),
+         'contact_person_3' => trim(strtoupper($createProjectRequest->get('contact_person_3'))),
+         'contact_number_3' => trim(($createProjectRequest->get('contact_number_3'))),
+         'email_3' => trim(strtoupper($createProjectRequest->get('email_3'))),
+         'approved_vendors_list' => trim(strtoupper($createProjectRequest->get('approved_vendors_list'))),
+         'requirement' => trim(strtoupper($createProjectRequest->get('requirement'))),
+         'epc_award' => trim(strtoupper($createProjectRequest->get('epc_award'))),
+         'award_date' => date('Y-m-d', strtotime(trim($createProjectRequest->get('award_date')))),
+         'implementation_date' => date('Y-m-d', strtotime(trim($createProjectRequest->get('implementation_date')))),
+         'execution_date' => date('Y-m-d', strtotime(trim($createProjectRequest->get('execution_date')))),
+         'bu' => trim(strtoupper($createProjectRequest->get('bu'))),
+         'bu_reference' => trim(strtoupper($createProjectRequest->get('bu_reference'))),
+         'wpc_reference' => trim(strtoupper($createProjectRequest->get('wpc_reference'))),
+         'affinity_reference' => trim(strtoupper($createProjectRequest->get('affinity_reference'))),
+         'value' => trim(strtoupper($createProjectRequest->get('value'))),
+         'status' => trim(strtoupper($createProjectRequest->get('status'))),
+         'reference_number' => trim(strtoupper($updateProjectInformationRequest->get('reference_number'))),
+         'drawing_number' => trim(strtoupper($updateProjectInformationRequest->get('drawing_number'))),
+         'material_number' => trim(strtoupper($updateProjectInformationRequest->get('material_number'))),
+         'serial_number' => trim(strtoupper($updateProjectInformationRequest->get('serial_number'))),
+         'tag_number' => trim(strtoupper($updateProjectInformationRequest->get('tag_number'))),
+         'final_result' => trim(strtoupper($createProjectRequest->get('final_result'))),
          'scanned_file' => $scannedProject
       ]);
 
-      return redirect()->back()->with('message', 'Project ['.$project->name.'] was successfully updated');
+      return redirect()->back()->with('message', 'Project "'.$project->name.'" was successfully updated');
    }
 
    /*

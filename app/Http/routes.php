@@ -260,7 +260,6 @@ Route::group(['middlewareGroups' => ['web']], function() {
          Route::get('/profile', 'Admin\UserController@profile')->name('admin_user_profile');
          Route::patch('/profile/update', 'Admin\UserController@updateProfile')->name('admin_update_profile');
 
-
          # USERS
          Route::get('/users', 'Admin\UserController@adminUserIndex')->name('admin_user_index');
          Route::get('/create/user/', 'Admin\UserController@adminCreateUser')->name('admin_create_user');

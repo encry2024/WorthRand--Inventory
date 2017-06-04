@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
                'role'       => 'owner',
                'created_at' => date('Y-m-d h:i:s'),
                'updated_at' => date('Y-m-d h:i:s'),
-               'is_actve'   => 1
+               'is_active'   => 1
             ),
             array(
                'name'       => env('NAME', 'Test Admin'),
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
                'role'       => 'admin',
                'created_at' => date('Y-m-d h:i:s'),
                'updated_at' => date('Y-m-d h:i:s'),
-               'is_actve'   => 1
+               'is_active'   => 1
             ),
             array(
                'name'       => env('NAME', 'Rakel Keeno'),
@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
                'role'       => 'secretary',
                'created_at' => date('Y-m-d h:i:s'),
                'updated_at' => date('Y-m-d h:i:s'),
-               'is_actve'   => 1
+               'is_active'   => 1
             ),
             array(
                'name'       => env('NAME', 'Test Assistant'),
@@ -47,7 +47,7 @@ class UserSeeder extends Seeder
                'role'       => 'assistant',
                'created_at' => date('Y-m-d h:i:s'),
                'updated_at' => date('Y-m-d h:i:s'),
-               'is_actve'   => 1
+               'is_active'   => 1
             ),
             array(
                'name'       => env('NAME', 'Tester Collection'),
@@ -56,7 +56,7 @@ class UserSeeder extends Seeder
                'role'       => 'collection',
                'created_at' => date('Y-m-d h:i:s'),
                'updated_at' => date('Y-m-d h:i:s'),
-               'is_actve'   => 1
+               'is_active'   => 1
             ),
             array(
                'name'       => env('NAME', 'Tester Sales Engineer'),
@@ -65,7 +65,7 @@ class UserSeeder extends Seeder
                'role'       => 'sales_engineer',
                'created_at' => date('Y-m-d h:i:s'),
                'updated_at' => date('Y-m-d h:i:s'),
-               'is_actve'   => 1
+               'is_active'   => 1
             ),
 
             /*array(

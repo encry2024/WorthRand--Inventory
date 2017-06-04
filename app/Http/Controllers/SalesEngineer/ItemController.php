@@ -73,12 +73,39 @@ class ItemController extends Controller
    public function getItemBasedOnCategory($category)
    {
       $itemArray = array();
-      $items = DB::table($category)->get();
 
-      if($category != 'seals') {
+
+      if($category == 'projects') {
+         $items = DB::table('projects')->get();
+
          foreach($items as $item) {
-            $pricing_history = DB::table(str_singular($category).'_pricing_histories')
-            ->where(str_singular($category).'_pricing_histories.' . str_singular($category) . '_id', '=', $item->id)
+            $pricing_history = DB::table('project_pricing_histories')
+            ->where('project_pricing_histories.project_id', '=', $item->id)
+            ->latest()->get();
+
+            $itemArray['suggestions'][] = [
+               'data' => $item->id,
+               'item_id' => $item->id,
+               'value' => $item->material_number,
+               'dataCollection1' => $item->name,
+               'dataCollection2' => $item->status,
+               'dataCollection3' => $item->epc,
+               'dataCollection4' => $item->final_result,
+               'dataCollection5' => $item->reference_number,
+               'dataCollection6' => $item->serial_number,
+               'dataCollection7' => $item->drawing_number,
+               'dataCollection8' => $item->tag_number,
+               'table_name' => $category,
+               'pricinHistoryArray' => $pricing_history,
+
+            ];
+         }
+      } else if($category == 'after_markets') {
+         $items = DB::table('after_markets')->get();
+
+         foreach($items as $item) {
+            $pricing_history = DB::table('after_market_pricing_histories')
+            ->where('after_market_pricing_histories.after_market_id', '=', $item->id)
             ->latest()->get();
 
             $itemArray['suggestions'][] = [

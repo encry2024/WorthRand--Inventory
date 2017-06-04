@@ -9,7 +9,7 @@
 
    <title>WorthRand-CRM</title>
 
-   <link rel="stylesheet" href="{{ URL::to('/') }}/bootstrap-3.3.7/css/bootstrap-theme.min.css">
+   {{-- <link rel="stylesheet" href="{{ URL::to('/') }}/bootstrap-3.3.7/css/bootstrap-theme.min.css"> --}}
    <link rel="stylesheet" href="{{ URL::to('/') }}/bootstrap-3.3.7/css/bootstrap.css">
    <link rel="stylesheet" href="{{ URL::to('/') }}/font-awesome-4.7.0/css/font-awesome.min.css">
    <link rel="stylesheet" href="{{ URL::to('/') }}/font-css/worthrand-css.css">
@@ -54,6 +54,16 @@
 
    <script type="text/javascript">
    $('#implementation_date').datepicker({
+      format: "MM d, yyyy",
+      orientation: "bottom right"
+   });
+
+   $('#execution_date').datepicker({
+      format: "MM d, yyyy",
+      orientation: "bottom right"
+   });
+
+   $('#award_date').datepicker({
       format: "MM d, yyyy",
       orientation: "bottom right"
    });

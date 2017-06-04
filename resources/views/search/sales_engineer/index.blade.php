@@ -299,6 +299,15 @@ $('#item_category').change(function () {
          document.getElementById('data6').innerHTML = 'Size:';
          document.getElementById('data7').innerHTML = 'Code:';
          document.getElementById('data8').innerHTML = 'Model:';
+      } else if($(this).val() == "projects") {
+         document.getElementById('data1').innerHTML = 'Name:';
+         document.getElementById('data2').innerHTML = 'Status:';
+         document.getElementById('data3').innerHTML = 'EPC:';
+         document.getElementById('data4').innerHTML = 'Final Result:';
+         document.getElementById('data5').innerHTML = 'Reference Number:';
+         document.getElementById('data6').innerHTML = 'Searial Number:';
+         document.getElementById('data7').innerHTML = 'Drawing Number:';
+         document.getElementById('data8').innerHTML = 'Tag Number:';
       } else {
          document.getElementById('data1').innerHTML = 'Name:';
          document.getElementById('data2').innerHTML = 'CCN Number:';

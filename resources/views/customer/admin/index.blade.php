@@ -25,76 +25,76 @@
          </div>
       </div>
 
-      <div class="row">
-         <div class="col-lg-12">
-            @if (Request::has('filter'))
-               <div class="alert alert-success" role="alert" style="border-radius: 0px; border-radius: 0px; color: #224323; background-color: #cde6cd;border-color: #bcddbc; background-image: none;">Entered Query: "{{ Request::get('filter') }}" Filtered Result: {{ $customers->firstItem() }} to {{ $customers->lastItem() }} out of {{$customers->total()}} Customers</div>
-            @endif
-            <form class="form-horizontal">
-               <div class="form-group">
-                  <label for="SearchInput" class="control-label pull-left" style="margin-left: 1.5rem;">Search:</label>
-                  <div style="margin-left: 5rem;">
-                     <div class="col-lg-5" >
-                        <input id="SearchInput" type="search" class="form-control" name="filter">
-                     </div>
-                  </div>
-                  <button class="btn btn-primary">Search</button>
-                  <a href="{{ route('admin_customer_index') }}" class="btn btn-warning">Clear Search</a>
-                  <a class="btn btn-success" href="{{ route('admin_customer_create') }}"><span class="glyphicon glyphicon-plus-sign"></span> Add Customer</a>
-               </div>
-            </form>
-         </div>
-      </div>
+      @if(Request::has('filter'))
+      <div class="alert alert-success" role="alert" style="border-radius: 0px; border-radius: 0px; color: #224323; background-color: #cde6cd;border-color: #bcddbc; background-image: none;">Entered Query: "{{ Request::get('filter') }}" Filtered Result: {{ $customers->firstItem() }} to {{ $customers->lastItem() }} out of {{$customers->total()}} Customers</div>
+      @endif
+      <form>
+         <div class="form-group">
+            <label for="SearchInput" class="control-label pull-left" style="line-height: 3rem;">Search:</label>
+            <div class="col-lg-3" >
+               <input id="SearchInput" type="search" class="form-control" name="filter" style="height: 30px;">
+            </div>
+            <button class="btn btn-sm btn-primary">Search</button>
+            <a href="{{ route('admin_customer_index') }}" class="btn btn-sm btn-warning">Clear Search</a>
+            <div class="pull-right mb-10 hidden-sm hidden-xs">
 
-      <hr>
+               <a class="btn btn-sm btn-success" href="{{ route('admin_customer_create') }}">Create Customer</a>
+            </div>
+         </div>
+      </form>
 
       @if(count($customers) != 0)
       <div class="row">
          <div class="col-lg-12">
+
+
+
             <div class="table-reponsive">
-               <table class="table table-bordered table-striped">
+               <table class="table table-hover">
                   <thead>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">ID</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Date Added</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Name</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Address</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">City</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Postal Code</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;" class="text-right" >Actions</th>
+                     <th>ID</th>
+                     <th>Name</th>
+                     <th>Address</th>
+                     <th>City</th>
+                     <th>Postal Code</th>
+                     <th>Date Added</th>
+                     <th>Actions</th>
                   </thead>
                   <tbody>
                      @foreach($customers as $customer)
                      <tr>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ ((($customers->currentPage() - 1) * $customers->perPage()) + ($ctr++) + 1) }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ date('m/d/Y', strtotime($customer->created_at)) }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $customer->name }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $customer->address }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $customer->city }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $customer->postal_code }}</b></td>
-                        <td class="text-right"><a href="{{ route('admin_show_customer', $customer->id) }}" class="btn btn-primary btn-sm">View</a></td>
+                        <td><b>{{ ((($customers->currentPage() - 1) * $customers->perPage()) + ($ctr++) + 1) }}</b></td>
+                        <td><b>{{ $customer->name }}</b></td>
+                        <td><b>{{ $customer->address }}</b></td>
+                        <td><b>{{ $customer->city }}</b></td>
+                        <td><b>{{ $customer->postal_code }}</b></td>
+                        <td><b>{{ date('m/d/Y', strtotime($customer->created_at)) }}</b></td>
+                        <td>
+                           <a href="{{ route('admin_show_customer', $customer->id) }}" class="btn btn-primary btn-xs" title="View Customer"><i class="fa fa-search"></i></a>
+                        </td>
                      </tr>
                      @endforeach
                   </tbody>
                </table>
                @if (Request::has('filter'))
-                  <form class="form-inline">
-                     <div class="form-group left" style=" margin-top: 2.55rem; ">
-                        <label class="" for="">Showing {{ count($customers) == 0 ? count($customers) . ' to '.  $customers->lastItem() . ' out of ' . $customers->total() : $customers->firstItem() . ' to ' . $customers->lastItem() . ' out of ' . $customers->total() . ' Customers'}}</label>
-                     </div>
-                     <div class="form-group right">
-                        <span class="right">{!! $customers->appends(['filter' => Request::get('filter')])->render() !!}</span>
-                     </div>
-                  </form>
-                @else
-                  <form class="form-inline">
-                     <div class="form-group left" style=" margin-top: 2.55rem; ">
-                        <label class="" for="">Showing {!! $customers->firstItem() !!} to {!! $customers->lastItem() !!} out of {!! $customers->total() !!} Customers</label>
-                     </div>
-                     <div class="form-group right">
-                        <span class="right">{!! $customers->appends(['filter' => Request::get('filter')])->render() !!}</span>
-                     </div>
-                  </form>
-                @endif
+               <form class="form-inline">
+                  <div class="form-group left" style=" margin-top: 2.55rem; ">
+                     <label class="" for="">Showing {{ count($customers) == 0 ? count($customers) . ' to '.  $customers->lastItem() . ' out of ' . $customers->total() : $customers->firstItem() . ' to ' . $customers->lastItem() . ' out of ' . $customers->total() . ' Customers'}}</label>
+                  </div>
+                  <div class="form-group right">
+                     <span class="right">{!! $customers->appends(['filter' => Request::get('filter')])->render() !!}</span>
+                  </div>
+               </form>
+               @else
+               <form class="form-inline">
+                  <div class="form-group left" style=" margin-top: 2.55rem; ">
+                     <label class="" for="">Showing {!! $customers->firstItem() !!} to {!! $customers->lastItem() !!} out of {!! $customers->total() !!} Customers</label>
+                  </div>
+                  <div class="form-group right">
+                     <span class="right">{!! $customers->appends(['filter' => Request::get('filter')])->render() !!}</span>
+                  </div>
+               </form>
+               @endif
             </div>
          </div>
       </div>

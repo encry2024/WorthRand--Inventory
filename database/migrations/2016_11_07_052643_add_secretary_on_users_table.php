@@ -19,7 +19,7 @@ class AddSecretaryOnUsersTable extends Migration
                 'password'  => bcrypt('admin123'),
                 'role'      => 'secretary',
                 'created_at' => date('Y-m-d h:i:s'),
-                'updated_at' => date('Y-m-d h:i:s')
+                'updated_at' => date('Y-m-d h:i:s'),
             )
         );
     }
