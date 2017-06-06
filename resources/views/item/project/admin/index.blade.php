@@ -27,7 +27,7 @@
       </div>
 
       <div class="pull-right mb-10 hidden-sm hidden-xs">
-         <a href="{{ route('create_project') }}" class="btn btn-sm btn-success">Create Project</a>
+         <a href="{{ route('create_project') }}" class="btn btn-success">Create Project</a>
       </div>
       <div class="clearfix"></div>
 
@@ -47,6 +47,7 @@
                      <th>Last Updated</th>
                      <th>Actions</th>
                   </thead>
+                  
                   <tbody>
                      @foreach($projects as $project)
                      <tr>

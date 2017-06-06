@@ -50,6 +50,34 @@
                   </div>
                </div>
 
+               <div class="form-group{{ $errors->has('sap_number') ? ' has-error' : '' }}">
+                  <label for="sap_number" class="col-md-4 control-label">SAP Number:</label>
+
+                  <div class="col-md-6">
+                     <input id="sap_number" type="text" class="form-control" name="sap_number" value="{{ old('sap_number') }}" required autofocus>
+
+                     @if ($errors->has('sap_number'))
+                     <span class="help-block">
+                        <strong>{{ $errors->first('sap_number') }}</strong>
+                     </span>
+                     @endif
+                  </div>
+               </div>
+
+               <div class="form-group{{ $errors->has('stock_number') ? ' has-error' : '' }}">
+                  <label for="stock_number" class="col-md-4 control-label">Stock Number:</label>
+
+                  <div class="col-md-6">
+                     <input id="stock_number" type="text" class="form-control" name="stock_number" value="{{ old('stock_number') }}" required autofocus>
+
+                     @if ($errors->has('stock_number'))
+                     <span class="help-block">
+                        <strong>{{ $errors->first('stock_number') }}</strong>
+                     </span>
+                     @endif
+                  </div>
+               </div>
+
                <div class="form-group{{ $errors->has('model') ? ' has-error' : '' }}">
                   <label for="model" class="col-md-4 control-label">Model:</label>
 

@@ -24,9 +24,11 @@
                 </div>
             </div>
 
-            <a href="{{ route('admin_seal_create') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i> Add Seal</a>
-            <hr>
-            
+            <div class="pull-right mb-10 hidden-sm hidden-xs">
+               <a href="{{ route('admin_seal_create') }}" class="btn btn-success">Create Seal</a>
+            </div>
+            <div class="clearfix"></div>
+
             @if(count($seals) != 0)
             <div class="row">
                 <div class="col-lg-12">

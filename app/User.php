@@ -105,7 +105,7 @@ class User extends Authenticatable
       * TARGET SALES CHART
       */
 
-      $targetRevenues = TargetRevenue::all();
+      $targetRevenues = TargetRevenue::orderBy('current_sale', 'desc')->limit(5);
 
       $target_chart = new Lavacharts();
       $data = $target_chart->DataTable();

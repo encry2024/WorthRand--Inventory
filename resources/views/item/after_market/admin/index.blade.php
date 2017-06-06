@@ -25,8 +25,10 @@
          </div>
       </div>
 
-      <a href="{{ route('create_after_market') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add AfterMarket</a>
-      <hr>
+      <div class="pull-right mb-10 hidden-sm hidden-xs">
+         <a href="{{ route('create_after_market') }}" class="btn btn-success">&nbsp;Create Aftermarket</a>
+      </div>
+      <div class="clearfix"></div>
 
       @if(count($aftermarkets) != 0)
       <div class="row">
