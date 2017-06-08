@@ -35,29 +35,29 @@
          <div class="col-lg-12">
 
             <div class="table-responsive">
-               <table class="table table-striped table-bordered">
+               <table class="table table-hover">
                   <thead>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">ID</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Name</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Model</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Material Number</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Tag Number</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Drawing Number</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Date Added</th>
-                     <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Actions</th>
+                     <th>ID</th>
+                     <th>Name</th>
+                     <th>Model</th>
+                     <th>Material Number</th>
+                     <th>Tag Number</th>
+                     <th>Drawing Number</th>
+                     <th>Date Added</th>
+                     <th>Actions</th>
                   </thead>
                   <tbody>
                      @foreach($aftermarkets as $aftermarket)
                      <tr>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $aftermarket->id }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $aftermarket->name }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $aftermarket->model }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $aftermarket->serial_number }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $aftermarket->tag_number }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $aftermarket->drawing_number }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ date('m/d/Y', strtotime($aftermarket->created_at)) }}</b></td>
-                        <td style="border: none; border-bottom: 1px solid #ddd; font-size: 15px;" class="text-center">
-                           <a href="{{ route('admin_after_market_show', $aftermarket->id) }}" title="View Aftermarket"><i class="fa fa-search"></i></a>
+                        <td><b>{{ $aftermarket->id }}</b></td>
+                        <td><b>{{ $aftermarket->name }}</b></td>
+                        <td><b>{{ $aftermarket->model }}</b></td>
+                        <td><b>{{ $aftermarket->serial_number }}</b></td>
+                        <td><b>{{ $aftermarket->tag_number }}</b></td>
+                        <td><b>{{ $aftermarket->drawing_number }}</b></td>
+                        <td><b>{{ date('m/d/Y', strtotime($aftermarket->created_at)) }}</b></td>
+                        <td>
+                           <a class="btn btn-xs btn-primary" href="{{ route('admin_after_market_show', $aftermarket->id) }}" title="View Aftermarket"><i class="fa fa-search"></i></a>
                         </td>
                      </tr>
                      @endforeach

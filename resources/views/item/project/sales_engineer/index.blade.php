@@ -20,27 +20,27 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered">
+                            <table class="table table-hover">
                                 <thead>
-                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">#</th>
-                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Name</th>
-                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Model</th>
-                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Serial Number</th>
-                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Tag Number</th>
-                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;">Drawing Number</th>
-                                    <th style="background-color: #428bca; color: white; border-right: #ddd 1px solid;" class="text-right">Actions</th>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Model</th>
+                                    <th>Serial Number</th>
+                                    <th>Tag Number</th>
+                                    <th>Drawing Number</th>
+                                    <th>Actions</th>
                                 </thead>
                                 <tbody>
                                 @foreach($projects as $project)
                                     <tr>
-                                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $project->id }}</b></td>
-                                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $project->name }}</b></td>
-                                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $project->model }}</b></td>
-                                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $project->serial_number }}</b></td>
-                                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $project->tag_number }}</b></td>
-                                        <td style="border: none; border-bottom: 1px solid #ddd;"><b>{{ $project->drawing_number }}</b></td>
-                                        <td style="border: none; border-bottom: 1px solid #ddd;" class="text-right">
-                                            <b><a href="{{ route('se_project_show', $project->id) }}" class="btn btn-sm btn-success">View Project</a></b>
+                                        <td><b>{{ $project->id }}</b></td>
+                                        <td><b>{{ $project->name }}</b></td>
+                                        <td><b>{{ $project->model }}</b></td>
+                                        <td><b>{{ $project->serial_number }}</b></td>
+                                        <td><b>{{ $project->tag_number }}</b></td>
+                                        <td><b>{{ $project->drawing_number }}</b></td>
+                                        <td>
+                                            <b><a href="{{ route('se_project_show', $project->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-search"></i></a></b>
                                         </td>
                                     </tr>
                                 @endforeach
