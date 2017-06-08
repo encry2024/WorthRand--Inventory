@@ -15,7 +15,7 @@
    </div>
 
    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-      <form class="form-horizontal" action="{{ route('se_submit_indented_proposal') }}" method="POST" id="SubmitIndentedProposal" enctype="multipart/form-data">
+      <form class="form-horizontal" action="{{ route('se_resend_draft_indented_proposal', $indentedProposal->id) }}" method="POST" id="SubmitIndentedProposal" enctype="multipart/form-data">
          {{ csrf_field() }}
          <input type="hidden" name="indent_proposal_id" value="{{ $indentedProposal->id }}">
          <input type="hidden" name="customer_id" id="customer_id">

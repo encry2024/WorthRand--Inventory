@@ -158,6 +158,7 @@ class IndentedProposal extends Model
       } else {
          $fileName = '<File not provided>';
       }
+
       $indented_proposal = IndentedProposal::find($createIndentedProposalRequest->get('indent_proposal_id'));
       $indented_proposal->customer_id = $createIndentedProposalRequest->get('customer_id');
       $indented_proposal->rfq_number = $createIndentedProposalRequest->get('rfq_number');
@@ -257,6 +258,116 @@ class IndentedProposal extends Model
                   $seal_pricing_history->terms = "30-days";
                   $seal_pricing_history->delivery = $indentedProposalItem->delivery;
                   $seal_pricing_history->fpd_reference = "TEST_FPD_REFERENCE";
+                  $seal_pricing_history->wpc_reference = $indented_proposal->wpc_reference;
+
+                  if($seal_pricing_history->save()) {
+                     $seal = Seal::find($seal_pricing_history->seal_id);
+                     $seal->price = $seal_pricing_history->price;
+                     $seal->save();
+                  }
+               }
+            }
+         }
+         return redirect()->to('/sales_engineer/search')->with('message', 'Indented Proposal [ WPC Reference: #'.$indented_proposal->wpc_reference.' ] was successfully sent.')
+         ->with('alert', "alert-success")->with('alert-icon', 'glyphicon glyphicon-ok');
+      } else {
+         return redirect()->back()->with('message', 'Failed to send Indented Proposal. Please review your inputs before sending. <i>The System only accepts PDF files.</i>')
+         ->with('alert', "alert-danger")->with('alert-icon', 'glyphicon glyphicon-remove');
+      }
+   }
+
+   public static function resendDraftIndentedProposal($resendDraftIndentedProposal)
+   {
+      $path = storage_path() . '/uploads/users/' . Auth::user()->id . '/indented_proposals';
+      if($resendDraftIndentedProposal->has('fileField')) {
+         $fileName = $resendDraftIndentedProposal->file('fileField')->getClientOriginalName();
+      } else {
+         $fileName = '<File not provided>';
+      }
+
+      $indented_proposal = IndentedProposal::find($resendDraftIndentedProposal->get('indent_proposal_id'));
+      $indented_proposal->customer_id = $resendDraftIndentedProposal->get('customer_id');
+      $indented_proposal->rfq_number = $resendDraftIndentedProposal->get('rfq_number');
+      $indented_proposal->ship_to = $resendDraftIndentedProposal->get('ship_to');
+      $indented_proposal->ship_to_address = $resendDraftIndentedProposal->get('ship_to_address');
+      $indented_proposal->status = "SENT";
+      $indented_proposal->collection_status = "PENDING";
+      $indented_proposal->wpc_reference = $resendDraftIndentedProposal->get('wpc_reference');
+      $indented_proposal->file_name = $fileName;
+
+      if($resendDraftIndentedProposal->has('fileField')) {
+         $resendDraftIndentedProposal->file('fileField')->move($path , $fileName);
+      }
+
+      if($indented_proposal->save()) {
+         foreach($resendDraftIndentedProposal->all() as $key => $value) {
+            if(strpos($key, 'quantity') !== FALSE)  {
+               foreach($value as $indented_proposal_item_id => $quantity_value) {
+                  $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
+                  $indented_proposal_item->quantity = $quantity_value;
+                  $indented_proposal_item->save();
+               }
+            }
+
+            if(strpos($key, 'price') !== FALSE) {
+               foreach($value as $indented_proposal_item_id => $quantity_value) {
+                  $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
+                  $indented_proposal_item->price = $quantity_value;
+                  $indented_proposal_item->save();
+               }
+            }
+
+            if(strpos($key, 'delivery') !== FALSE) {
+               foreach($value as $indented_proposal_item_id => $quantity_value) {
+                  $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
+                  $indented_proposal_item->delivery = $quantity_value * 7;
+                  $indented_proposal_item->notify_me_after = ($quantity_value - 2) * 7;
+                  $indented_proposal_item->save();
+               }
+            }
+         }
+
+         $indented_proposal_items = IndentedProposalItem::whereIndentedProposalId($indented_proposal->id)->get();
+
+         foreach($indented_proposal_items as $indentedProposalItem) {
+            $indentedProposalItem->status = "PROCESSING";
+
+            if($indentedProposalItem->save()) {
+               if($indentedProposalItem->type == "projects") {
+                  $project_pricing_history = new ProjectPricingHistory();
+                  $project_pricing_history->project_id = $indentedProposalItem->item_id;
+                  $project_pricing_history->price = $indentedProposalItem->price;
+                  $project_pricing_history->pricing_date = date('Y');
+                  $project_pricing_history->terms = "30-days";
+                  $project_pricing_history->delivery = $indentedProposalItem->delivery;
+                  $project_pricing_history->wpc_reference = $indented_proposal->wpc_reference;
+
+                  if($project_pricing_history->save()) {
+                     $project = Project::find($project_pricing_history->project_id);
+                     $project->price = $project_pricing_history->price;
+                     $project->save();
+                  }
+               } else if($indentedProposalItem->type == "after_markets") {
+                  $after_marketpricing_history = new AfterMarketPricingHistory();
+                  $after_marketpricing_history->after_market_id = $indentedProposalItem->item_id;
+                  $after_marketpricing_history->price = $indentedProposalItem->price;
+                  $after_marketpricing_history->pricing_date = date('Y');
+                  $after_marketpricing_history->terms = "30-days";
+                  $after_marketpricing_history->delivery = $indentedProposalItem->delivery;
+                  $after_marketpricing_history->wpc_reference = $indented_proposal->wpc_reference;
+
+                  if($after_marketpricing_history->save()) {
+                     $aftermarket = AfterMarket::find($after_marketpricing_history->after_market_id);
+                     $aftermarket->price = $after_marketpricing_history->price;
+                     $aftermarket->save();
+                  }
+               }else if($indentedProposalItem->type == "seals") {
+                  $seal_pricing_history = new SealPricingHistory();
+                  $seal_pricing_history->after_market_id = $indentedProposalItem->item_id;
+                  $seal_pricing_history->price = $indentedProposalItem->price;
+                  $seal_pricing_history->pricing_date = date('Y');
+                  $seal_pricing_history->terms = "30-days";
+                  $seal_pricing_history->delivery = $indentedProposalItem->delivery;
                   $seal_pricing_history->wpc_reference = $indented_proposal->wpc_reference;
 
                   if($seal_pricing_history->save()) {

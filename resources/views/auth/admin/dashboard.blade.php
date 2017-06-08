@@ -84,9 +84,9 @@
                                  @if($indented_proposal->collection_status == "ON-CREATE")
                                  <span style="font-size: 12px;" class="label label-danger">View Unavailable</span>
                                  @elseif($indented_proposal->collection_status == "COMPLETED")
-                                 <a href="{{ route('admin_completed_indented_proposal', $indented_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
+                                 <a href="{{ route('admin_completed_indented_proposal', $indented_proposal->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-search"></i></a>
                                  @else
-                                 <a href="{{ route('admin_show_pending_proposal', $indented_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
+                                 <a href="{{ route('admin_show_pending_proposal', $indented_proposal->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-search"></i></a>
                                  @endif
                               </td>
                            </tr>
@@ -112,7 +112,7 @@
                <div class="col-lg-12">
                   @if(count($buy_and_sell_proposals) != 0)
                   <div class="table-responsive">
-                     <table class="table table-striped">
+                     <table class="table table-hover">
                         <thead>
                            <th>ID</th>
                            <th>Purchase Order</th>
@@ -157,7 +157,7 @@
                                  @if($buy_and_sell_proposal->collection_status == "ON-CREATE")
                                  <span style="font-size: 12px;" class="label label-danger">View Unavailable</span>
                                  @else
-                                 <a href="{{ route('admin_show_pending_buy_and_sell_proposal', $buy_and_sell_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
+                                 <a href="{{ route('admin_show_pending_buy_and_sell_proposal', $buy_and_sell_proposal->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></a>
                                  @endif
                               </td>
                            </tr>

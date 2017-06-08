@@ -13,6 +13,7 @@ use App\IndentedProposalItem;
 use App\BuyAndSellProposal;
 use App\BuyAndSellProposalItem;
 use App\Http\Requests\CreateBuyAndSellProposalRequest;
+use App\Http\Requests\ResendDraftIndentedProposal;
 
 class ProposalController extends Controller
 {
@@ -27,6 +28,13 @@ class ProposalController extends Controller
    public function salesEngineerSubmitIndentedProposal(CreateIndentedProposalRequest $createIndentedProposalRequest)
    {
       $saveIndentedProposal = IndentedProposal::saveIndentedProposal($createIndentedProposalRequest);
+
+      return $saveIndentedProposal;
+   }
+
+   public function resendDraftIndentedProposal(ResendDraftIndentedProposal $resendIndentedProposalRequest, IndentedProposal $indentedProposal)
+   {
+      $saveIndentedProposal = IndentedProposal::resendDraftIndentedProposal($resendIndentedProposalRequest);
 
       return $saveIndentedProposal;
    }

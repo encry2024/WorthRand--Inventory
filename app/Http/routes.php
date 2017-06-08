@@ -432,6 +432,7 @@ Route::group(['middlewareGroups' => ['web']], function() {
          Route::get('/indented_proposals', 'ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
          Route::get('/indented_proposal/{indentedProposal}/sent', 'SalesEngineer\ProposalController@showSentIndentedProposal')->name('se_sent_indented_proposal');
          Route::get('/indented_proposal/{indentedProposal}/draft', 'SalesEngineer\ProposalController@showDraftIndentedProposal')->name('show_draft_proposal');
+         Route::post('/indented_proposal/{indentedProposal}/resend', 'SalesEngineer\ProposalController@resendDraftIndentedProposal')->name('se_resend_draft_indented_proposal');
 
          Route::post('/buy_and_resale_proposal/create', 'SalesEngineer\ProposalController@salesEngineerPostCreateBuyAndSellProposal');
          Route::get('/buy_and_resale_proposal/{buyAndSellProposal}', 'SalesEngineer\ProposalController@salesEngineerBuyAndSellProposalView');

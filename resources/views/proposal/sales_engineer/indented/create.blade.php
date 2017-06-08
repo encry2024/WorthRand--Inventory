@@ -246,81 +246,8 @@
                </table>
             </div>
          </div>
-
-         <div class="row">
-            <hr>
-         </div>
-
-         <div class="row">
-            <div class="col-lg-12">
-               <div class="form-group">
-                  <label for="InputSpecialInstruction" class="col-sm-3 control-label"><b><i>SPECIAL INSTRUCTION</i></b>: </label>
-                  <div class="col-sm-5">
-                     <textarea name="special_instruction" id="InputSpecialInstruction" class="form-control" placeholder="Special Instruction">{{ $indented_proposal->special_instructions != '' ? $indented_proposal->special_instructions : '' }}</textarea>
-                  </div>
-               </div>
-
-               <div class="form-group">
-                  <label for="InputShipVia" class="col-sm-3 control-label">SHIP VIA:</label>
-                  <div class="col-sm-5">
-                     <input name="ship_via" class="form-control" id="InputShipVia" placeholder="Ship via" value="{{ $indented_proposal->ship_via != '' ? $indented_proposal->ship_via : '' }}">
-
-                  </div>
-               </div>
-
-               <div class="form-group">
-                  <label for="InputPacking" class="col-sm-3 control-label">PACKING:</label>
-                  <div class="col-sm-5">
-                     <textarea name="packing" id="InputPacking" class="form-control" placeholder="Packing" >{{ $indented_proposal->packing != '' ? $indented_proposal->packing : '' }}</textarea>
-                  </div>
-               </div>
-
-               <div class="form-group">
-                  <label for="InputDocuments" class="col-sm-3 control-label">DOCUMENTS:</label>
-                  <div class="col-sm-5">
-                     <textarea name="documents" id="InputDocuments" class="form-control" placeholder="Documents">{{ $indented_proposal->documents != '' ? $indented_proposal->documents : '' }}</textarea>
-                  </div>
-               </div>
-
-               <div class="form-group">
-                  <label for="InputInsurance" class="col-sm-3 control-label">INSURANCE:</label>
-                  <div class="col-sm-5">
-                     <input class="form-control" id="InputInsurance" name="insurance" placeholder="Insurance"  value="{{ $indented_proposal->insurance != '' ? $indented_proposal->insurance : '' }}">
-                  </div>
-               </div>
-
-               <div class="form-group">
-                  <label for="InputBankDetailName" class="col-sm-3 control-label">BANK DETAILS: </label>
-                  <div class="col-sm-5">
-                     <input class="form-control" id="InputBankDetailName" name="bank_detail_owner" placeholder="Bank Details"  value="{{ $indented_proposal->bank_detail_name != '' ? $indented_proposal->bank_detail_name : '' }}">
-                     <br>
-                     <textarea name="bank_detail_address" id="" class="form-control" placeholder="Bank Details Address">{{ $indented_proposal->bank_detail_address != '' ? $indented_proposal->bank_detail_address : '' }}</textarea>
-                     <br>
-                     <input class="form-control" id="InputBankDetailName" name="bank_detail_account_number" placeholder="Account Number"  value="{{ $indented_proposal->bank_detail_account_no != '' ? $indented_proposal->bank_detail_account_no : '' }}">
-                     <br>
-                     <input class="form-control" id="InputBankDetailName" name="bank_detail_swift_code" placeholder="Swift Code"  value="{{ $indented_proposal->bank_detail_swift_code != '' ? $indented_proposal->bank_detail_swift_code : '' }}">
-                     <br>
-                     <input class="form-control" id="InputBankDetailName" name="bank_detail_account_name" placeholder="Bank Account Name"  value="{{ $indented_proposal->bank_detail_account_name != '' ? $indented_proposal->bank_detail_account_name : '' }}">
-                  </div>
-               </div>
-
-               <div class="form-group">
-                  <label for="InputBankDetailName" class="col-sm-3 control-label">COMMISSION: </label>
-                  <div class="col-sm-5">
-                     <input class="form-control" id="InputBankDetailName" name="commission_note" placeholder="Commission Details"  value="{{ $indented_proposal->commission_note != '' ? $indented_proposal->commission_note : '' }}">
-                     <br>
-                     <textarea name="commission_address" id="" class="form-control" placeholder="Commission Address" >{{ $indented_proposal->commission_address != '' ? $indented_proposal->commission_address : '' }}</textarea>
-                     <br>
-                     <input class="form-control" id="InputBankDetailName" name="commission_account_number" placeholder="Commission Account Number"  value="{{ $indented_proposal->commission_account_number != '' ? $indented_proposal->commission_account_number : '' }}">
-                     <br>
-                     <input class="form-control" id="InputBankDetailName" name="commission_swift_code" placeholder="Commission Swift Code"  value="{{ $indented_proposal->commission_swift_code != '' ? $indented_proposal->commission_swift_code : '' }}">
-                  </div>
-               </div>
-
-            </div>
-         </div>
-      </form>
-   </div>
+      </div>
+   </form>
 </div>
 
 <script>
