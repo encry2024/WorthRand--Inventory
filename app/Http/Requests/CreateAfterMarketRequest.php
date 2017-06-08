@@ -28,6 +28,7 @@ class CreateAfterMarketRequest extends Request
          'model' => 'required',
          'stock_number' => 'max:50',
          'sap_number' => 'max:50',
+         'description' => 'max:191',
          'part_number' => 'required',
          'reference_number' => 'required',
          'material_number' => 'required|unique:after_markets,material_number',

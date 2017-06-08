@@ -120,6 +120,30 @@
                         </div>
                      </div>
 
+                     <div class="form-group{{ $errors->has('stock_number') ? ' has-error' : '' }}">
+                        <label for="stock_number" class="col-md-4 control-label">Stock Number:</label>
+
+                        <div class="col-md-6">
+                           <label id="stock_number" class="control-label">{{ $afterMarket->stock_number }}</label>
+                        </div>
+                     </div>
+
+                     <div class="form-group{{ $errors->has('sap_number') ? ' has-error' : '' }}">
+                        <label for="sap_number" class="col-md-4 control-label">SAP Number:</label>
+
+                        <div class="col-md-6">
+                           <label id="sap_number" class="control-label">{{ $afterMarket->sap_number }}</label>
+                        </div>
+                     </div>
+
+                     <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+                        <label for="description" class="col-md-4 control-label">Description:</label>
+
+                        <div class="col-md-6">
+                           <label id="description" class="control-label">{{ $afterMarket->description }}</label>
+                        </div>
+                     </div>
+
                      <div class="form-group{{ $errors->has('scanned_file') ? ' has-error' : '' }}">
                         <label for="drawing_number" class="col-md-4 control-label">Scanned Aftermarket:</label>
 

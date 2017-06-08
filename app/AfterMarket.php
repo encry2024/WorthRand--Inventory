@@ -12,7 +12,7 @@ class AfterMarket extends Model
    protected $fillable = [
       'name', 'model', 'ccn_number', 'part_number', 'reference_number', 'drawing_number',
       'material_number', 'serial_number', 'tag_number', 'project_id', 'company_name', 'scanned_file',
-      'sap_number', 'stock_number'
+      'sap_number', 'stock_number', 'description'
    ];
 
    protected $dates = ['deleted_at'];
@@ -44,6 +44,9 @@ class AfterMarket extends Model
       $after_market->drawing_number = strtoupper($createAfterMarketRequest->get('drawing_number'));
       $after_market->ccn_number = strtoupper($createAfterMarketRequest->get('ccn_number'));
       $after_market->company_name = strtoupper($createAfterMarketRequest->get('company_name'));
+      $after_market->sap_number = strtoupper($createAfterMarketRequest->get('sap_number'));
+      $after_market->stock_number = strtoupper($createAfterMarketRequest->get('stock_number'));
+      $after_market->description = strtoupper($createAfterMarketRequest->get('description'));
       $after_market->scanned_file = $scannedAftermarket;
 
       if($after_market->save()) {
