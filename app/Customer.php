@@ -11,7 +11,7 @@ class Customer extends Model
    use SoftDeletes;
 
    protected $fillable = [
-      'name', 'address', 'city', 'postal_code', 'user_id', 'contact_person', 'contact_number', 'position_of_contact_person', 
+      'name', 'address', 'city', 'postal_code', 'user_id', 'contact_person', 'contact_number', 'position_of_contact_person',
       'plant_site_address'
    ];
 
@@ -58,7 +58,7 @@ class Customer extends Model
    {
       $ctr = 0;
       $customers = DB::table('customers')
-      ->select('customers.*');
+      ->select('customers.*')->where('deleted_at', '=', null);
 
       if($request->has('filter')) {
          $customers = $customers->where('name', 'LIKE', '%'.$request->get('filter').'%')
