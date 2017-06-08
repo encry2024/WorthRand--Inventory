@@ -13,7 +13,7 @@
 
       <div class="col-md-3">
          <div class="list-group">
-            <a href="{{ route('admin_export_pending_proposal', $indented_proposal->id) }}" class="list-group-item"><i class="fa fa-download"></i>&nbsp; Export to XLSX</a>
+            <a href="{{ route('admin_export_pending_proposal', $indentedProposal->id) }}" class="list-group-item"><i class="fa fa-download"></i>&nbsp; Export to XLSX</a>
             <a href="{{ route('admin_dashboard') }}" class="list-group-item" style="font-size: 13px;"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
          </div>
       </div>
