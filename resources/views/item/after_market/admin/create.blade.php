@@ -33,7 +33,7 @@
 
       <div class="row">
          <div class="col-lg-12">
-            <form class="form-horizontal" id="createAfterMarketForm" action="{{ route('post_after_market') }}" method="POST">
+            <form class="form-horizontal" id="createAfterMarketForm" action="{{ route('post_after_market') }}" method="POST" enctype="multipart/form-data">
                {{ csrf_field() }}
 
                <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">

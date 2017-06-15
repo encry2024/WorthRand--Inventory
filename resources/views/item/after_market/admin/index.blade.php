@@ -40,7 +40,7 @@
                      <th>ID</th>
                      <th>Name</th>
                      <th>Model</th>
-                     <th>Material Number</th>
+                     <th>Serial Number</th>
                      <th>Tag Number</th>
                      <th>Drawing Number</th>
                      <th>Date Added</th>

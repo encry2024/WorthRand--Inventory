@@ -19,15 +19,6 @@
    </tr>
 
    <tr>
-      <td>SOLD TO:</td>
-      <td>{{ $indented_proposal->branch->name }}</td>
-   </tr>
-   <tr>
-      <td></td>
-      <td>{{ $indented_proposal->branch->address }}</td>
-   </tr>
-
-   <tr>
       <td>INVOICE TO:</td>
       <td>{{ $indented_proposal->invoice_to != '' ? $indented_proposal->invoice_to : '' }}</td>
    </tr>

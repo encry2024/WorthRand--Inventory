@@ -27,12 +27,12 @@ Route::group(['middlewareGroups' => ['web']], function() {
             $selectedItems = DB::table('indented_proposal_item')
             ->select('projects.*',
             DB::raw('wr_crm_projects.name as "project_name"'),
-            DB::raw('wr_crm_projects.model as "project_md"'),
+            DB::raw('wr_crm_projects.status as "project_md"'),
             DB::raw('wr_crm_projects.serial_number as "project_sn"'),
-            DB::raw('wr_crm_projects.part_number as "project_pn"'),
+            DB::raw('wr_crm_projects.epc as "project_pn"'),
             DB::raw('wr_crm_projects.drawing_number as "project_dn"'),
             DB::raw('wr_crm_projects.tag_number as "project_tn"'),
-            DB::raw('wr_crm_projects.material_number as "project_mn"'),
+            DB::raw('wr_crm_projects.final_result as "project_mn"'),
             DB::raw('wr_crm_projects.price as "project_price"'),
             'after_markets.*',
             DB::raw('wr_crm_after_markets.name as "after_market_name"'),
@@ -93,12 +93,12 @@ Route::group(['middlewareGroups' => ['web']], function() {
             $selectedItems = DB::table('indented_proposal_item')
             ->select('projects.*',
             DB::raw('wr_crm_projects.name as "project_name"'),
-            DB::raw('wr_crm_projects.model as "project_md"'),
+            DB::raw('wr_crm_projects.status as "project_md"'),
             DB::raw('wr_crm_projects.serial_number as "project_sn"'),
-            DB::raw('wr_crm_projects.part_number as "project_pn"'),
+            DB::raw('wr_crm_projects.epc as "project_pn"'),
             DB::raw('wr_crm_projects.drawing_number as "project_dn"'),
             DB::raw('wr_crm_projects.tag_number as "project_tn"'),
-            DB::raw('wr_crm_projects.material_number as "project_mn"'),
+            DB::raw('wr_crm_projects.final_result as "project_mn"'),
             DB::raw('wr_crm_projects.price as "project_price"'),
             'after_markets.*',
             DB::raw('wr_crm_after_markets.name as "after_market_name"'),
@@ -287,7 +287,7 @@ Route::group(['middlewareGroups' => ['web']], function() {
          Route::post('/item/create/group', 'Admin\ItemController@adminPostGroup')->name('admin_post_group');
 
          # AFTERMARKETS
-         Route::get('/after_markets', 'Admin\ItemController@afterMarketIndex')->name('after_market_index');
+         Route::get('/after_markets', 'Admin\ItemController@indexAftermarket')->name('after_market_index');
          Route::get('/aftermarket/create', 'Admin\ItemController@createAfterMarket')->name('create_after_market');
          Route::get('/aftermarket/{afterMarket}', 'Admin\ItemController@showAfterMarket')->name('admin_after_market_show');
          Route::get('/aftermarkets', 'Admin\ItemController@indexAftermarket')->name('admin_after_market_index');
