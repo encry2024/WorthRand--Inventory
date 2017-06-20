@@ -47,12 +47,6 @@
          </div>
       </div>
 
-      <div class="row">
-         <div class="alert alert-info" role="alert">
-            <b><i class="fa fa-info-circle"></i> You have to put a <i>DASH "-"</i> on a field if you want to leave it blank.</b>
-         </div>
-      </div>
-
       <form class="form-horizontal" action="{{ route('se_submit_indented_proposal') }}" method="POST" id="SubmitIndentedProposal" enctype="multipart/form-data">
          {{ csrf_field() }}
          <input type="hidden" name="indent_proposal_id" value="{{ $indented_proposal->id }}">

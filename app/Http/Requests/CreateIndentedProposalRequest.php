@@ -33,18 +33,6 @@ class CreateIndentedProposalRequest extends Request
          'price.*'           => 'required',
          'delivery.*'        => 'required',
          'fileField'         => 'mimes:pdf,xlsx,xls|max:10000',
-         'ship_via'          => 'required',
-         'packing'           => 'required',
-         'documents'         => 'required',
-         'insurance'         => 'required',
-         'bank_detail_owner' => 'required',
-         'bank_detail_address' => 'required',
-         'bank_detail_swift_code' => 'required',
-         'bank_detail_account_name' => 'required',
-         'commission_note' => 'required',
-         'commission_address' => 'required',
-         'commission_account_number' => 'required',
-         'commission_swift_code' => 'required'
       ];
    }
 
@@ -52,7 +40,6 @@ class CreateIndentedProposalRequest extends Request
    {
       return [
          'customer_id.required' => 'Branch '. $this->request->get('branch') . ' has no Main Office',
-         'branch_id.required' => 'Please provide a legal Branch',
          'terms_of_payment_1.required' => 'The terms of payment note field is required'
       ];
    }

@@ -168,18 +168,6 @@ class IndentedProposal extends Model
       $indented_proposal->collection_status = "PENDING";
       $indented_proposal->wpc_reference = $createIndentedProposalRequest->get('wpc_reference');
       $indented_proposal->file_name = $fileName;
-      $indented_proposal->ship_via = $createIndentedProposalRequest->get('ship_via');
-      $indented_proposal->packing = $createIndentedProposalRequest->get('packing');
-      $indented_proposal->documents = $createIndentedProposalRequest->get('documents');
-      $indented_proposal->insurance = $createIndentedProposalRequest->get('insurance');
-      $indented_proposal->bank_detail_name = $createIndentedProposalRequest->get('bank_detail_owner');
-      $indented_proposal->bank_detail_address = $createIndentedProposalRequest->get('bank_detail_address');
-      $indented_proposal->bank_detail_swift_code = $createIndentedProposalRequest->get('bank_detail_swift_code');
-      $indented_proposal->bank_detail_account_name = $createIndentedProposalRequest->get('bank_detail_account_name');
-      $indented_proposal->commission_note = $createIndentedProposalRequest->get('commission_note');
-      $indented_proposal->commission_address = $createIndentedProposalRequest->get('commission_address');
-      $indented_proposal->commission_account_number = $createIndentedProposalRequest->get('commission_account_number');
-      $indented_proposal->commission_swift_code = $createIndentedProposalRequest->get('commission_swift_code');
       $indented_proposal->order_entry_no = $createIndentedProposalRequest->get('order_entry_no');
 
       if($createIndentedProposalRequest->has('fileField')) {
