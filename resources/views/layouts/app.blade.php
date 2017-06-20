@@ -20,6 +20,7 @@
    <link rel="stylesheet" href="{{ asset('chosen_v1.6.2/chosen.css') }}">
    <link rel="stylesheet" href="{{ asset('chosen_v1.6.2/chosen-bootstrap-css.css') }}">
    <link rel="stylesheet" href="{{ asset('bootstrap-datepicker-1.6.4/css/bootstrap-datepicker.min.css') }}">
+   <link rel="stylesheet" href="{{ asset('dropzone/dist/dropzone.css') }}">
 
    <script type='text/javascript' src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
    <script type='text/javascript' src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -32,6 +33,7 @@
    <script src="{{ URL::to('/') }}/adamwdraper-numeral-js/src/numeral.js"></script>
    <script src="{{ asset('chosen_v1.6.2/chosen.jquery.min.js') }}" type="text/javascript"></script>
    <script type="text/javascript" src="{{ asset('bootstrap-datepicker-1.6.4/js/bootstrap-datepicker.min.js') }}"></script>
+   <script type="text/javascript" src="{{ asset('dropzone/dist/dropzone.js') }}"></script>
    @include('layouts.header')
 </head>
 

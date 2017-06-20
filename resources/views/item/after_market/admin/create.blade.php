@@ -204,20 +204,6 @@
                   </div>
                </div>
 
-               <div class="form-group{{ $errors->has('scanned_file') ? ' has-error' : '' }}">
-                  <label for="scanned_file" class="col-md-4 control-label">Scanned Aftermarket:</label>
-
-                  <div class="col-md-6">
-                     <input id="scanned_file" type="file" class="form-control" name="scanned_file" value="{{ old('scanned_file') }}" required autofocus>
-
-                     @if ($errors->has('scanned_file'))
-                     <span class="help-block">
-                        <strong>{{ $errors->first('scanned_file') }}</strong>
-                     </span>
-                     @endif
-                  </div>
-               </div>
-
                <div class="form-group">
                   <div class="col-lg-10">
                      <div class="col-lg-offset-5">

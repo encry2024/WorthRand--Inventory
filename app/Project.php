@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\ProjectPricingHistory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use File;
 
 class Project extends Model
 {
@@ -30,19 +31,13 @@ class Project extends Model
       return $this->hasMany(ProjectPricingHistory::class)->latest();
    }
 
+   public function upload_projects()
+   {
+      return $this->hasMany(UploadProject::class)->latest();
+   }
+
    public static function createProject($createProjectRequest)
    {
-      $path = storage_path() . '/uploads/projects/';
-      if(! $createProjectRequest->hasFile('scanned_file') ) {
-         $scannedProject = "<N/A>";
-      } else {
-         $file = $createProjectRequest->file('scanned_file');
-         $file->move($path, $file->getClientOriginalName());
-         $scannedProject = $path . $file->getClientOriginalName();
-      }
-
-      //dd($createProjectRequest->all());
-
       $project = new Project();
       $project->customer_id = $createProjectRequest->get('customer_id');
       $project->name = trim(ucwords($createProjectRequest->get('name'), " "));
@@ -83,10 +78,9 @@ class Project extends Model
       $project->epc = trim(strtoupper($createProjectRequest->get('epc')));
       $project->vendors = trim(strtoupper($createProjectRequest->get('vendors')));
       $project->final_result = trim(strtoupper($createProjectRequest->get('final_result')));
-      $project->scanned_file = $scannedProject;
 
       if ($project->save()) {
-         return redirect()->back()->with('message', 'Project "'.$project->name.'" was successfully created');
+         return redirect()->route('admin_project_show', $project->id)->with('message', 'Project "'.$project->name.'" was successfully created');
       } else {
          return redirect()->back()->with('message', 'An error occured when saving the Project.');
       }
@@ -167,6 +161,36 @@ class Project extends Model
       ]);
 
       return redirect()->back()->with('message', 'Project "'.$project->name.'" was successfully updated');
+   }
+
+   public static function adminUploadFileOnProject($request)
+   {
+      $uploadedProject = new UploadProject();
+      $projectId = $request->get('project_id');
+      $path = storage_path('uploads/projects/' . $projectId . '/');
+      $file = $request->file('file');
+
+      if(!File::exists($path)) {
+         File::makeDirectory($path, 0777, true, true);
+
+         $uploadedProject->project_id = $projectId;
+         $uploadedProject->original_filename = $file->getClientOriginalName();
+         $uploadedProject->file_type = strtoupper($file->getClientOriginalExtension());
+         $uploadedProject->filepath = $path;
+
+         if($uploadedProject->save()) {
+            $file->move($path, $file->getClientOriginalName());
+         }
+      }
+
+      $uploadedProject->project_id = $projectId;
+      $uploadedProject->original_filename = $file->getClientOriginalName();
+      $uploadedProject->file_type = strtoupper($file->getClientOriginalExtension());
+      $uploadedProject->filepath = $path;
+
+      if($uploadedProject->save()) {
+         $file->move($path, $file->getClientOriginalName());
+      }
    }
 
    /*

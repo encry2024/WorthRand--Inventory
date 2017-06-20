@@ -5,8 +5,15 @@
 @stop
 
 @section('content')
+@if(Session::has('message'))
+<div class="row" style="margin-top: -2rem;">
+   <div class="alert alert-success alert-dismissible" role="alert" style="border-radius: 0px; border-radius: 0px; color: #224323; background-color: #cde6cd;border-color: #bcddbc; background-image: none;">
+      <i class="fa fa-check" style="margin-left: 18rem;"></i>&nbsp;&nbsp;<b>{{ Session::get('message') }}</b>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 15rem;"><span aria-hidden="true">&times;</span></button>
+   </div>
+</div>
+@endif
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
    <div class="col-md-3">
       <div class="list-group">
          <a href="{{ route('admin_project_index') }}" class="list-group-item" style="font-size: 13px;">
@@ -27,6 +34,7 @@
 
       <ul class="nav nav-tabs" role="tablist">
          <li role="presentation" class="active" style="margin-left: 3rem;"><a href="#information" aria-controls="information" role="tab" data-toggle="tab"><b>Information</b></a></li>
+         <li role="presentation"><a href="#projectFiles" aria-controls="projectFiles" role="tab" data-toggle="tab"><b>Scanned Projects</b></a></li>
          <li role="presentation"><a href="#pricing_history" aria-controls="pricing_history" role="tab" data-toggle="tab"><b>Pricing History</b></a></li>
          <div class="dropdown pull-right">
             <button class="btn btn-default dropdown-toggle" style="text-shadow: none !important;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -332,22 +340,11 @@
                         </div>
                      </div>
 
-                     <div class="form-group{{ $errors->has('drawing_number') ? ' has-error' : '' }}">
-                        <label for="drawing_number" class="col-md-4 control-label">Scanned Project:</label>
-
-                        <div class="col-md-4">
-                           @if($project->scanned_file == "<N/A>")
-                              <label style="margin-top: 0.7rem;">No file was uploaded</label>
-                           @else
-                              <a id="drawing_number" href="{{ route('project_open_pdf', $project->id) }}" target="_blank" class="btn btn-primary">Click here to view {{ basename($project->scanned_file) }}</a>
-                           @endif
-                        </div>
-                     </div>
-
                   </form>
                </div>
             </div>
          </div>
+
          <div role="tabpanel" class="tab-pane fade in" id="pricing_history">
             <br>
             <div class="row">
@@ -392,10 +389,79 @@
                </div>
             </div>
          </div>
+
+         <div role="tabpanel" class="tab-pane fade in" id="projectFiles">
+            <br>
+            <div class="row">
+               <div class="col-lg-12">
+                  <div id="dropzone">
+                     <form class="dropzone" id="dropZ" method="POST">
+                        {{ csrf_field() }}
+                        <input type="hidden" value="{{ $project->id }}" name="project_id">
+
+                     </form>
+                  </div>
+               </div>
+            </div>
+
+            <br><br>
+
+            <div class="row">
+               <div class="table-responsive">
+                  <table class="table table-hover">
+                     <thead>
+                        <th>ID</th>
+                        <th>Filename</th>
+                        <th>Date Uploaded</th>
+                        <th>Action</th>
+                     </thead>
+
+                     <tbody>
+                        @foreach($project->upload_projects as $uploaded_project)
+                        <tr>
+                           <td>{{ $uploaded_project->id }}</td>
+                           <td>{{ $uploaded_project->original_filename }}</td>
+                           <td>{{ $uploaded_project->created_at }}</td>
+                           <td>
+                              <a href="{{ route('project_open_pdf', $uploaded_project->id) }}" class="btn btn-xs btn-info"><i class="fa fa-search"></i></a>
+                              <a href="{{ route('admin_download_file', $uploaded_project->id) }}" class="btn btn-xs btn-success"><i class="fa fa-download"></i></a>
+                              <a onclick="deleteUploadedProject({{ $uploaded_project->id }}, '{{ $uploaded_project->original_filename }}' )" data-target="#DeletePDFModal" data-toggle="modal" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+                           </td>
+                        </tr>
+                        @endforeach
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+
+         </div>
+
       </div>
    </div>
 </div>
 
+<div class="modal fade" id="DeletePDFModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+   <form id="deletePdfForm" method="POST">
+      {{ csrf_field() }}
+      {{ method_field('DELETE') }}
+
+      <div class="modal-dialog" role="document">
+         <div class="modal-content" style="border-radius: 0px;">
+            <div class="modal-header modal-header-danger" style="padding: 10px;">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               <label class="modal-title" id="myModalLabel" style="font-size: 16px; font-weight: normal;"><i class="fa fa-trash"></i>&nbsp;Delete Scanned File: <span id="fileName2"></span></label>
+            </div>
+            <div class="modal-body">
+               <p>This will permanently delete the scanned file. Are you sure you want to delete <b><span id="fileName1"></span></b>?</p>
+            </div>
+            <div class="modal-footer" style="padding: 5px; background-color: #e6e6e6; border-top: #ccc solid 1px;">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+               <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;Delete Permanently</button>
+            </div>
+         </div>
+      </div>
+   </form>
+</div>
 
 <div class="modal fade" id="DeleteProjectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
    <form action="{{ route('admin_project_delete', $project->id) }}" method="POST">
@@ -423,4 +489,25 @@
       </div>
    </form>
 </div>
+
+<script type="text/javascript">
+function deleteUploadedProject(fileId, fileName) {
+   var url = "{{ route('admin_delete_file', ':fileId') }}";
+   url = url.replace(':fileId', fileId);
+
+   document.getElementById('deletePdfForm').action = url;
+   document.getElementById('fileName1').innerHTML = fileName;
+   document.getElementById('fileName2').innerHTML = fileName;
+}
+
+$(function() {
+   Dropzone.autoDiscover = false;
+
+   var dropzoneField = new Dropzone("#dropZ", {
+      url: "{{ route('admin_upload_file_project', $project->id) }}",
+      addRemoveLinks: true,
+      dictDefaultMessage: "-Drag your files, or click to upload."
+   });
+});
+</script>
 @endsection

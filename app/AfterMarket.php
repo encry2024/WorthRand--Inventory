@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use File;
 
 class AfterMarket extends Model
 {
@@ -22,17 +23,13 @@ class AfterMarket extends Model
       return $this->hasMany(AfterMarketPricingHistory::class);
    }
 
+   public function aftermarket_uploads()
+   {
+      return $this->hasMany(AftermarketUpload::class, 'aftermarket_id')->latest();
+   }
+
    public static function postAfterMarket($request, $createAfterMarketRequest)
    {
-      $path = storage_path() . '/uploads/projects/';
-      if(! $request->hasFile('scanned_file') ) {
-         $scannedAftermarket = "<N/A>";
-      } else {
-         $file = $createAfterMarketRequest->file('scanned_file');
-         $file->move($path, $file->getClientOriginalName());
-         $scannedAftermarket = $path . $file->getClientOriginalName();
-      }
-
       $after_market = new AfterMarket();
       $after_market->name = strtoupper($createAfterMarketRequest->get('name'));
       $after_market->model = strtoupper($createAfterMarketRequest->get('model'));
@@ -47,10 +44,9 @@ class AfterMarket extends Model
       $after_market->sap_number = strtoupper($createAfterMarketRequest->get('sap_number'));
       $after_market->stock_number = strtoupper($createAfterMarketRequest->get('stock_number'));
       $after_market->description = strtoupper($createAfterMarketRequest->get('description'));
-      $after_market->scanned_file = $scannedAftermarket;
 
       if($after_market->save()) {
-         return redirect()->back()->with('message', 'You have successfully added AfterMarket "' . $after_market->name . '".');
+         return redirect()->route('admin_after_market_show', $after_market->id)->with('message', 'You have successfully added AfterMarket "' . $after_market->name . '".');
       }
    }
 
@@ -68,6 +64,36 @@ class AfterMarket extends Model
 
       if($aftermarket_pricing_history->save()) {
          return redirect()->back()->with('message', 'Pricing History for AfterMarket "'.$afterMarket->name.'" was successfully saved.');
+      }
+   }
+
+   public static function adminUploadFileOnAftermarket($request)
+   {
+      $uploadedAftermarket = new AftermarketUpload();
+      $aftermarketId = $request->get('aftermarket_id');
+      $path = storage_path('uploads/aftermarket/' . $aftermarketId . '/');
+      $file = $request->file('file');
+
+      if(!File::exists($path)) {
+         File::makeDirectory($path, 0777, true, true);
+
+         $uploadedAftermarket->aftermarket_id = $aftermarketId;
+         $uploadedAftermarket->original_filename = $file->getClientOriginalName();
+         $uploadedAftermarket->file_type = strtoupper($file->getClientOriginalExtension());
+         $uploadedAftermarket->filepath = $path;
+
+         if($uploadedAftermarket->save()) {
+            $file->move($path, $file->getClientOriginalName());
+         }
+      }
+
+      $uploadedAftermarket->aftermarket_id = $aftermarketId;
+      $uploadedAftermarket->original_filename = $file->getClientOriginalName();
+      $uploadedAftermarket->file_type = strtoupper($file->getClientOriginalExtension());
+      $uploadedAftermarket->filepath = $path;
+
+      if($uploadedAftermarket->save()) {
+         $file->move($path, $file->getClientOriginalName());
       }
    }
 

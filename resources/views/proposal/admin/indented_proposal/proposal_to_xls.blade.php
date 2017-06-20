@@ -16,7 +16,7 @@
    <tr>
       <td></td>
       <td>{{ $indented_proposal->customer->address }}</td>
-   </tr>
+   </tr>jlj
 
    <tr>
       <td>INVOICE TO:</td>

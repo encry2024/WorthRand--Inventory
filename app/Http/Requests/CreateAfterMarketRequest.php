@@ -36,8 +36,7 @@ class CreateAfterMarketRequest extends Request
          'tag_number' => 'required',
          'drawing_number' => 'required|unique:after_markets,drawing_number',
          'ccn_number' => 'required',
-         'company_name' => 'required',
-         'scanned_file' => 'mimes:pdf',
+         'company_name' => 'required'
       ];
    }
 }

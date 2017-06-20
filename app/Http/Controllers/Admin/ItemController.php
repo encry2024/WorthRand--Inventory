@@ -25,6 +25,9 @@ use App\Http\Requests\UpdateSealInformationRequest;
 use App\Http\Requests\CreatePricingHistoryForSealRequest;
 use App\SealPricingHistory;
 use App\Http\Requests\AdminCreateSealRequest;
+use App\UploadProject;
+use File;
+use App\AftermarketUpload;
 
 class ItemController extends Controller
 {
@@ -273,10 +276,66 @@ class ItemController extends Controller
       return redirect()->route('admin_seal_index')->with('message', 'You have successfully deleted Seal "' . strtoupper($seal->name) . '"');
    }
 
-   public function openProjectPDF(Project $project)
+   public function openProjectPDF(UploadProject $uploadedProject)
    {
-      $file = $project->scanned_file;
-      $filename = basename($project->scanned_file);
+      $file = $uploadedProject->filepath . $uploadedProject->original_filename;
+      $filename = basename($uploadedProject->scanned_file . $uploadedProject->original_filename);
+
+      header('Content-type: application/pdf');
+      header('Content-Disposition: inline; filename="' . $filename . '"');
+      header('Content-Transfer-Encoding: binary');
+      header('Content-Length: ' . filesize($file));
+      header('Accept-Ranges: bytes');
+
+      @readfile($file);
+   }
+
+   public function adminUploadFileOnProject(Request $request)
+   {
+      $adminUploadFileOnProject = Project::adminUploadFileOnProject($request);
+
+      return $adminUploadFileOnProject;
+   }
+
+   public function adminDownloadFile(UploadProject $uploadedProject)
+   {
+      $file_path = $uploadedProject->filepath . $uploadedProject->original_filename;
+      return response()->download($file_path);
+   }
+
+   public function adminDeleteUploadProject(UploadProject $uploadedProject)
+   {
+      $uploadedProject->delete();
+      File::delete($uploadedProject->filepath . $uploadedProject->original_filename);
+
+      return redirect()->back();
+   }
+
+   public function adminUploadFileOnAftermarket(Request $request)
+   {
+      $adminUploadFileOnAftermarket = Aftermarket::adminUploadFileOnAftermarket($request);
+
+      return $adminUploadFileOnAftermarket;
+   }
+
+   public function adminDownloadAftermarketFile(AftermarketUpload $uploadedAftermarket)
+   {
+      $file_path = $uploadedAftermarket->filepath . $uploadedAftermarket->original_filename;
+      return response()->download($file_path);
+   }
+
+   public function adminDeleteUploadedAftermarketFile(AftermarketUpload $uploadedAftermarket)
+   {
+      $uploadedAftermarket->delete();
+      File::delete($uploadedAftermarket->filepath . $uploadedAftermarket->original_filename);
+
+      return redirect()->back();
+   }
+
+   public function openAftermarketPDF(AftermarketUpload $uploadedAftermarket)
+   {
+      $file = $uploadedAftermarket->filepath . $uploadedAftermarket->original_filename;
+      $filename = basename($uploadedAftermarket->scanned_file . $uploadedAftermarket->original_filename);
 
       header('Content-type: application/pdf');
       header('Content-Disposition: inline; filename="' . $filename . '"');

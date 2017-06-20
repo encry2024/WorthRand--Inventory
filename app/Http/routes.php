@@ -253,7 +253,8 @@ Route::group(['middlewareGroups' => ['web']], function() {
    // ADMIN ACCOUNT
    Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
       Route::group(['prefix' => 'admin'], function() {
-         Route::any('/open/project/{project}', 'Admin\ItemController@openProjectPDF')->name('project_open_pdf');
+         Route::any('/open/project/{uploadedProject}', 'Admin\ItemController@openProjectPDF')->name('project_open_pdf');
+         Route::any('/open/aftermarket/{uploadedAftermarket}', 'Admin\ItemController@openAftermarketPDF')->name('aftermarket_open_pdf');
 
          # DASHBOARD
          Route::get('/dashboard', 'Admin\UserController@adminDashboard')->name('admin_dashboard');
@@ -298,6 +299,9 @@ Route::group(['middlewareGroups' => ['web']], function() {
          Route::patch('/aftermarket/{afterMarket}/update', 'Admin\ItemController@adminUpdateAfterMarketInformation')->name('admin_after_market_information_update');
          Route::post('/aftermarket/{afterMarket}/pricing_history/create', 'Admin\ItemController@adminAddAfterMarketPricingHistory')->name('admin_add_after_market_pricing_history');
          Route::delete('/aftermarket/{afterMarket}/delete', 'Admin\ItemController@adminAftermarketDelete')->name('admin_aftermarket_delete');
+         Route::post('/aftermarket/{uploadedAftermarket}/upload_file', 'Admin\ItemController@adminUploadFileOnAftermarket')->name('admin_upload_file_aftermarket');
+         Route::get('/uploaded_aftermarket/{uploadedAftermarket}', 'Admin\ItemController@adminDownloadAftermarketFile')->name('admin_download_aftermarket_file');
+         Route::delete('/uploaded_aftermarket/{uploadedAftermarket}', 'Admin\ItemController@adminDeleteUploadedAftermarketFile')->name('admin_delete_file_on_aftermarket');
 
          # PROJECT
          Route::get('/create/project', 'Admin\ItemController@createProject')->name('create_project');
@@ -313,6 +317,9 @@ Route::group(['middlewareGroups' => ['web']], function() {
          Route::get('/project/dashboard', 'Admin\ItemController@adminProjectDashboard')->name('admin_project_dashboard');
          Route::get('/project/{project}/aftermarket/create', 'Admin\ItemController@adminCreateAfterMarketOnProject')->name('admin_create_aftermarket_on_project');
          Route::delete('/project/{project}/delete', 'Admin\ItemController@adminProjectDelete')->name('admin_project_delete');
+         Route::post('/project/{project}/upload_file', 'Admin\ItemController@adminUploadFileOnProject')->name('admin_upload_file_project');
+         Route::get('/uploaded_project/{uploadedProject}', 'Admin\ItemController@adminDownloadFile')->name('admin_download_file');
+         Route::delete('/uploaded_project/{uploadedProject}', 'Admin\ItemController@adminDeleteUploadedProject')->name('admin_delete_file');
 
          # SEAL
          Route::get('/seal/create', 'Admin\ItemController@adminSealCreate')->name('admin_seal_create');

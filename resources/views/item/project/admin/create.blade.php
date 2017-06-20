@@ -36,7 +36,7 @@
             <form class="form-horizontal" id="createProjectForm" action="{{ route('post_project') }}" method="POST" enctype="multipart/form-data">
                {{ csrf_field() }}
 
-                  <div class="form-group{{ $errors->has('customer_id') ? ' has-error' : '' }}">
+               <div class="form-group{{ $errors->has('customer_id') ? ' has-error' : '' }}">
                   <label for="customer_id" class="col-md-4 control-label">Customer Name:</label>
 
                   <div class="col-md-6">
@@ -578,20 +578,25 @@
                   </div>
                </div>
 
-               <div class="form-group{{ $errors->has('scanned_file') ? ' has-error' : '' }}">
-                  <label for="scanned_file" class="col-md-4 control-label">Scanned Project:</label>
+               <!--  -->
+               {{-- <div id="uploader">
+                  <div class="form-group{{ $errors->has('scanned_file') ? ' has-error' : '' }}">
+                     <label for="scanned_file" class="col-md-4 control-label">Scanned Project:</label>
 
-                  <div class="col-md-6">
-                     <input id="scanned_file" type="file" class="form-control" name="scanned_file" value="{{ old('scanned_file') }}" required autofocus>
+                     <div class="col-md-6">
+                        <input id="scanned_file" type="file" class="form-control" name="scanned_file[]" value="{{ old('scanned_file') }}" required autofocus>
 
-                     @if ($errors->has('scanned_file'))
-                     <span class="help-block">
-                        <strong>{{ $errors->first('scanned_file') }}</strong>
-                     </span>
-                     @endif
+                        @if ($errors->has('scanned_file'))
+                        <span class="help-block">
+                           <strong>{{ $errors->first('scanned_file') }}</strong>
+                        </span>
+                        @endif
+                     </div>
+                     <a class="btn btn-success" id="addField"><i class="fa fa-plus"></i></a>
                   </div>
-               </div>
+               </div> --}}
 
+               <!--  -->
                <div class="form-group">
                   <div class="col-lg-10">
                      <div class="col-lg-offset-5">
@@ -616,5 +621,6 @@ $(".clear_input").click(function(e) {
       this.value = "";
    })
 });
+
 </script>
 @endsection

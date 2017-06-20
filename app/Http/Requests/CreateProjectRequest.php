@@ -61,8 +61,7 @@ class CreateProjectRequest extends Request
          'reference_number' => 'required|unique:projects,drawing_number',
          'epc' => 'required',
          'vendors' => 'required',
-         'final_result' => 'required',
-         'scanned_file' => 'mimes:pdf'
+         'final_result' => 'required'
       ];
    }
 
