@@ -48,7 +48,7 @@ class ProposalController extends Controller
       DB::raw('wr_crm_after_markets.price as "after_market_price"'),
       'seals.*',
       DB::raw('wr_crm_seals.name as "seal_name"'),
-      DB::raw('wr_crm_seals.status as "seal_status"'),
+      DB::raw('wr_crm_seals.model as "seal_model"'),
       DB::raw('wr_crm_seals.drawing_number as "seal_drawing_number"'),
       DB::raw('wr_crm_seals.material_number as "seal_material_number"'),
       DB::raw('wr_crm_seals.serial_number as "seal_serial_number"'),
