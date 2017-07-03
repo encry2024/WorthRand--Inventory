@@ -40,7 +40,7 @@ class ProposalController extends Controller
       'after_markets.*',
       DB::raw('wr_crm_after_markets.name as "after_market_name"'),
       DB::raw('wr_crm_after_markets.model as "after_market_md"'),
-      DB::raw('wr_crm_after_markets.epc as "after_market_pn"'),
+      DB::raw('wr_crm_after_markets.part_number as "after_market_pn"'),
       DB::raw('wr_crm_after_markets.drawing_number as "after_market_dn"'),
       DB::raw('wr_crm_after_markets.material_number as "after_market_mn"'),
       DB::raw('wr_crm_after_markets.material_number as "after_market_sn"'),
