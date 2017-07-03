@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\ProjectPricingHistory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use File;
+use DB;
 
 class Project extends Model
 {
