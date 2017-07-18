@@ -27,7 +27,7 @@ class UpdateSealInformationRequest extends Request
     {
         return [
             'name' => 'required',
-            'drawing_number' => 'required|unique:seals,drawing_number,'.$this->request->get('seal_id'),
+            'drawing_number' => 'required',
             'bom_number' => 'required',
             'end_user' => 'required',
             'seal_type' => 'required',

@@ -168,7 +168,6 @@ class IndentedProposal extends Model
       $indented_proposal->collection_status = "PENDING";
       $indented_proposal->wpc_reference = $createIndentedProposalRequest->get('wpc_reference');
       $indented_proposal->file_name = $fileName;
-      $indented_proposal->order_entry_no = $createIndentedProposalRequest->get('order_entry_no');
 
       if($createIndentedProposalRequest->has('fileField')) {
          $createIndentedProposalRequest->file('fileField')->move($path , $fileName);

@@ -35,7 +35,7 @@ class UpdateAfterMarketInformationRequest extends Request
          'material_number' => 'required',
          'serial_number' => 'required',
          'tag_number' => 'required',
-         'drawing_number' => 'required|unique:after_markets,drawing_number,'.Input::get('aftermarket_id')
+         'drawing_number' => 'required'
       ];
    }
 }

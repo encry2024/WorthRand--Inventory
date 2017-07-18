@@ -25,7 +25,7 @@ class CreateSealRequest extends Request
     {
         return [
             'name' => 'required',
-            'drawing_number' => 'required|unique:seals,drawing_number',
+            'drawing_number' => 'required',
             'bom_number' => 'required',
             'end_user' => 'required',
             'seal_type' => 'required',

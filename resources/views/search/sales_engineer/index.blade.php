@@ -314,7 +314,7 @@ $('#item_category').change(function () {
          document.getElementById('data3').innerHTML = 'Part Number:';
          document.getElementById('data4').innerHTML = 'Model:';
          document.getElementById('data5').innerHTML = 'Reference Number:';
-         document.getElementById('data6').innerHTML = 'Searial Number:';
+         document.getElementById('data6').innerHTML = 'Serial Number:';
          document.getElementById('data7').innerHTML = 'Drawing Number:';
          document.getElementById('data8').innerHTML = 'Tag Number:';
       }

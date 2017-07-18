@@ -24,7 +24,6 @@ class CreateIndentedProposalRequest extends Request
    public function rules()
    {
       return [
-         'order_entry_no'    => 'required|unique:indented_proposals,order_entry_no',
          'indent_proposal_id' => 'required',
          'wpc_reference'    => 'required|unique:indented_proposals,wpc_reference',
          'customer_id'       => 'required|exists:customers,id',

@@ -70,13 +70,6 @@
          <div class="row">
             <div class="col-lg-12">
                <div class="form-group">
-                  <label for="order_entry_no" class="col-sm-3 control-label">Order Entry Number: </label>
-                  <div class="col-sm-5">
-                     <input class="form-control" id="order_entry_no" name="order_entry_no" placeholder="Order Entry Number" value="{{ $indented_proposal->order_entry_no != '' ? $indented_proposal->order_entry_no : '' }}">
-                  </div>
-               </div>
-
-               <div class="form-group">
                   <label for="uploadPOFile" class="col-sm-3 control-label">Upload P.O File</label>
                   <div class="col-sm-5">
                      <input class="form-control" type="file" id="uploadPOFile" name="fileField">

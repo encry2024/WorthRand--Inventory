@@ -495,7 +495,7 @@
                </div>
 
                <div class="form-group{{ $errors->has('tag_number') ? ' has-error' : '' }}">
-                  <label for="tag_number" class="col-md-4 control-label">Material Number:</label>
+                  <label for="tag_number" class="col-md-4 control-label">Tag Number:</label>
 
                   <div class="col-md-6">
                      <input id="tag_number" type="text" class="form-control" name="tag_number" value="{{ old('tag_number') }}" required autofocus>
