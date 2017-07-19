@@ -21,7 +21,7 @@
       <div class="row">
          <div class="panel panel-default">
             <div class="panel-heading" style="border-top: saddlebrown 3px solid;">
-               <h4><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;&nbsp;MAKE AN ORDER</h4>
+               <h4><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;&nbsp;MAKE A PROPOSAL</h4>
             </div>
          </div>
       </div>

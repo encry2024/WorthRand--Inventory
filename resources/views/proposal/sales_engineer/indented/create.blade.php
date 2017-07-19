@@ -76,7 +76,6 @@
                   </div>
                </div>
 
-
                <div class="form-group{{ $errors->has('wpc_reference') ? ' has-error' : '' }}">
                   <label for="wpc_reference" class="col-sm-3 control-label">WPC Reference: </label>
                   <div class="col-sm-5">

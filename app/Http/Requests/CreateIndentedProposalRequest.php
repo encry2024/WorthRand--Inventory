@@ -25,21 +25,21 @@ class CreateIndentedProposalRequest extends Request
    {
       return [
          'indent_proposal_id' => 'required',
-         'wpc_reference'    => 'required|unique:indented_proposals,wpc_reference',
-         'customer_id'       => 'required|exists:customers,id',
-         'rfq_number'        => 'required',
-         'quantity.*'        => 'required',
-         'price.*'           => 'required',
-         'delivery.*'        => 'required',
-         'fileField'         => 'mimes:pdf,xlsx,xls|max:10000',
+         'wpc_reference'      => 'required|unique:indented_proposals,wpc_reference',
+         'customer_id'        => 'required|exists:customers,id',
+         'rfq_number'         => 'required',
+         'quantity.*'         => 'required',
+         'price.*'            => 'required',
+         'delivery.*'         => 'required',
+         'fileField'          => 'mimes:pdf,xlsx,xls|max:10000',
       ];
    }
 
    public function messages()
    {
       return [
-         'customer_id.required' => 'Branch '. $this->request->get('branch') . ' has no Main Office',
-         'terms_of_payment_1.required' => 'The terms of payment note field is required'
+         'customer_id.required'        => 'Branch '. $this->request->get('branch') . ' has no Main Office.',
+         'terms_of_payment_1.required' => 'The terms of payment note field is required.',
       ];
    }
 }
