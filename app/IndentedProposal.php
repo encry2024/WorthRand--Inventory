@@ -239,7 +239,7 @@ class IndentedProposal extends Model
                   }
                }else if($indentedProposalItem->type == "seals") {
                   $seal_pricing_history = new SealPricingHistory();
-                  $seal_pricing_history->after_market_id = $indentedProposalItem->item_id;
+                  $seal_pricing_history->seal_id = $indentedProposalItem->item_id;
                   $seal_pricing_history->price = $indentedProposalItem->price;
                   $seal_pricing_history->pricing_date = date('Y');
                   $seal_pricing_history->terms = "30-days";
