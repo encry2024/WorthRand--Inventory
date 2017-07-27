@@ -24,7 +24,7 @@ class CreateAfterMarketPricingHistoryRequest extends Request
    public function rules()
    {
       return [
-         'po_number' => 'required|unique:after_market_pricing_histories',
+         'po_number' => 'required',
          'pricing_date' => 'required|digits:4|integer|min:1900|max:'.\Carbon\Carbon::tomorrow()->year,
          'price' => 'required',
          'terms' => 'required',

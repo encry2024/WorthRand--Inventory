@@ -38,7 +38,7 @@ class CreateIndentedProposalRequest extends Request
    public function messages()
    {
       return [
-         'customer_id.required'        => 'Branch '. $this->request->get('branch') . ' has no Main Office.',
+         'customer_id.required'        => 'Branch '. $this->request->get('customer_id') . ' has no Main Office.',
          'terms_of_payment_1.required' => 'The terms of payment note field is required.',
       ];
    }
