@@ -291,7 +291,7 @@ $('#item_category').change(function () {
       item_category += $( this ).val();
 
       if($(this).val() == "seals") {
-         document.getElementById('data1').innerHTML = 'Material Number:';
+         document.getElementById('data1').innerHTML = 'Name:';
          document.getElementById('data2').innerHTML = 'Drawing Number:';
          document.getElementById('data3').innerHTML = 'BOM Number:';
          document.getElementById('data4').innerHTML = 'End User:';

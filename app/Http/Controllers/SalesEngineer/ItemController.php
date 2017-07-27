@@ -137,8 +137,8 @@ class ItemController extends Controller
             $itemArray['suggestions'][] = [
                'data' => $item->id,
                'item_id' => $item->id,
-               'value' => $item->name,
-               'dataCollection1' => $item->material_number,
+               'value' => $item->material_number,
+               'dataCollection1' => $item->name,
                'dataCollection2' => $item->drawing_number,
                'dataCollection3' => $item->bom_number,
                'dataCollection4' => $item->end_user,
