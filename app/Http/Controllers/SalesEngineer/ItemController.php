@@ -127,6 +127,8 @@ class ItemController extends Controller
             ];
          }
       } else {
+         $items = DB::table('seals')->get();
+
          foreach($items as $item) {
             $pricing_history = DB::table('seal_pricing_histories')
             ->where('seal_pricing_histories.seal_id', '=', $item->id)
