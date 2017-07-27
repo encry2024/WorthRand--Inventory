@@ -33,7 +33,7 @@
       <div class="row">
          <div class="col-lg-12">
             <div class="table-responsive">
-               <table class="table table-striped table-bordered">
+               <table class="table table-hover">
                   <thead>
                      <th>ID</th>
                      <th>Name</th>

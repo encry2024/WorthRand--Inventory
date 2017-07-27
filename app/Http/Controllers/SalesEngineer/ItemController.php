@@ -59,10 +59,11 @@ class ItemController extends Controller
 
    public function salesEngineerSealIndex()
    {
+      $ctr = 0;
       $seals = Seal::paginate(30);
       $seals->setPath('/seals');
 
-      return view('item.seal.sales_engineer.index', compact('seals'));
+      return view('item.seal.sales_engineer.index', compact('seals', 'ctr'));
    }
 
    public function salesEngineerShowSeal(Seal $seal)

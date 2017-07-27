@@ -7,6 +7,6 @@
       <a href="{{ route('se_project_index') }}" class="list-group-item {!! Request::route()->getName() == 'se_project_index' ? 'active' : '' !!}" style="font-size: 13px;"><i class="fa fa-cog"></i>&nbsp;&nbsp;Project List</a></li>
       <a href="{{ route('aftermarket_index') }}" class="list-group-item {!! Request::route()->getName() == 'aftermarket_index' ? 'active' : '' !!}" style="font-size: 13px;"><i class="fa fa-cogs"></i>&nbsp;&nbsp;AfterMarket List</a>
       <a href="{{ route('se_seal_index') }}" class="list-group-item {!! Request::route()->getName() == 'se_seal_index' ? 'active' : '' !!}"><i class="fa fa-file-text-o" style="font-size: 13px;"></i>&nbsp;&nbsp;Seal List</a>
-      <a href="{{ route('search') }}" class="list-group-item {!! Request::route()->getName() == 'search' ? 'active' : '' !!}" style="font-size: 13px;"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;&nbsp;Make An Order</a>
+      <a href="{{ route('search') }}" class="list-group-item {!! Request::route()->getName() == 'search' ? 'active' : '' !!}" style="font-size: 13px;"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;&nbsp;Make A Proposal</a>
    </div>
 </div>
