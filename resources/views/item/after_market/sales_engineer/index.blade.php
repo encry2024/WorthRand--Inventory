@@ -36,7 +36,7 @@
                         <td><b>{{ $aftermarket->id }}</b></td>
                         <td><b>{{ $aftermarket->name }}</b></td>
                         <td><b>{{ $aftermarket->model }}</b></td>
-                        <td><b>{{ $aftermarket->serial_number }}</b></td>
+                        <td><b>{{ $aftermarket->material_number }}</b></td>
                         <td><b>{{ $aftermarket->tag_number }}</b></td>
                         <td><b>{{ $aftermarket->drawing_number }}</b></td>
                         <td>

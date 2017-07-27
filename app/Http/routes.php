@@ -425,7 +425,7 @@ Route::group(['middlewareGroups' => ['web']], function() {
          Route::get('/customers', 'SalesEngineer\CustomerController@index')->name('customer_index');
          Route::get('/customer/{customer}', 'SalesEngineer\CustomerController@show')->name('show_customer');
          Route::get('/customer/{customer}/branches', 'SalesEngineer\CustomerController@customerBranchList')->name('customer_branch_list');
-         Route::get('/fetch_customers', 'SalesEngineer\CustomerController@fetchCustomers')->name('se_fetch_customers');
+         // Route::get('/fetch_customers', 'SalesEngineer\CustomerController@fetchCustomers')->name('se_fetch_customers');
 
          # BRANCHES
          Route::get('/branches', 'SalesEngineer\BranchController@adminBranchIndex')->name('se_branch_index');
