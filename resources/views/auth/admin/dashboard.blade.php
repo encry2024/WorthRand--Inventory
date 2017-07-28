@@ -157,7 +157,7 @@
                                  @if($buy_and_sell_proposal->collection_status == "ON-CREATE")
                                  <span style="font-size: 12px;" class="label label-danger">View Unavailable</span>
                                  @else
-                                 <a href="{{ route('admin_show_pending_buy_and_sell_proposal', $buy_and_sell_proposal->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></a>
+                                 <a href="{{ route('admin_show_pending_buy_and_sell_proposal', $buy_and_sell_proposal->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-search"></i></a>
                                  @endif
                               </td>
                            </tr>

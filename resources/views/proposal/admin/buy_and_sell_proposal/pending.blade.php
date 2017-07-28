@@ -11,11 +11,11 @@
 @endif
 
 <div class="col-lg-12">
-   @if(($indentedProposal->collection_status == "DELIVERY") || ($indentedProposal->collection_status == "FOR-COLLECTION"))
+   @if(($buyAndSellProposal->collection_status == "DELIVERY") || ($buyAndSellProposal->collection_status == "FOR-COLLECTION"))
    <div class="row">
       <div class="row" >
          <div class="alert alert-success alert-dismissible" role="alert" style="border-radius: 0px; border-radius: 0px; color: #224323; background-color: #cde6cd;border-color: #bcddbc; background-image: none;">
-            <i class="fa fa-check" style="margin-left: 18rem;"></i>&nbsp;&nbsp;<b>This Indented Proposal is in {{ $indentedProposal->collection_status }} process...</b>
+            <i class="fa fa-check" style="margin-left: 18rem;"></i>&nbsp;&nbsp;<b>This Indented Proposal is in {{ $buyAndSellProposal->collection_status }} process...</b>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 15rem;"><span aria-hidden="true">&times;</span></button>
          </div>
       </div>
@@ -156,7 +156,7 @@
                                  <div class="col-lg-12">
                                     <div class="input-group">
                                        <div class="input-group-addon">$</div>
-                                       <input disabled type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->buy_and_sell_proposal_item_id }}]" value="{{ number_format($selectedItem->buy_and_sell_proposal_item_price, 2) }}">
+                                       <input disabled type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->buy_and_sell_proposal_item_id }}]" value="{{ number_format($selectedItem->buy_and_sell_proposal_item_price, 2) }}" disabled>
                                     </div>
                                  </div>
                               </div>
