@@ -131,10 +131,10 @@
                                  @endif
                               </td>
                               <td>
-                                 @if($indented_proposal->customer_id == 0)
+                                 @if($buy_and_sell_proposal->customer_id == 0)
                                  <span class='label label-danger'>Draft Proposal</span>
                                  @else
-                                 {{ $indented_proposal->customer->name }}
+                                 {{ $buy_and_sell_proposal->customer->name }}
                                  @endif
                               </td>
                               <td>{{ $buy_and_sell_proposal->status }}</td>
