@@ -24,7 +24,7 @@
                                 <thead>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Model</th>
+                                    <th>Material Number</th>
                                     <th>Serial Number</th>
                                     <th>Tag Number</th>
                                     <th>Drawing Number</th>
@@ -35,7 +35,7 @@
                                     <tr>
                                         <td><b>{{ $project->id }}</b></td>
                                         <td><b>{{ $project->name }}</b></td>
-                                        <td><b>{{ $project->model }}</b></td>
+                                        <td><b>{{ $project->material_number }}</b></td>
                                         <td><b>{{ $project->serial_number }}</b></td>
                                         <td><b>{{ $project->tag_number }}</b></td>
                                         <td><b>{{ $project->drawing_number }}</b></td>
