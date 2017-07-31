@@ -537,7 +537,6 @@ class IndentedProposal extends Model
 
    public static function collectIndentedProposal($request, $indentedProposal)
    {
-      $convertCurrency = new Currency();
       $total_collected = "";
       if($indentedProposal->collection_status == "FOR-COLLECTION") {
          $indented_proposal_items = IndentedProposalItem::where('indented_proposal_id', $request->get('indent_proposal_id'))->get();
@@ -558,7 +557,7 @@ class IndentedProposal extends Model
 
                $target_revenue_history = new TargetRevenueHistory();
                $target_revenue_history->target_revenue_id = $getTargetRevenueId->id;
-               $target_revenue_history->collected = $convertCurrency->currency($total_price);
+               $target_revenue_history->collected = $total_price;
                $target_revenue_history->date = date('Y-m-d');
                $target_revenue_history->proposal_type = 'indented_proposal';
                $target_revenue_history->proposal_id = $indentedProposal->id;
