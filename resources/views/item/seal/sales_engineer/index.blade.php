@@ -17,11 +17,6 @@
          </div>
       </div>
 
-      <div class="pull-right mb-10 hidden-sm hidden-xs">
-         <a href="{{ route('create_after_market') }}" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Create Seal</a>
-      </div>
-      <div class="clearfix"></div>
-
       @if(count($seals) != 0)
       <div class="row">
          <div class="col-lg-12">

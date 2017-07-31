@@ -156,7 +156,7 @@
                                  <div class="col-lg-12">
                                     <div class="input-group">
                                        <div class="input-group-addon">$</div>
-                                       <input disabled type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->buy_and_sell_proposal_item_id }}]" value="{{ number_format($selectedItem->buy_and_sell_proposal_item_price, 2) }}" disabled>
+                                       <input disabled type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->buy_and_sell_proposal_item_id }}]" value="{{ number_format($selectedItem->buy_and_sell_proposal_item_price, 2) }}" disabledul>
                                     </div>
                                  </div>
                               </div>
