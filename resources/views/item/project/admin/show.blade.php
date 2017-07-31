@@ -328,7 +328,7 @@
                         <label for="tag_number" class="col-md-4 control-label">Tag Number:</label>
 
                         <div class="col-md-6">
-                           <label id="tag_number" class="control-label">{{ $project->serial_number }}</label>
+                           <label id="tag_number" class="control-label">{{ $project->tag_number }}</label>
                         </div>
                      </div>
 
