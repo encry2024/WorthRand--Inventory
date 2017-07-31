@@ -391,6 +391,7 @@
          </div>
 
          <div role="tabpanel" class="tab-pane fade in" id="projectFiles">
+            <div class="alert alert-info" role="alert">Reload/Refresh the page after uploading to reflect the changes.</div>
             <br>
             <div class="row">
                <div class="col-lg-12">

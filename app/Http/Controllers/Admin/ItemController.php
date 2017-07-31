@@ -331,6 +331,14 @@ class ItemController extends Controller
       return redirect()->back();
    }
 
+   public function adminDeleteUploadedProject(UploadProject $uploadedProject)
+   {
+      $uploadedProject->delete();
+      File::delete($uploadedProject->filepath . $uploadedProject->original_filename);
+
+      return redirect()->back()->with('message', 'File was permanently deleted.');
+   }
+
    public function openAftermarketPDF(AftermarketUpload $uploadedAftermarket)
    {
       $file = $uploadedAftermarket->filepath . $uploadedAftermarket->original_filename;
