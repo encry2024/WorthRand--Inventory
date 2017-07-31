@@ -144,9 +144,9 @@ class ItemController extends Controller
       return view('item.after_market.admin.index', compact('aftermarkets'));
    }
 
-   public function adminAddProjectPricingHistory(AddProjectPricingHistoryRequest $addProjectPricingHistoryRequest, Project $project)
+   public function adminAddProjectPricingHistory(Project $project, AddProjectPricingHistoryRequest $addProjectPricingHistoryRequest)
    {
-      $add_project_pricing_history = Project::addProjectPricingHistory($addProjectPricingHistoryRequest, $project);
+      $add_project_pricing_history = Project::addProjectPricingHistory($project, $addProjectPricingHistoryRequest);
 
       return $add_project_pricing_history;
    }

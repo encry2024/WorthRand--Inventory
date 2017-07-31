@@ -87,26 +87,27 @@ class Project extends Model
       }
    }
 
-   public static function addProjectPricingHistory($addProjectPricingHistoryRequest, $project)
+   public static function addProjectPricingHistory($project, $addProjectPricingHistoryRequest)
    {
-      DB::transaction(function() {
-         $project_pricing_history = new ProjectPricingHistory();
-         $project_pricing_history->project_id = $project->id;
-         $project_pricing_history->po_number = strtoupper($addProjectPricingHistoryRequest->get('po_number'));
-         $project_pricing_history->pricing_date = trim(strtoupper($addProjectPricingHistoryRequest->get('pricing_date')));
-         $project_pricing_history->price = str_replace(',', '', trim($addProjectPricingHistoryRequest->get('price')));
-         $project_pricing_history->terms = trim(strtoupper($addProjectPricingHistoryRequest->get('terms')));
-         $project_pricing_history->delivery = trim(strtoupper($addProjectPricingHistoryRequest->get('delivery')));
-         $project_pricing_history->fpd_reference = trim(strtoupper($addProjectPricingHistoryRequest->get('fpd_reference')));
-         $project_pricing_history->wpc_reference = trim(strtoupper($addProjectPricingHistoryRequest->get('wpc_reference')));
+      $project_pricing_history = new ProjectPricingHistory();
+      $project_pricing_history->project_id = $project->id;
+      $project_pricing_history->po_number = strtoupper($addProjectPricingHistoryRequest->get('po_number'));
+      $project_pricing_history->pricing_date = trim(strtoupper($addProjectPricingHistoryRequest->get('pricing_date')));
+      $project_pricing_history->price = str_replace(',', '', trim($addProjectPricingHistoryRequest->get('price')));
+      $project_pricing_history->terms = trim(strtoupper($addProjectPricingHistoryRequest->get('terms')));
+      $project_pricing_history->delivery = trim(strtoupper($addProjectPricingHistoryRequest->get('delivery')));
+      $project_pricing_history->fpd_reference = trim(strtoupper($addProjectPricingHistoryRequest->get('fpd_reference')));
+      $project_pricing_history->wpc_reference = trim(strtoupper($addProjectPricingHistoryRequest->get('wpc_reference')));
 
-         if($project_pricing_history->save()) {
-            $project = Project::find($project_pricing_history->project_id);
-            $project->update(['price' => $project_pricing_history->price]);
+      if($project_pricing_history->save()) {
+         $project = Project::find($project_pricing_history->project_id);
+         $project->update(['price' => $project_pricing_history->price]);
 
-            return redirect()->back()->with('message', 'Pricing History for Project ['.$project->name.'] was successfully saved');
-         }
-      });
+         return redirect()->back()->with('message', 'Pricing History for Project ['.$project->name.'] was successfully saved');
+
+      }
+
+      return redirect()->back()->with('message', 'Add Project Pricing History failed. Please review your input.');
    }
 
    public static function adminUpdateProject($request, $updateProjectInformationRequest)
