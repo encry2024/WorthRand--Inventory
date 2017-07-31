@@ -219,7 +219,7 @@ class IndentedProposal extends Model
 
                   if($project_pricing_history->save()) {
                      $project = Project::find($project_pricing_history->project_id);
-                     $project->price = $project_pricing_history->price;
+                     $project->price = $indentedProposalItem->price;
                      $project->save();
                   }
                } else if($indentedProposalItem->type == "after_markets") {
