@@ -124,7 +124,7 @@
                               <td>
                                  <b>{{ date('m/d/Y', strtotime($buy_and_sell_proposal->created_at)) }}</b>
                               </td>
-                              <td>@if($indented_proposal->purchase_order == '')
+                              <td>@if($buy_and_sell_proposal->purchase_order == '')
                                  <span class='label label-danger'>Draft Proposal</span>
                                  @else
                                  {{ $buy_and_sell_proposal->purchase_order }}
