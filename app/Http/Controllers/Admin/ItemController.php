@@ -28,6 +28,7 @@ use App\Http\Requests\AdminCreateSealRequest;
 use App\UploadProject;
 use File;
 use App\AftermarketUpload;
+use App\UploadSeal;
 
 class ItemController extends Controller
 {
@@ -343,6 +344,40 @@ class ItemController extends Controller
    {
       $file = $uploadedAftermarket->filepath . $uploadedAftermarket->original_filename;
       $filename = basename($uploadedAftermarket->scanned_file . $uploadedAftermarket->original_filename);
+
+      header('Content-type: application/pdf');
+      header('Content-Disposition: inline; filename="' . $filename . '"');
+      header('Content-Transfer-Encoding: binary');
+      header('Accept-Ranges: bytes');
+
+      @readfile($file);
+   }
+
+   public function adminUploadFileOnSeal(Request $request)
+   {
+      $adminUploadFileOnSeal = Seal::adminUploadFileOnSeal($request);
+
+      return $adminUploadFileOnSeal;
+   }
+
+   public function adminDownloadFileSeal(UploadSeal $uploadedSeal)
+   {
+      $file_path = $uploadedSeal->filepath . $uploadedSeal->original_filename;
+      return response()->download($file_path);
+   }
+
+   public function adminDeleteUploadSeal(UploadSeal $uploadedSeal)
+   {
+      $uploadedSeal->delete();
+      File::delete($uploadedSeal->filepath . $uploadedSeal->original_filename);
+
+      return redirect()->back();
+   }
+
+   public function openSealPDF(UploadSeal $uploadedSeal)
+   {
+      $file = $uploadedSeal->filepath . $uploadedSeal->original_filename;
+      $filename = basename($uploadedSeal->scanned_file . $uploadedSeal->original_filename);
 
       header('Content-type: application/pdf');
       header('Content-Disposition: inline; filename="' . $filename . '"');

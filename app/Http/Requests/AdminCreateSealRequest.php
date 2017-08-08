@@ -36,7 +36,6 @@ class AdminCreateSealRequest extends Request
          'serial_number' => 'required',
          'tag' => 'required',
          'price' => 'required',
-         'scanned_file' => 'mimes:pdf'
       ];
    }
 }

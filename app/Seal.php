@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use File;
 
 class Seal extends Model
 {
@@ -20,17 +21,13 @@ class Seal extends Model
       return $this->hasMany(SealPricingHistory::class);
    }
 
+   public function upload_seals()
+   {
+      return $this->hasMany(UploadSeal::class);
+   }
+
    public static function adminPostSealCreate($adminCreateSealRequest, $request)
    {
-      $path = storage_path() . '/uploads/projects/';
-      if(! $request->hasFile('scanned_file') ) {
-         $scannedSeal = "<N/A>";
-      } else {
-         $file = $request->file('scanned_file');
-         $file->move($path, $file->getClientOriginalName());
-         $scannedSeal = $path . $file->getClientOriginalName();
-      }
-
       $seal = new Seal();
       $seal->name = strtoupper($adminCreateSealRequest->get('name'));
       $seal->drawing_number = strtoupper($adminCreateSealRequest->get('drawing_number'));
@@ -44,7 +41,6 @@ class Seal extends Model
       $seal->tag = strtoupper($adminCreateSealRequest->get('tag'));
       $seal->size = strtoupper($adminCreateSealRequest->get('size'));
       $seal->price = str_replace(',', '', $adminCreateSealRequest->get('price'));
-      $seal->scanned_file = $scannedSeal;
 
       if($seal->save())
       {
@@ -73,5 +69,35 @@ class Seal extends Model
       ]);
 
       return redirect()->back()->with('message', 'Seal ['.$seal->name.'] was successfully updated');
+   }
+
+   public static function adminUploadFileOnSeal($request)
+   {
+      $uploadedSeal = new UploadSeal();
+      $sealId = $request->get('seal_id');
+      $path = storage_path('uploads/seal/' . $sealId . '/');
+      $file = $request->file('file');
+
+      if(!File::exists($path)) {
+         File::makeDirectory($path, 0777, true, true);
+
+         $uploadedSeal->seal_id = $sealId;
+         $uploadedSeal->original_filename = $file->getClientOriginalName();
+         $uploadedSeal->file_type = strtoupper($file->getClientOriginalExtension());
+         $uploadedSeal->filepath = $path;
+
+         if($uploadedSeal->save()) {
+            $file->move($path, $file->getClientOriginalName());
+         }
+      }
+
+      $uploadedSeal->seal_id = $sealId;
+      $uploadedSeal->original_filename = $file->getClientOriginalName();
+      $uploadedSeal->file_type = strtoupper($file->getClientOriginalExtension());
+      $uploadedSeal->filepath = $path;
+
+      if($uploadedSeal->save()) {
+         $file->move($path, $file->getClientOriginalName());
+      }
    }
 }

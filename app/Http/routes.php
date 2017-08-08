@@ -255,6 +255,7 @@ Route::group(['middlewareGroups' => ['web']], function() {
       Route::group(['prefix' => 'admin'], function() {
          Route::any('/open/project/{uploadedProject}', 'Admin\ItemController@openProjectPDF')->name('project_open_pdf');
          Route::any('/open/aftermarket/{uploadedAftermarket}', 'Admin\ItemController@openAftermarketPDF')->name('aftermarket_open_pdf');
+         Route::any('/open/seal/{uploadedSeal}', 'Admin\ItemController@openSealPDF')->name('seal_open_pdf');
 
          # DASHBOARD
          Route::get('/dashboard', 'Admin\UserController@adminDashboard')->name('admin_dashboard');
@@ -332,6 +333,10 @@ Route::group(['middlewareGroups' => ['web']], function() {
          Route::get('/seal/{seal}/pricing_history/create', 'Admin\ItemController@showSealPricingHistory')->name('admin_seal_pricing_history_create');
          Route::post('/seal/{seal}/pricing_history/create', 'Admin\ItemController@postSealPricingHistory')->name('admin_add_seal_pricing_history');
          Route::delete('/seal/{seal}/delete', 'Admin\ItemController@adminSealDelete')->name('admin_seal_delete');
+
+         Route::post('/seal/{seal}/upload_file', 'Admin\ItemController@adminUploadFileOnSeal ')->name('admin_upload_file_seal');
+         Route::get('/uploaded_seal/{uploadedSeal}', 'Admin\ItemController@adminDownloadFileSeal')->name('admin_download_file');
+         Route::delete('/uploaded_seal/{uploadedSeal}', 'Admin\ItemController@adminDeleteUploadedSeal')->name('admin_delete_file');
 
          # PRICING HISTORY
          Route::get('/pricing_history', 'Admin\ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');
