@@ -36,6 +36,17 @@
       <div class="row">
          <div class="col-lg-12">
             <div class="page-header">
+               <h1><small>Patch</small> - 0.6.1 - RELEASE</h1>
+            </div>
+            <label style="font-size: 16px !important; font-weight: 400;"><li>User can upload bulk of Seal PDF Files.</li></label><br>
+            <label style="font-size: 16px !important; font-weight: 400;"><li>Removed auto convert currency</li></label><br>
+            <label style="font-size: 16px !important; font-weight: 400;"><li>Fixed bugs.</li></label><br>
+         </div>
+      </div>
+
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="page-header">
                <h1><small>Patch</small> - 0.6.0 - RELEASE</h1>
             </div>
             <label style="font-size: 16px !important; font-weight: 400;"><li>Additional fields in Project Page. <small><i>Check Create Project page for reference.</i></small></li></label><br>
