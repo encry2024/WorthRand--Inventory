@@ -268,9 +268,32 @@
       </form>
    </div>
 
+   <div class="modal fade" id="DeletePDFModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <form id="deletePdfForm" method="POST">
+         {{ csrf_field() }}
+         {{ method_field('DELETE') }}
+
+         <div class="modal-dialog" role="document">
+            <div class="modal-content" style="border-radius: 0px;">
+               <div class="modal-header modal-header-danger" style="padding: 10px;">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <label class="modal-title" id="myModalLabel" style="font-size: 16px; font-weight: normal;"><i class="fa fa-trash"></i>&nbsp;Delete Scanned File: <span id="fileName2"></span></label>
+               </div>
+               <div class="modal-body">
+                  <p>This will permanently delete the scanned file. Are you sure you want to delete <b><span id="fileName1"></span></b>?</p>
+               </div>
+               <div class="modal-footer" style="padding: 5px; background-color: #e6e6e6; border-top: #ccc solid 1px;">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;Delete Permanently</button>
+               </div>
+            </div>
+         </div>
+      </form>
+   </div>
+
    <script type="text/javascript">
    function deleteUploadedSeal(fileId, fileName) {
-      var url = "{{ route('admin_delete_file', ':fileId') }}";
+      var url = "{{ route('admin_delete_file_seal', ':fileId') }}";
       url = url.replace(':fileId', fileId);
 
       document.getElementById('deletePdfForm').action = url;

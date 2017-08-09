@@ -336,7 +336,7 @@ Route::group(['middlewareGroups' => ['web']], function() {
 
          Route::post('/seal/{seal}/upload_file', 'Admin\ItemController@adminUploadFileOnSeal')->name('admin_upload_file_seal');
          Route::get('/uploaded_seal/{uploadedSeal}', 'Admin\ItemController@adminDownloadFileSeal')->name('admin_download_file');
-         Route::delete('/uploaded_seal/{uploadedSeal}', 'Admin\ItemController@adminDeleteUploadedSeal')->name('admin_delete_file');
+         Route::delete('/uploaded_seal/{uploadedSeal}', 'Admin\ItemController@adminDeleteUploadedSeal')->name('admin_delete_file_seal');
 
          # PRICING HISTORY
          Route::get('/pricing_history', 'Admin\ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');

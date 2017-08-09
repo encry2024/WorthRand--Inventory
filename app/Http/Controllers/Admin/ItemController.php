@@ -366,7 +366,7 @@ class ItemController extends Controller
       return response()->download($file_path);
    }
 
-   public function adminDeleteUploadSeal(UploadSeal $uploadedSeal)
+   public function adminDeleteUploadedSeal(UploadSeal $uploadedSeal)
    {
       $uploadedSeal->delete();
       File::delete($uploadedSeal->filepath . $uploadedSeal->original_filename);
