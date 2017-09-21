@@ -25,9 +25,23 @@
          </div>
       </div>
 
-      <div class="pull-right mb-10 hidden-sm hidden-xs">
-         <a href="{{ route('create_after_market') }}" class="btn btn-success">&nbsp;Create Aftermarket</a>
-      </div>
+      @if(Request::has('filter'))
+      <div class="alert alert-success" role="alert" style="border-radius: 0px; border-radius: 0px; color: #224323; background-color: #cde6cd;border-color: #bcddbc; background-image: none;">Entered Query: "{{ Request::get('filter') }}" Filtered Result: {{ $aftermarkets->firstItem() }} to {{ $aftermarkets->lastItem() }} out of {{$aftermarkets->total()}} Aftermarket</div>
+      @endif
+      <form>
+         <div class="form-group">
+            <label for="SearchInput" class="control-label pull-left" style="line-height: 3rem;">Search:</label>
+            <div class="col-lg-3" >
+               <input id="SearchInput" type="search" class="form-control" name="filter" style="height: 30px;">
+            </div>
+            <button class="btn btn-sm btn-primary">Search</button>
+            <a href="{{ route('admin_after_market_index') }}" class="btn btn-sm btn-warning">Clear Search</a>
+            <div class="pull-right mb-10 hidden-sm hidden-xs">
+
+               <a href="{{ route('create_after_market') }}" class="btn btn-success">&nbsp;Create Aftermarket</a>
+            </div>
+         </div>
+      </form>
       <div class="clearfix"></div>
 
       @if(count($aftermarkets) != 0)
@@ -67,9 +81,9 @@
                   <div class="form-group left" style=" margin-top: 2.55rem; ">
                      <label class="" for="">Showing {{ $aftermarkets->firstItem() }} to {{ $aftermarkets->lastItem() }} out of {{ $aftermarkets->total() }} Aftermarket(s)</label>
                   </div>
-                  {{-- <div class="form-group right">
+                  <div class="form-group right">
                      <span class="right">{!! $aftermarkets->appends(['filter' => Request::get('filter')])->render() !!}</span>
-                  </div> --}}
+                  </div>
                </form>
             </div>
          </div>

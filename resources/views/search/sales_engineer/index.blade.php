@@ -311,8 +311,8 @@ $('#item_category').change(function () {
       } else {
          document.getElementById('data1').innerHTML = 'Name:';
          document.getElementById('data2').innerHTML = 'CCN Number:';
-         document.getElementById('data3').innerHTML = 'Part Number:';
-         document.getElementById('data4').innerHTML = 'Model:';
+         document.getElementById('data3').innerHTML = 'Model:';
+         document.getElementById('data4').innerHTML = 'Part Number:';
          document.getElementById('data5').innerHTML = 'Reference Number:';
          document.getElementById('data6').innerHTML = 'Serial Number:';
          document.getElementById('data7').innerHTML = 'Drawing Number:';

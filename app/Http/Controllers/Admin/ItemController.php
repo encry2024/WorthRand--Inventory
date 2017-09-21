@@ -137,10 +137,21 @@ class ItemController extends Controller
       return view('item.pricing_history.admin.index');
    }
 
-   public function indexAftermarket()
+   public function indexAftermarket(Request $request)
    {
-      $aftermarkets = AfterMarket::paginate(20);
+      $ctr = 0;
+      $aftermarkets = DB::table('after_markets')
+      ->select('after_markets.*')->where('deleted_at', '=', null);
+
+      if($request->has('filter')) {
+         $aftermarkets = $aftermarkets->where('name', 'LIKE', '%'.$request->get('filter').'%');
+      }
+
+      // dd($aftermarkets);
+      $aftermarkets = $aftermarkets->paginate(30);
       $aftermarkets->setPath('/aftermarkets');
+
+
 
       return view('item.after_market.admin.index', compact('aftermarkets'));
    }

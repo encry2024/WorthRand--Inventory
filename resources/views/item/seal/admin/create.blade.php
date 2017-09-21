@@ -223,8 +223,6 @@
                   </div>
                </div>
 
-               
-
                <div style="margin-left: 25.5%;">
                   <a class="btn btn-success" href="#" onclick='document.getElementById("createAfterMarketForm").submit();'><i class="fa fa-check"></i>&nbsp; Create Seal</a>
                   <button class="btn btn-danger clear_input"><span class="glyphicon glyphicon-remove"></span> Clear</button>
